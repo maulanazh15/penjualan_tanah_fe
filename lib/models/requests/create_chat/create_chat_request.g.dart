@@ -10,7 +10,7 @@ _$CreateChatRequestImpl _$$CreateChatRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateChatRequestImpl(
       userId: json['user_id'] as int,
-      isPrivate: json['is_private'] as int?,
+      isPrivate: json['is_private'] as int? ?? 1,
       name: json['name'] as String?,
     );
 

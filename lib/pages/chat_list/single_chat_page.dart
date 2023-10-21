@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
+import 'package:penjualan_tanah_fe/models/user_model.dart';
 import 'package:penjualan_tanah_fe/widget/startup_container.dart';
 import '../../blocs/chat/chat_bloc.dart';
+import '../../models/chat_participant_model.dart';
+import '../../utils/chat.dart';
 import './data.dart';
 
 class SingleChatPage extends StatefulWidget {
@@ -15,13 +20,22 @@ class SingleChatPage extends StatefulWidget {
 }
 
 class _SingleChatPageState extends State<SingleChatPage> {
-  List<ChatMessage> messages = basicSample;
+  // List<ChatMessage> messages = basicSample;
 
   @override
   Widget build(BuildContext context) {
+    final chatBloc = context.read<ChatBloc>();
+    final authBloc = context.read<AuthBloc>();
+    print('Chat Bloc Widget Build ${chatBloc.state.chatMessages}');
     return StartUpContainer(
       onInit: () {
-        
+        // create a chat and get chat messages
+        chatBloc.add(const GetChatMessage());
+        print('On Init StartUp Container ${chatBloc.state.chatMessages}');
+      },
+      onDisposed: () {
+        chatBloc.add(const ChatReset());
+        chatBloc.add(const ChatStarted());
       },
       child: Scaffold(
         appBar: AppBar(
@@ -31,21 +45,29 @@ class _SingleChatPageState extends State<SingleChatPage> {
             },
             builder: (context, state) {
               final chat = state.selectedChat;
-              print(chat);
-              return Text('Other User Name');
+              print('Bloc Consumer Selected Chat ${state.chatMessages}');
+              return Text(chat == null
+                  ? 'N/A'
+                  : getChatName(chat.participants, authBloc.state.user!));
             },
           ),
         ),
-        body: DashChat(
-          currentUser: user,
-          onSend: (ChatMessage message) {
-            print("Buat Pesan chat");
+        body: BlocBuilder<ChatBloc, ChatState>(
+          builder: (context, state) {
+            print('Bloc Builder Chat Messages ${state.chatMessages}');
+            return DashChat(
+              currentUser: authBloc.state.user!.toChatUser,
+              onSend: (ChatMessage chatMessage) {
+                chatBloc.add(SendMessage(state.selectedChat!.id, chatMessage));
+              },
+              messages: state.uiChatMessages,
+              messageListOptions: MessageListOptions(onLoadEarlier: () async {
+                // await Future.delayed(const Duration(seconds: 3));
+                // loading more message
+                chatBloc.add(const LoadMoreChatMessage());
+              }),
+            );
           },
-          messages: messages,
-          messageListOptions: MessageListOptions(onLoadEarlier: () async {
-            await Future.delayed(const Duration(seconds: 3));
-            // loadi more message
-          }),
         ),
       ),
     );

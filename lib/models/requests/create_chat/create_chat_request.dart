@@ -8,7 +8,7 @@ part 'create_chat_request.g.dart';
 class CreateChatRequest with _$CreateChatRequest {
   factory CreateChatRequest({
     @JsonKey(name: 'user_id') required int userId,
-    @JsonKey(name: 'is_private') int? isPrivate,
+    @JsonKey(name: 'is_private') @Default(1) int? isPrivate,
     String? name,
   }) = _CreateChatRequest;
 	

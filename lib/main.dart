@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:penjualan_tanah_fe/pages/splash/splash_page.dart';
 import 'package:penjualan_tanah_fe/repositories/auth/auth_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/chat/chat_repository.dart';
+import 'package:penjualan_tanah_fe/repositories/chat_message/chat_message_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/user/base_user_repository.dart';
 
 import 'blocs/chat/chat_bloc.dart';
@@ -38,6 +39,8 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<ChatRepository>(create: (_) => ChatRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
+        RepositoryProvider<ChatMessageRepository>(create: (_) => ChatMessageRepository()),
+        
       ],
       child: MultiBlocProvider(
         providers: [
@@ -51,6 +54,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => ChatBloc(
               chatRepository: context.read<ChatRepository>(),
+              chatMessageRepository: context.read<ChatMessageRepository>(),
             ),
           ),
           BlocProvider(
@@ -58,6 +62,7 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             ),
           ),
+          
         ],
         child: MaterialApp(
           title: 'Penjualan Tanah App',

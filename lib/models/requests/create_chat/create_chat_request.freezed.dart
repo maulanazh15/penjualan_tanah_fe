@@ -129,7 +129,7 @@ class __$$CreateChatRequestImplCopyWithImpl<$Res>
 class _$CreateChatRequestImpl implements _CreateChatRequest {
   _$CreateChatRequestImpl(
       {@JsonKey(name: 'user_id') required this.userId,
-      @JsonKey(name: 'is_private') this.isPrivate,
+      @JsonKey(name: 'is_private') this.isPrivate = 1,
       this.name});
 
   factory _$CreateChatRequestImpl.fromJson(Map<String, dynamic> json) =>

@@ -2,6 +2,8 @@ part of 'chat_bloc.dart';
 
 @freezed
 class ChatState with _$ChatState {
+  const ChatState._();
+
   const factory ChatState({
     required List<ChatEntity> chats,
     required List<ChatMessageEntity> chatMessages,
@@ -23,5 +25,13 @@ class ChatState with _$ChatState {
       isLastPage: false,
       page: 1,
     );
+  }
+
+  bool get isSearchChat => otherUserId != null && selectedChat == null;
+
+  bool get isListChat => otherUserId == null && selectedChat != null;
+
+  List<ChatMessage> get uiChatMessages {
+    return chatMessages.map((e) => e.toChatMessage).toList();
   }
 }

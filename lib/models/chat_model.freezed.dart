@@ -30,7 +30,7 @@ mixin _$ChatEntity {
   String get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_message')
   ChatMessageEntity? get lastMessage => throw _privateConstructorUsedError;
-  List<ChatParticipantEntity> get participant =>
+  List<ChatParticipantEntity> get participants =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $ChatEntityCopyWith<$Res> {
       @JsonKey(name: 'created_at') String createdAt,
       @JsonKey(name: 'updated_at') String updatedAt,
       @JsonKey(name: 'last_message') ChatMessageEntity? lastMessage,
-      List<ChatParticipantEntity> participant});
+      List<ChatParticipantEntity> participants});
 
   $ChatMessageEntityCopyWith<$Res>? get lastMessage;
 }
@@ -76,7 +76,7 @@ class _$ChatEntityCopyWithImpl<$Res, $Val extends ChatEntity>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? lastMessage = freezed,
-    Object? participant = null,
+    Object? participants = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -103,9 +103,9 @@ class _$ChatEntityCopyWithImpl<$Res, $Val extends ChatEntity>
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
               as ChatMessageEntity?,
-      participant: null == participant
-          ? _value.participant
-          : participant // ignore: cast_nullable_to_non_nullable
+      participants: null == participants
+          ? _value.participants
+          : participants // ignore: cast_nullable_to_non_nullable
               as List<ChatParticipantEntity>,
     ) as $Val);
   }
@@ -138,7 +138,7 @@ abstract class _$$ChatEntityImplCopyWith<$Res>
       @JsonKey(name: 'created_at') String createdAt,
       @JsonKey(name: 'updated_at') String updatedAt,
       @JsonKey(name: 'last_message') ChatMessageEntity? lastMessage,
-      List<ChatParticipantEntity> participant});
+      List<ChatParticipantEntity> participants});
 
   @override
   $ChatMessageEntityCopyWith<$Res>? get lastMessage;
@@ -161,7 +161,7 @@ class __$$ChatEntityImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? lastMessage = freezed,
-    Object? participant = null,
+    Object? participants = null,
   }) {
     return _then(_$ChatEntityImpl(
       id: null == id
@@ -188,9 +188,9 @@ class __$$ChatEntityImplCopyWithImpl<$Res>
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
               as ChatMessageEntity?,
-      participant: null == participant
-          ? _value._participant
-          : participant // ignore: cast_nullable_to_non_nullable
+      participants: null == participants
+          ? _value._participants
+          : participants // ignore: cast_nullable_to_non_nullable
               as List<ChatParticipantEntity>,
     ));
   }
@@ -206,8 +206,8 @@ class _$ChatEntityImpl implements _ChatEntity {
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt,
       @JsonKey(name: 'last_message') this.lastMessage,
-      required final List<ChatParticipantEntity> participant})
-      : _participant = participant;
+      required final List<ChatParticipantEntity> participants})
+      : _participants = participants;
 
   factory _$ChatEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatEntityImplFromJson(json);
@@ -228,17 +228,17 @@ class _$ChatEntityImpl implements _ChatEntity {
   @override
   @JsonKey(name: 'last_message')
   final ChatMessageEntity? lastMessage;
-  final List<ChatParticipantEntity> _participant;
+  final List<ChatParticipantEntity> _participants;
   @override
-  List<ChatParticipantEntity> get participant {
-    if (_participant is EqualUnmodifiableListView) return _participant;
+  List<ChatParticipantEntity> get participants {
+    if (_participants is EqualUnmodifiableListView) return _participants;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_participant);
+    return EqualUnmodifiableListView(_participants);
   }
 
   @override
   String toString() {
-    return 'ChatEntity(id: $id, name: $name, isPrivate: $isPrivate, createdAt: $createdAt, updatedAt: $updatedAt, lastMessage: $lastMessage, participant: $participant)';
+    return 'ChatEntity(id: $id, name: $name, isPrivate: $isPrivate, createdAt: $createdAt, updatedAt: $updatedAt, lastMessage: $lastMessage, participants: $participants)';
   }
 
   @override
@@ -257,7 +257,7 @@ class _$ChatEntityImpl implements _ChatEntity {
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
             const DeepCollectionEquality()
-                .equals(other._participant, _participant));
+                .equals(other._participants, _participants));
   }
 
   @JsonKey(ignore: true)
@@ -270,7 +270,7 @@ class _$ChatEntityImpl implements _ChatEntity {
       createdAt,
       updatedAt,
       lastMessage,
-      const DeepCollectionEquality().hash(_participant));
+      const DeepCollectionEquality().hash(_participants));
 
   @JsonKey(ignore: true)
   @override
@@ -294,7 +294,7 @@ abstract class _ChatEntity implements ChatEntity {
           @JsonKey(name: 'created_at') required final String createdAt,
           @JsonKey(name: 'updated_at') required final String updatedAt,
           @JsonKey(name: 'last_message') final ChatMessageEntity? lastMessage,
-          required final List<ChatParticipantEntity> participant}) =
+          required final List<ChatParticipantEntity> participants}) =
       _$ChatEntityImpl;
 
   factory _ChatEntity.fromJson(Map<String, dynamic> json) =
@@ -317,7 +317,7 @@ abstract class _ChatEntity implements ChatEntity {
   @JsonKey(name: 'last_message')
   ChatMessageEntity? get lastMessage;
   @override
-  List<ChatParticipantEntity> get participant;
+  List<ChatParticipantEntity> get participants;
   @override
   @JsonKey(ignore: true)
   _$$ChatEntityImplCopyWith<_$ChatEntityImpl> get copyWith =>

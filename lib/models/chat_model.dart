@@ -14,7 +14,7 @@ class ChatEntity with _$ChatEntity {
     @JsonKey(name: 'created_at') required String createdAt,
     @JsonKey(name: 'updated_at') required String updatedAt,
     @JsonKey(name: 'last_message') ChatMessageEntity? lastMessage,
-    required List<ChatParticipantEntity> participant,
+    required List<ChatParticipantEntity> participants,
   }) = _ChatEntity;
 
   factory ChatEntity.fromJson(Map<String, dynamic> json) =>
