@@ -7,7 +7,7 @@ import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:penjualan_tanah_fe/pages/profile_page.dart';
 import 'package:penjualan_tanah_fe/pages/serach_page.dart';
 
-import '../pages/chat_list/chat_page.dart';
+import '../chat_list/chat_page.dart';
 
 class NavigationBarComponent extends StatefulWidget {
   const NavigationBarComponent({Key? key}) : super(key: key);
@@ -44,23 +44,27 @@ class _NavigationBarState extends State<NavigationBarComponent> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          BlocConsumer<AuthBloc, AuthState>(
-            listener: (context, state) {
-              // TODO: implement listener
-              // print(state);
-              if (!state.isAuthenticated) {
-                Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
-              }
-            },
-            builder: (context, state) {
+          BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
+            // TODO: implement listener
+            // print(state);
+            if (!state.isAuthenticated) {
+              Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
+            }
+          }, builder: (context, state) {
+            if (state.isAuthenticated) {
               return IconButton(
                   onPressed: () {
                     // print(state);
                     context.read<LoginCubit>().signOut();
                   },
                   icon: const Icon(Icons.logout));
-            },
-          )
+            }
+
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.people),
+            );
+          })
         ],
       ),
       body: _screens[_selectedIndex],

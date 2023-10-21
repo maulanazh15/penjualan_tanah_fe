@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:penjualan_tanah_fe/components/navigation_bar_component.dart';
+import 'package:penjualan_tanah_fe/pages/components/navigation_bar_component.dart';
 import 'package:penjualan_tanah_fe/cubits/cubits.dart';
 
 class LoginPage extends StatelessWidget {
@@ -20,11 +20,11 @@ class LoginPage extends StatelessWidget {
       scrollable: true,
       userType: LoginUserType.name,
       hideForgotPasswordButton: true,
-      logo: AssetImage('assets/images/chat.png'),
+      logo: AssetImage('assets/images/5-you-jung.jpg'),
       onLogin: cubit.signIn,
       onSignup: cubit.signUp,
       userValidator: (value) {
-        if (value == null ) {
+        if (value == '' ) {
           return 'Please enter username';
         }
       },

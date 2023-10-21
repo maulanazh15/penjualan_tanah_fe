@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:penjualan_tanah_fe/models/requests/login/login_request.dart';
+import 'package:penjualan_tanah_fe/models/requests/register/register_request.dart';
 import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
 import 'package:penjualan_tanah_fe/utils/dio_client/dio_client.dart';
 import 'package:penjualan_tanah_fe/models/app_response.dart';
-import 'package:penjualan_tanah_fe/models/requests/login_request.dart';
-import 'package:penjualan_tanah_fe/models/requests/register_request.dart';
 import 'package:penjualan_tanah_fe/models/user_model.dart';
 import 'package:penjualan_tanah_fe/repositories/auth/base_auth_repository.dart';
 
@@ -19,7 +19,7 @@ class AuthRepository extends BaseAuthRepository {
     final response = await _dioClient.get(
       Endpoints.currentUser,
     );
-    print(response);
+    // print(response);
     return AppResponse<UserEntity?>.fromJson(
       response.data,
       (dynamic json) => response.data['success'] && json != null
@@ -64,6 +64,7 @@ class AuthRepository extends BaseAuthRepository {
       Endpoints.register,
       data: request.toJson(),
     );
+
 
     return AppResponse<AuthUser?>.fromJson(
       response.data,

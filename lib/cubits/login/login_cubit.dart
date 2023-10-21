@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:penjualan_tanah_fe/blocs/blocs.dart';
-import 'package:penjualan_tanah_fe/models/requests/login_request.dart';
-import 'package:penjualan_tanah_fe/models/requests/register_request.dart';
+import 'package:penjualan_tanah_fe/models/requests/login/login_request.dart';
+import 'package:penjualan_tanah_fe/models/requests/register/register_request.dart';
 import 'package:penjualan_tanah_fe/repositories/auth/auth_repository.dart';
 
 part 'login_state.dart';
