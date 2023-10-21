@@ -31,7 +31,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       emit(state.copyWith(status: DataStatus.loading));
 
       final result = await _chatRepository.getChats();
-      print(result);
+      ;
       emit(state.copyWith(
         status: DataStatus.loaded,
         chats: result.success ? result.data ?? [] : [],
@@ -66,14 +66,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
       ChatEntity? chat;
 
-      // print(state);
+      // ;
       // print(state.isSearchChat);
       if (state.isSearchChat) {
         final chatResult = await _chatRepository.createChat(
           CreateChatRequest(userId: state.otherUserId!),
         );
 
-        // print(chatResult);
+        // ;
         if (chatResult.success) {
           chat = chatResult.data;
         }

@@ -19,7 +19,7 @@ class AuthRepository extends BaseAuthRepository {
     final response = await _dioClient.get(
       Endpoints.currentUser,
     );
-    // print(response);
+    // response);
     return AppResponse<UserEntity?>.fromJson(
       response.data,
       (dynamic json) => response.data['success'] && json != null
@@ -64,7 +64,6 @@ class AuthRepository extends BaseAuthRepository {
       Endpoints.register,
       data: request.toJson(),
     );
-
 
     return AppResponse<AuthUser?>.fromJson(
       response.data,

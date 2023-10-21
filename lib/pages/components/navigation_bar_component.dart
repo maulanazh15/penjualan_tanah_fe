@@ -24,7 +24,7 @@ class _NavigationBarState extends State<NavigationBarComponent> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      print(_selectedIndex);
+      ;
     });
   }
 
@@ -40,13 +40,13 @@ class _NavigationBarState extends State<NavigationBarComponent> {
   @override
   Widget build(BuildContext context) {
     // final authState = context.read<AuthBloc>().state;
-    // print(authState);
+    // ;
     return Scaffold(
       appBar: AppBar(
         actions: [
           BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
             // TODO: implement listener
-            // print(state);
+            // ;
             if (!state.isAuthenticated) {
               Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
             }
@@ -54,7 +54,7 @@ class _NavigationBarState extends State<NavigationBarComponent> {
             if (state.isAuthenticated) {
               return IconButton(
                   onPressed: () {
-                    // print(state);
+                    // ;
                     context.read<LoginCubit>().signOut();
                   },
                   icon: const Icon(Icons.logout));

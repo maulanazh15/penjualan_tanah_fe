@@ -26,12 +26,10 @@ class _SingleChatPageState extends State<SingleChatPage> {
   Widget build(BuildContext context) {
     final chatBloc = context.read<ChatBloc>();
     final authBloc = context.read<AuthBloc>();
-    print('Chat Bloc Widget Build ${chatBloc.state.chatMessages}');
     return StartUpContainer(
       onInit: () {
         // create a chat and get chat messages
         chatBloc.add(const GetChatMessage());
-        print('On Init StartUp Container ${chatBloc.state.chatMessages}');
       },
       onDisposed: () {
         chatBloc.add(const ChatReset());
@@ -45,7 +43,6 @@ class _SingleChatPageState extends State<SingleChatPage> {
             },
             builder: (context, state) {
               final chat = state.selectedChat;
-              print('Bloc Consumer Selected Chat ${state.chatMessages}');
               return Text(chat == null
                   ? 'N/A'
                   : getChatName(chat.participants, authBloc.state.user!));
@@ -54,7 +51,6 @@ class _SingleChatPageState extends State<SingleChatPage> {
         ),
         body: BlocBuilder<ChatBloc, ChatState>(
           builder: (context, state) {
-            print('Bloc Builder Chat Messages ${state.chatMessages}');
             return DashChat(
               currentUser: authBloc.state.user!.toChatUser,
               onSend: (ChatMessage chatMessage) {

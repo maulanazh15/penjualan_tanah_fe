@@ -20,7 +20,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   void _showSearch(BuildContext context, List<UserEntity> users) {
-    // print(users);
+    // ;
     showSearch(
       context: context,
       delegate: SearchPage<UserEntity>(
@@ -129,7 +129,7 @@ class _ChatPageState extends State<ChatPage> {
                       );
                     },
                     builder: (context, state) {
-                      // print(state);
+                      // ;
                       return IconButton(
                         onPressed: () {
                           _showSearch(context, state);
@@ -171,7 +171,6 @@ class _ChatPageState extends State<ChatPage> {
                             item: item,
                             currentUser: currentUser,
                             onPressed: (chat) {
-                              print('Chat List Item ${chat}');
                               chatBloc.add(ChatSelected(chat));
                               Navigator.of(context)
                                   .pushNamed(SingleChatPage.routeName);

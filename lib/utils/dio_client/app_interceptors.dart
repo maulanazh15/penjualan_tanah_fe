@@ -24,7 +24,7 @@ class AppInterceptors extends Interceptor {
     /// Tries to add Authorization header only if Authorization header not extisted
     if (!options.headers.containsKey(HttpHeaders.authorizationHeader)) {
       var state = AuthBloc().state;
-      print(state);
+      ;
       if (state.token != null) {
         options.headers[HttpHeaders.authorizationHeader] =
             'Bearer ${state.token}';
