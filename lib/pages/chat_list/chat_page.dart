@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:penjualan_tanah_fe/blocs/chat/chat_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/user/user_bloc.dart';
 import 'package:penjualan_tanah_fe/pages/chat_list/chat_list_item.dart';
 import 'package:penjualan_tanah_fe/pages/chat_list/single_chat_page.dart';
+import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:penjualan_tanah_fe/widget/blank_content.dart';
 import 'package:search_page/search_page.dart';
 import '../../models/user_model.dart';
@@ -20,7 +23,8 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   void _showSearch(BuildContext context, List<UserEntity> users) {
-    // ;
+    print(users);
+
     showSearch(
       context: context,
       delegate: SearchPage<UserEntity>(
@@ -59,7 +63,14 @@ class _ChatPageState extends State<ChatPage> {
         ),
         filter: (user) => [user.username],
         builder: (user) => ListTile(
-          leading: const Icon(Icons.account_circle, size: 50.0),
+          leading:
+              // const Icon(Icons.account_circle, size: 50.0),
+              AvatarProfile(key: ValueKey(user.id), user: user),
+              // Image.network(user.urlProfileImage, 
+              // headers: 
+              // const {
+              //   HttpHeaders.connectionHeader: 'keep-alive',
+              // },),
           title: Text(user.username),
           subtitle: Text(user.email),
           onTap: () {
@@ -102,6 +113,11 @@ class _ChatPageState extends State<ChatPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // const Icon(Icons.account_circle, size: 50.0),
+                  AvatarProfile(user: currentUser),
+                  // Image.network(currentUser.urlProfileImage, headers: const {
+                  //   HttpHeaders.connectionHeader: 'keep-alive'
+                  // },),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -57,6 +57,10 @@ class _SingleChatPageState extends State<SingleChatPage> {
                 chatBloc.add(SendMessage(state.selectedChat!.id, chatMessage));
               },
               messages: state.uiChatMessages,
+              messageOptions: const MessageOptions(
+                showOtherUsersAvatar: true,
+                showCurrentUserAvatar: false,
+              ),
               messageListOptions: MessageListOptions(onLoadEarlier: () async {
                 // await Future.delayed(const Duration(seconds: 3));
                 // loading more message

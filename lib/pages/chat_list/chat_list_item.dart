@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../models/chat_model.dart';
 import '../../models/user_model.dart';
 import '../../utils/chat.dart';
 import '../../utils/formatting.dart';
+import '../components/avatar_profile.dart';
 
 class ChatListItem extends StatelessWidget {
   const ChatListItem({
@@ -19,8 +22,12 @@ class ChatListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(currentUser.urlProfileImage);
     return ListTile(
-      leading: const Icon(Icons.account_circle, size: 50.0),
+      leading:
+          // const Icon(Icons.account_circle, size: 50.0),
+          AvatarProfile(user: item.lastMessage!.user),
+          // Image.network(currentUser.urlProfileImage),
       title: Text(
         item.name ??
             getChatName(
@@ -45,3 +52,5 @@ class ChatListItem extends StatelessWidget {
     );
   }
 }
+
+

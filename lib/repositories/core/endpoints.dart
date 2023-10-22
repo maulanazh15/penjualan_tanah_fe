@@ -1,4 +1,8 @@
 class Endpoints {
+  // Base Url
+
+  static const baseUrl = "http://10.0.2.2:8000";
+
   /// Current Api Version
   static const _apiVersion = "/api";
 
@@ -26,4 +30,5 @@ class Endpoints {
   /// User
 
   static const getUsers = "$_apiVersion/user";
+  static const getPhotoProfile = "$baseUrl$_baseAuth/photo-profile";
 }

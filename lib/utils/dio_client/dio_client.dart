@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:penjualan_tanah_fe/utils/dio_client/app_interceptors.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+import '../../repositories/core/endpoints.dart';
 class DioClient {
   static DioClient? _singleton;
 
@@ -19,7 +21,7 @@ class DioClient {
   Dio createDioClient() {
     final dio = Dio(
       BaseOptions(
-        baseUrl: "http://10.0.2.2:8000",
+        baseUrl: Endpoints.baseUrl,
         receiveTimeout: 15000, // 15 seconds
         connectTimeout: 15000,
         sendTimeout: 15000,
