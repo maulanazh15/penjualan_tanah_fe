@@ -26,7 +26,7 @@ class ChatListItem extends StatelessWidget {
     return ListTile(
       leading:
           // const Icon(Icons.account_circle, size: 50.0),
-          AvatarProfile(user: item.lastMessage!.user),
+          AvatarProfile(user: getOtherUser(item.participants, currentUser)),
           // Image.network(currentUser.urlProfileImage),
       title: Text(
         item.name ??

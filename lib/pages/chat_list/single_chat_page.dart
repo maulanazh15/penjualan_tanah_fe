@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
-import 'package:penjualan_tanah_fe/models/user_model.dart';
 import 'package:penjualan_tanah_fe/widget/startup_container.dart';
 import '../../blocs/chat/chat_bloc.dart';
-import '../../models/chat_participant_model.dart';
+import '../../models/chat_model.dart';
 import '../../utils/chat.dart';
-import './data.dart';
+import '../../utils/laravel_echo/laravel_echo.dart';
 
 class SingleChatPage extends StatefulWidget {
   const SingleChatPage({Key? key}) : super(key: key);
@@ -22,6 +21,31 @@ class SingleChatPage extends StatefulWidget {
 class _SingleChatPageState extends State<SingleChatPage> {
   // List<ChatMessage> messages = basicSample;
 
+  void listenChatChannel(ChatEntity chat) {
+    // print(LaravelEcho.socketId);
+
+    LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent',
+        (e) {
+      print(e);
+        if (e.data != null) {
+          print(jsonDecode(e.data as String));
+        }
+      
+    }).error((error) {
+      print(error);
+    });
+  }
+
+  void leaveChatChannel(ChatEntity chat) {
+    try {
+      LaravelEcho.instance.leave('chat.${chat.id}');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _handleMessage() {}
+
   @override
   Widget build(BuildContext context) {
     final chatBloc = context.read<ChatBloc>();
@@ -30,8 +54,12 @@ class _SingleChatPageState extends State<SingleChatPage> {
       onInit: () {
         // create a chat and get chat messages
         chatBloc.add(const GetChatMessage());
+        if (chatBloc.state.selectedChat != null) {
+          listenChatChannel(chatBloc.state.selectedChat!);
+        }
       },
       onDisposed: () {
+        leaveChatChannel(chatBloc.state.selectedChat!);
         chatBloc.add(const ChatReset());
         chatBloc.add(const ChatStarted());
       },

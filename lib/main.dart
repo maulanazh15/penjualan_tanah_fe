@@ -11,6 +11,7 @@ import 'package:penjualan_tanah_fe/pages/chat_list/chat_page.dart';
 import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:penjualan_tanah_fe/pages/splash/splash_page.dart';
+import 'package:penjualan_tanah_fe/pages/websocket-test/websocket.dart';
 import 'package:penjualan_tanah_fe/repositories/auth/auth_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/chat/chat_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/chat_message/chat_message_repository.dart';
@@ -25,6 +26,7 @@ void main() async {
         ? HydratedStorage.webStorageDirectory
         : await getTemporaryDirectory(),
   );
+  
   runApp(const MyApp());
 }
 
@@ -39,8 +41,8 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<ChatRepository>(create: (_) => ChatRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
-        RepositoryProvider<ChatMessageRepository>(create: (_) => ChatMessageRepository()),
-        
+        RepositoryProvider<ChatMessageRepository>(
+            create: (_) => ChatMessageRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -62,7 +64,6 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             ),
           ),
-          
         ],
         child: MaterialApp(
           title: 'Penjualan Tanah App',
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
             SplashPage.routeName: (_) => const SplashPage(),
             ChatPage.routeName: (_) => const ChatPage(),
             SingleChatPage.routeName: (_) => const SingleChatPage(),
+            Websocket.routeName: (_) => const Websocket(),
           },
         ),
       ),

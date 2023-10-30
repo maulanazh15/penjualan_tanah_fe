@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
@@ -8,8 +6,11 @@ import 'package:penjualan_tanah_fe/blocs/user/user_bloc.dart';
 import 'package:penjualan_tanah_fe/pages/chat_list/chat_list_item.dart';
 import 'package:penjualan_tanah_fe/pages/chat_list/single_chat_page.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
+import 'package:penjualan_tanah_fe/pages/websocket-test/websocket.dart';
+import 'package:penjualan_tanah_fe/utils/laravel_echo/laravel_echo.dart';
 import 'package:penjualan_tanah_fe/widget/blank_content.dart';
 import 'package:search_page/search_page.dart';
+import 'package:web_socket_channel/io.dart';
 import '../../models/user_model.dart';
 import '../../widget/startup_container.dart';
 
@@ -23,7 +24,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   void _showSearch(BuildContext context, List<UserEntity> users) {
-    print(users);
+    // print(users);
 
     showSearch(
       context: context,
@@ -66,11 +67,11 @@ class _ChatPageState extends State<ChatPage> {
           leading:
               // const Icon(Icons.account_circle, size: 50.0),
               AvatarProfile(key: ValueKey(user.id), user: user),
-              // Image.network(user.urlProfileImage, 
-              // headers: 
-              // const {
-              //   HttpHeaders.connectionHeader: 'keep-alive',
-              // },),
+          // Image.network(user.urlProfileImage,
+          // headers:
+          // const {
+          //   HttpHeaders.connectionHeader: 'keep-alive',
+          // },),
           title: Text(user.username),
           subtitle: Text(user.email),
           onTap: () {
@@ -96,6 +97,13 @@ class _ChatPageState extends State<ChatPage> {
       onInit: () async {
         chatBloc.add(const ChatStarted());
         userBloc.add(const UserStarted());
+
+        LaravelEcho.init(token: authBloc.state.token!);
+
+        print(LaravelEcho.socketId);
+      },
+      onDisposed: () {
+        LaravelEcho.instance.disconnect();
       },
       child: Container(
         padding: EdgeInsets.all(14.0),
@@ -154,6 +162,11 @@ class _ChatPageState extends State<ChatPage> {
                       );
                     },
                   ),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(Websocket.routeName);
+                      },
+                      icon: Icon(Icons.ac_unit))
                 ],
               ),
             ),
