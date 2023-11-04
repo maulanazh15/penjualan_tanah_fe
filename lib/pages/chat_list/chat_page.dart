@@ -100,10 +100,23 @@ class _ChatPageState extends State<ChatPage> {
 
         LaravelEcho.init(token: authBloc.state.token!);
 
-        print(LaravelEcho.socketId);
+        // LaravelEcho.instance.connector.onConnect((data) => print("connected succesfully"));
+        // print(LaravelEcho.instance.);
+        // LaravelEcho.instance.connector.socket
+        //     .on('connect', (_) => print('connected ' + (LaravelEcho.instance.connector.socket.id ?? ' null')));
+        // print("Socket id : " + LaravelEcho.instance.connector.socket);
+        // LaravelEcho.instance.connector.onConnect((data) => print(data));
+        //     .on('connect', (_) => print('connected ' + (LaravelEcho.instance.connector.socket.id ?? ' null')));
+        // print("Socket id : " + LaravelEcho.instance.connector.socket);
+
+        // Lara.connector.socket.onDisconnect((_) => print('disconnected'));
+
+        // print(LaravelEcho.socketId);
       },
       onDisposed: () {
         LaravelEcho.instance.disconnect();
+        // LaravelEcho.instance.connector.socket
+        //     .on('disconnect', (_) => print('disconnected '));
       },
       child: Container(
         padding: EdgeInsets.all(14.0),

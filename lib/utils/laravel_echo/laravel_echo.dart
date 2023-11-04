@@ -1,6 +1,8 @@
 import 'package:laravel_echo/laravel_echo.dart';
+// import 'package:laravel_echo_null/laravel_echo_null.dart';
 import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
-import 'package:pusher_client_fixed/pusher_client_fixed.dart';
+// import 'package:pusher_client_fixed/pusher_client_fixed.dart';
+import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class LaravelEcho {
@@ -35,7 +37,7 @@ class PusherConfig {
   // static const key = "324f74abd706892cb6ea";
   // static const secret = "cdccec3873723daa7f17";
   // static const cluster = "ap1";
-  // static const hostEndPoint = "https://cb46-114-10-20-199.ngrok-free.app";
+  // static const hostEndPoint = "https://47f4-182-2-45-233.ngrok-free.app";
   // static const hostAuthEndPoint = '$hostEndPoint/api/broadcasting/auth';
   // static const port = 6001;
 
@@ -48,65 +50,80 @@ class PusherConfig {
   static const port = 6001;
 }
 
-PusherClient createPusherClient(String token) {
-  PusherOptions options = PusherOptions(
-    wsPort: PusherConfig.port,
-    // wssPort: PusherConfig.port,
-    // cluster: PusherConfig.cluster,
-    encrypted:
-        // true,
-        false,
-    host:
-        // PusherConfig.hostEndPoint,
-        '10.0.2.2',
-    auth: PusherAuth(
-      PusherConfig.hostAuthEndPoint,
-      headers: {
-        'Authorization': "Bearer $token",
-        "Accept": 'application/json',
-        // "Content-Type": 'application/x-www-form-urlencoded',
-      },
-    ),
-  );
-
-  PusherClient pusherClient = PusherClient(
-    PusherConfig.key,
-    options,
-    autoConnect: false,
-    enableLogging: true,
-  );
-
-  // var channel = pusherClient.subscribe('private-send-message-61-71');
-
-  return pusherClient;
-}
-
-Echo createLaravelEcho(String token) {
-  return Echo(
-    client: createPusherClient(token),
-    broadcaster: EchoBroadcasterType.Pusher,
-  );
-}
-
-// Echo createLaravelEcho(String token) {
-//   IO.Socket socket = IO.io(
-//     "http://10.0.2.2:6001",
-//     IO.OptionBuilder()
-//         .disableAutoConnect()
-//         .setTransports(['websocket']).build(),
+// PusherClient createPusherClient(String token) {
+//   PusherOptions options = PusherOptions(
+//     wsPort: PusherConfig.port,
+//     // wssPort: PusherConfig.port,
+//     // cluster: PusherConfig.cluster,
+//     encrypted:
+//         // true,
+//         false,
+//     host:
+//         // PusherConfig.hostEndPoint,
+//         '10.0.2.2',
+//     auth: PusherAuth(
+//       PusherConfig.hostAuthEndPoint,
+//       headers: {
+//         'Authorization': "Bearer $token",
+//         "Accept": 'application/json',
+//         // "Content-Type": 'application/x-www-form-urlencoded',
+//       },
+//     ),
 //   );
 
+//   PusherClient pusherClient = PusherClient(
+//     PusherConfig.key,
+//     options,
+//     autoConnect: false,
+//     enableLogging: true,
+//   );
+
+//   // var channel = pusherClient.subscribe('private-send-message-61-71');
+
+//   return pusherClient;
+// }
+
+// Echo createLaravelEcho(String token) {
 //   return Echo(
-//       broadcaster: EchoBroadcasterType.SocketIO,
-//       client: socket,
-//       options: {
-//         'auth': {
-//           'headers': {
-//             'Authorization': "Bearer $token",
-//             // 'X-Socket-Id' : "1111.1111",
-//           }
-//         }
-//       });
+//     client: createPusherClient(token),
+//     broadcaster: EchoBroadcasterType.Pusher,
+//   );
+// }
+
+Echo createLaravelEcho(String token) {
+  IO.Socket socket = IO.io(
+    "http://10.0.2.2:6002",
+    IO.OptionBuilder()
+        .disableAutoConnect()
+        .setTransports(['websocket']).build(),
+  );
+
+  return Echo(
+      broadcaster: EchoBroadcasterType.SocketIO,
+      client: socket,
+      options: {
+        'auth': {
+          'headers': {
+            'Authorization': "Bearer $token",
+            // 'X-Socket-Id' : "1111.1111",
+          }
+        }
+      });
+}
+
+// Echo<IO.Socket, SocketIoChannel> createLaravelEcho(String token) {
+//   Echo<IO.Socket, SocketIoChannel> echo = Echo.socket(
+//     'http://10.0.2.2:6002', // String: host
+//     // namespace: '', // String?: namespace
+//     autoConnect: true, // bool: client connection automatically
+//     authHeaders: {'Authorization': 'Bearer $token'},
+//     moreOptions: {
+//       // Map: more io options
+//       'transports': ['websocket']
+//     },
+//   );
+
+//   return echo;
 // }
 
 // Echo<PUSHER.PusherClient, PusherChannel> createLaravelEcho(String token) {
@@ -128,11 +145,9 @@ Echo createLaravelEcho(String token) {
 //     maxReconnectionAttempts: 6,
 //     maxReconnectGapInSeconds: 30,
 //     enableLogging: true,
-//     autoConnect: false, // bool: client connection automatically
-//     nameSpace: 'nameSpace',
+//     autoConnect: true, // bool: client connection automatically
+//     nameSpace: '',
 //   );
-
-//   echo.connect();
 
 //   return echo;
 // }

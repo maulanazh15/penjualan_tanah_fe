@@ -496,6 +496,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0-beta.1"
+  laravel_echo_null:
+    dependency: "direct main"
+    description:
+      name: laravel_echo_null
+      sha256: "5b9edd5ac95e726501f46a162e9204a20d95674a77cb0c0e1ac39856e287e135"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5+7"
   libphonenumber_platform_interface:
     dependency: transitive
     description:
@@ -740,10 +748,10 @@ packages:
     dependency: "direct main"
     description:
       name: pusher_client_fixed
-      sha256: "193642ccfc616e8bd0b5ce20bbde583a1165fdbf74549f1a841172e4002ae333"
+      sha256: "944fd8d5f4126ceaf777214826b87308753858cedc3c1e364585b7b6127b534a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.2+1"
+    version: "0.0.2+2"
   quiver:
     dependency: transitive
     description:

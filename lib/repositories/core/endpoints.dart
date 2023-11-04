@@ -4,7 +4,7 @@ class Endpoints {
   static const base = "http://10.0.2.2";
   static const baseUrl = 
   "$base:8000";
-  // 'https://cf40-114-10-23-153.ngrok-free.app';
+  // 'https://47f4-182-2-45-233.ngrok-free.app';
   static const broadCastUrl = "http://10.0.2.2:6001";
 
   /// Current Api Version

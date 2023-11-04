@@ -24,16 +24,19 @@ class _SingleChatPageState extends State<SingleChatPage> {
   void listenChatChannel(ChatEntity chat) {
     // print(LaravelEcho.socketId);
 
-    LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent',
-        (e) {
-      print(e);
-        if (e.data != null) {
-          print(jsonDecode(e.data as String));
-        }
-      
-    }).error((error) {
-      print(error);
+    LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent', (data) {
+      print(data);
     });
+    // channel.onSubscribedSuccess(() {
+    //   channel.listen('.message.sent', (event) {
+    //     print(
+    //       'event[${event.runtimeType}]: $event', // event[String]: {"key": "value"}
+    //     );
+    //     print(
+    //       'decodedData: ${jsonDecode(event)}', // decodedData: {"key": "value"}
+    //     );
+    //   });
+    // });
   }
 
   void leaveChatChannel(ChatEntity chat) {
