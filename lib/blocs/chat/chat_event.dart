@@ -7,7 +7,10 @@ class ChatEvent with _$ChatEvent {
   const factory ChatEvent.userSelected(UserEntity user) = UserSelected;
   const factory ChatEvent.getChatMessage() = GetChatMessage;
   const factory ChatEvent.loadMoreChatMessage() = LoadMoreChatMessage;
-  const factory ChatEvent.sendMessage(int chatId, ChatMessage message) =
-      SendMessage;
+  const factory ChatEvent.sendMessage(int chatId, ChatMessage message,
+      {required String socketId}
+      ) = SendMessage;
   const factory ChatEvent.chatSelected(ChatEntity chat) = ChatSelected;
+  const factory ChatEvent.addNewMessage(ChatMessageEntity message) =
+      AddNewMessage;
 }

@@ -4,6 +4,7 @@ import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
 // import 'package:pusher_client_fixed/pusher_client_fixed.dart';
 import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'dart:async';
 
 class LaravelEcho {
   static LaravelEcho? _singleton;
@@ -29,7 +30,14 @@ class LaravelEcho {
 
   static Echo get instance => _echo;
 
-  static String get socketId => _echo.socketId() ?? '1111.1111';
+  static Future<String> get socketId async {
+    _echo.connector.socket.on('connect', (_) {
+      final id = _echo.connector.socket.id;
+      print('connected ' + (id ?? ' null'));
+    });
+
+    return _echo.socketId().toString();
+  }
 }
 
 class PusherConfig {

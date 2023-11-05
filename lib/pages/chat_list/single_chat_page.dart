@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
+import 'package:penjualan_tanah_fe/models/chat_message_model.dart';
 import 'package:penjualan_tanah_fe/widget/startup_container.dart';
 import '../../blocs/chat/chat_bloc.dart';
 import '../../models/chat_model.dart';
@@ -24,19 +25,14 @@ class _SingleChatPageState extends State<SingleChatPage> {
   void listenChatChannel(ChatEntity chat) {
     // print(LaravelEcho.socketId);
 
-    LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent', (data) {
-      print(data);
+    LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent',
+        (data) {
+      final dataEncode = jsonEncode(data);
+      print(dataEncode);
+      
+
+      _handleMessage(jsonDecode(dataEncode));
     });
-    // channel.onSubscribedSuccess(() {
-    //   channel.listen('.message.sent', (event) {
-    //     print(
-    //       'event[${event.runtimeType}]: $event', // event[String]: {"key": "value"}
-    //     );
-    //     print(
-    //       'decodedData: ${jsonDecode(event)}', // decodedData: {"key": "value"}
-    //     );
-    //   });
-    // });
   }
 
   void leaveChatChannel(ChatEntity chat) {
@@ -47,7 +43,17 @@ class _SingleChatPageState extends State<SingleChatPage> {
     }
   }
 
-  void _handleMessage() {}
+  void _handleMessage(Map<String, dynamic> data) {
+    final chatBloc = context.read<ChatBloc>();
+    final selectedChat = chatBloc.state.selectedChat!;
+
+    if (selectedChat.id == data['chat_id']) {
+      final chatMessage = ChatMessageEntity.fromJson(data['message']);
+      if(chatMessage.userId != AuthBloc().state.user?.id) {
+        chatBloc.add(AddNewMessage(chatMessage));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +77,13 @@ class _SingleChatPageState extends State<SingleChatPage> {
           title: BlocConsumer<ChatBloc, ChatState>(
             listener: (context, state) {
               // TODO: implement listener
+              // print(state.selectedChat!);
+              if (state.selectedChat != null) {
+                listenChatChannel(state.selectedChat!);
+              }
             },
+            listenWhen: (previous, current) =>
+                previous.selectedChat != current.selectedChat,
             builder: (context, state) {
               final chat = state.selectedChat;
               return Text(chat == null
@@ -85,7 +97,13 @@ class _SingleChatPageState extends State<SingleChatPage> {
             return DashChat(
               currentUser: authBloc.state.user!.toChatUser,
               onSend: (ChatMessage chatMessage) {
-                chatBloc.add(SendMessage(state.selectedChat!.id, chatMessage));
+                chatBloc.add(
+                  SendMessage(
+                    state.selectedChat!.id,
+                    chatMessage,
+                    socketId: LaravelEcho.instance.socketId().toString(),
+                  ),
+                );
               },
               messages: state.uiChatMessages,
               messageOptions: const MessageOptions(

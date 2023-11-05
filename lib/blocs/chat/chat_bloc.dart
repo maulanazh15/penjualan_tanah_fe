@@ -116,11 +116,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         status: DataStatus.submitting,
       ));
 
+      // print(event.socketId + " from send message event");
       final result = await _chatMessageRepository.createChatMessage(
         CreateChatMessageRequest(
           chatId: event.chatId,
           message: event.message.text,
         ),
+        event.socketId,
       );
 
       if (result.success) {
@@ -174,6 +176,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       // print(event.chat);
       emit(state.copyWith(
         selectedChat: event.chat,
+      ));
+    });
+
+    on<AddNewMessage>((event, emit) {
+      emit(state.copyWith(
+        chatMessages: [
+          event.message, 
+        ...state.chatMessages,
+        ],
       ));
     });
   }
