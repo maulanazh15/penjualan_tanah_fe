@@ -23,14 +23,11 @@ class _SingleChatPageState extends State<SingleChatPage> {
   // List<ChatMessage> messages = basicSample;
 
   void listenChatChannel(ChatEntity chat) {
-    // print(LaravelEcho.socketId);
 
     LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent',
         (data) {
       final dataEncode = jsonEncode(data);
-      print(dataEncode);
       
-
       _handleMessage(jsonDecode(dataEncode));
     });
   }
@@ -77,7 +74,6 @@ class _SingleChatPageState extends State<SingleChatPage> {
           title: BlocConsumer<ChatBloc, ChatState>(
             listener: (context, state) {
               // TODO: implement listener
-              // print(state.selectedChat!);
               if (state.selectedChat != null) {
                 listenChatChannel(state.selectedChat!);
               }
@@ -101,7 +97,9 @@ class _SingleChatPageState extends State<SingleChatPage> {
                   SendMessage(
                     state.selectedChat!.id,
                     chatMessage,
-                    socketId: LaravelEcho.instance.socketId().toString(),
+                    socketId: 
+                    // LaravelEcho.instance.socketId().toString(),
+                    LaravelEcho.instance.socketId.toString(),
                   ),
                 );
               },

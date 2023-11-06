@@ -13,4 +13,6 @@ class ChatEvent with _$ChatEvent {
   const factory ChatEvent.chatSelected(ChatEntity chat) = ChatSelected;
   const factory ChatEvent.addNewMessage(ChatMessageEntity message) =
       AddNewMessage;
+  const factory ChatEvent.chatNotificationOpened(int chatId) =
+      ChatNotificationOpened;
 }

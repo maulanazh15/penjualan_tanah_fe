@@ -6,6 +6,7 @@ import 'package:penjualan_tanah_fe/pages/home_page.dart';
 import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:penjualan_tanah_fe/pages/profile_page.dart';
 import 'package:penjualan_tanah_fe/pages/serach_page.dart';
+import 'package:penjualan_tanah_fe/utils/onesignal/onesignal.dart';
 
 import '../chat_list/chat_page.dart';
 
@@ -48,6 +49,7 @@ class _NavigationBarState extends State<NavigationBarComponent> {
             // TODO: implement listener
             // ;
             if (!state.isAuthenticated) {
+              deleteUserTag();
               Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
             }
           }, builder: (context, state) {

@@ -27,6 +27,7 @@ mixin _$ChatEvent {
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,6 +41,7 @@ mixin _$ChatEvent {
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -53,6 +55,7 @@ mixin _$ChatEvent {
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -66,6 +69,8 @@ mixin _$ChatEvent {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,6 +83,7 @@ mixin _$ChatEvent {
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -90,6 +96,7 @@ mixin _$ChatEvent {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -165,6 +172,7 @@ class _$ChatStartedImpl with DiagnosticableTreeMixin implements ChatStarted {
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) {
     return started();
   }
@@ -181,6 +189,7 @@ class _$ChatStartedImpl with DiagnosticableTreeMixin implements ChatStarted {
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) {
     return started?.call();
   }
@@ -197,6 +206,7 @@ class _$ChatStartedImpl with DiagnosticableTreeMixin implements ChatStarted {
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -216,6 +226,8 @@ class _$ChatStartedImpl with DiagnosticableTreeMixin implements ChatStarted {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) {
     return started(this);
   }
@@ -231,6 +243,7 @@ class _$ChatStartedImpl with DiagnosticableTreeMixin implements ChatStarted {
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) {
     return started?.call(this);
   }
@@ -246,6 +259,7 @@ class _$ChatStartedImpl with DiagnosticableTreeMixin implements ChatStarted {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -341,6 +355,7 @@ class _$ChatResetImpl with DiagnosticableTreeMixin implements ChatReset {
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) {
     return reset(shouldResetChat);
   }
@@ -357,6 +372,7 @@ class _$ChatResetImpl with DiagnosticableTreeMixin implements ChatReset {
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) {
     return reset?.call(shouldResetChat);
   }
@@ -373,6 +389,7 @@ class _$ChatResetImpl with DiagnosticableTreeMixin implements ChatReset {
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (reset != null) {
@@ -392,6 +409,8 @@ class _$ChatResetImpl with DiagnosticableTreeMixin implements ChatReset {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) {
     return reset(this);
   }
@@ -407,6 +426,7 @@ class _$ChatResetImpl with DiagnosticableTreeMixin implements ChatReset {
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) {
     return reset?.call(this);
   }
@@ -422,6 +442,7 @@ class _$ChatResetImpl with DiagnosticableTreeMixin implements ChatReset {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (reset != null) {
@@ -531,6 +552,7 @@ class _$UserSelectedImpl with DiagnosticableTreeMixin implements UserSelected {
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) {
     return userSelected(user);
   }
@@ -547,6 +569,7 @@ class _$UserSelectedImpl with DiagnosticableTreeMixin implements UserSelected {
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) {
     return userSelected?.call(user);
   }
@@ -563,6 +586,7 @@ class _$UserSelectedImpl with DiagnosticableTreeMixin implements UserSelected {
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (userSelected != null) {
@@ -582,6 +606,8 @@ class _$UserSelectedImpl with DiagnosticableTreeMixin implements UserSelected {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) {
     return userSelected(this);
   }
@@ -597,6 +623,7 @@ class _$UserSelectedImpl with DiagnosticableTreeMixin implements UserSelected {
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) {
     return userSelected?.call(this);
   }
@@ -612,6 +639,7 @@ class _$UserSelectedImpl with DiagnosticableTreeMixin implements UserSelected {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (userSelected != null) {
@@ -685,6 +713,7 @@ class _$GetChatMessageImpl
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) {
     return getChatMessage();
   }
@@ -701,6 +730,7 @@ class _$GetChatMessageImpl
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) {
     return getChatMessage?.call();
   }
@@ -717,6 +747,7 @@ class _$GetChatMessageImpl
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (getChatMessage != null) {
@@ -736,6 +767,8 @@ class _$GetChatMessageImpl
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) {
     return getChatMessage(this);
   }
@@ -751,6 +784,7 @@ class _$GetChatMessageImpl
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) {
     return getChatMessage?.call(this);
   }
@@ -766,6 +800,7 @@ class _$GetChatMessageImpl
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (getChatMessage != null) {
@@ -836,6 +871,7 @@ class _$LoadMoreChatMessageImpl
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) {
     return loadMoreChatMessage();
   }
@@ -852,6 +888,7 @@ class _$LoadMoreChatMessageImpl
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) {
     return loadMoreChatMessage?.call();
   }
@@ -868,6 +905,7 @@ class _$LoadMoreChatMessageImpl
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (loadMoreChatMessage != null) {
@@ -887,6 +925,8 @@ class _$LoadMoreChatMessageImpl
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) {
     return loadMoreChatMessage(this);
   }
@@ -902,6 +942,7 @@ class _$LoadMoreChatMessageImpl
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) {
     return loadMoreChatMessage?.call(this);
   }
@@ -917,6 +958,7 @@ class _$LoadMoreChatMessageImpl
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (loadMoreChatMessage != null) {
@@ -1030,6 +1072,7 @@ class _$SendMessageImpl with DiagnosticableTreeMixin implements SendMessage {
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) {
     return sendMessage(chatId, message, socketId);
   }
@@ -1046,6 +1089,7 @@ class _$SendMessageImpl with DiagnosticableTreeMixin implements SendMessage {
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) {
     return sendMessage?.call(chatId, message, socketId);
   }
@@ -1062,6 +1106,7 @@ class _$SendMessageImpl with DiagnosticableTreeMixin implements SendMessage {
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (sendMessage != null) {
@@ -1081,6 +1126,8 @@ class _$SendMessageImpl with DiagnosticableTreeMixin implements SendMessage {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) {
     return sendMessage(this);
   }
@@ -1096,6 +1143,7 @@ class _$SendMessageImpl with DiagnosticableTreeMixin implements SendMessage {
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) {
     return sendMessage?.call(this);
   }
@@ -1111,6 +1159,7 @@ class _$SendMessageImpl with DiagnosticableTreeMixin implements SendMessage {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (sendMessage != null) {
@@ -1223,6 +1272,7 @@ class _$ChatSelectedImpl with DiagnosticableTreeMixin implements ChatSelected {
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) {
     return chatSelected(chat);
   }
@@ -1239,6 +1289,7 @@ class _$ChatSelectedImpl with DiagnosticableTreeMixin implements ChatSelected {
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) {
     return chatSelected?.call(chat);
   }
@@ -1255,6 +1306,7 @@ class _$ChatSelectedImpl with DiagnosticableTreeMixin implements ChatSelected {
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (chatSelected != null) {
@@ -1274,6 +1326,8 @@ class _$ChatSelectedImpl with DiagnosticableTreeMixin implements ChatSelected {
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) {
     return chatSelected(this);
   }
@@ -1289,6 +1343,7 @@ class _$ChatSelectedImpl with DiagnosticableTreeMixin implements ChatSelected {
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) {
     return chatSelected?.call(this);
   }
@@ -1304,6 +1359,7 @@ class _$ChatSelectedImpl with DiagnosticableTreeMixin implements ChatSelected {
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (chatSelected != null) {
@@ -1415,6 +1471,7 @@ class _$AddNewMessageImpl
         sendMessage,
     required TResult Function(ChatEntity chat) chatSelected,
     required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
   }) {
     return addNewMessage(message);
   }
@@ -1431,6 +1488,7 @@ class _$AddNewMessageImpl
         sendMessage,
     TResult? Function(ChatEntity chat)? chatSelected,
     TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
   }) {
     return addNewMessage?.call(message);
   }
@@ -1447,6 +1505,7 @@ class _$AddNewMessageImpl
         sendMessage,
     TResult Function(ChatEntity chat)? chatSelected,
     TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (addNewMessage != null) {
@@ -1466,6 +1525,8 @@ class _$AddNewMessageImpl
     required TResult Function(SendMessage value) sendMessage,
     required TResult Function(ChatSelected value) chatSelected,
     required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
   }) {
     return addNewMessage(this);
   }
@@ -1481,6 +1542,7 @@ class _$AddNewMessageImpl
     TResult? Function(SendMessage value)? sendMessage,
     TResult? Function(ChatSelected value)? chatSelected,
     TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
   }) {
     return addNewMessage?.call(this);
   }
@@ -1496,6 +1558,7 @@ class _$AddNewMessageImpl
     TResult Function(SendMessage value)? sendMessage,
     TResult Function(ChatSelected value)? chatSelected,
     TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
     required TResult orElse(),
   }) {
     if (addNewMessage != null) {
@@ -1516,6 +1579,199 @@ abstract class AddNewMessage implements ChatEvent {
 }
 
 /// @nodoc
+abstract class _$$ChatNotificationOpenedImplCopyWith<$Res> {
+  factory _$$ChatNotificationOpenedImplCopyWith(
+          _$ChatNotificationOpenedImpl value,
+          $Res Function(_$ChatNotificationOpenedImpl) then) =
+      __$$ChatNotificationOpenedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int chatId});
+}
+
+/// @nodoc
+class __$$ChatNotificationOpenedImplCopyWithImpl<$Res>
+    extends _$ChatEventCopyWithImpl<$Res, _$ChatNotificationOpenedImpl>
+    implements _$$ChatNotificationOpenedImplCopyWith<$Res> {
+  __$$ChatNotificationOpenedImplCopyWithImpl(
+      _$ChatNotificationOpenedImpl _value,
+      $Res Function(_$ChatNotificationOpenedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chatId = null,
+  }) {
+    return _then(_$ChatNotificationOpenedImpl(
+      null == chatId
+          ? _value.chatId
+          : chatId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChatNotificationOpenedImpl
+    with DiagnosticableTreeMixin
+    implements ChatNotificationOpened {
+  const _$ChatNotificationOpenedImpl(this.chatId);
+
+  @override
+  final int chatId;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChatEvent.chatNotificationOpened(chatId: $chatId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ChatEvent.chatNotificationOpened'))
+      ..add(DiagnosticsProperty('chatId', chatId));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChatNotificationOpenedImpl &&
+            (identical(other.chatId, chatId) || other.chatId == chatId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, chatId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChatNotificationOpenedImplCopyWith<_$ChatNotificationOpenedImpl>
+      get copyWith => __$$ChatNotificationOpenedImplCopyWithImpl<
+          _$ChatNotificationOpenedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(bool? shouldResetChat) reset,
+    required TResult Function(UserEntity user) userSelected,
+    required TResult Function() getChatMessage,
+    required TResult Function() loadMoreChatMessage,
+    required TResult Function(int chatId, ChatMessage message, String socketId)
+        sendMessage,
+    required TResult Function(ChatEntity chat) chatSelected,
+    required TResult Function(ChatMessageEntity message) addNewMessage,
+    required TResult Function(int chatId) chatNotificationOpened,
+  }) {
+    return chatNotificationOpened(chatId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(bool? shouldResetChat)? reset,
+    TResult? Function(UserEntity user)? userSelected,
+    TResult? Function()? getChatMessage,
+    TResult? Function()? loadMoreChatMessage,
+    TResult? Function(int chatId, ChatMessage message, String socketId)?
+        sendMessage,
+    TResult? Function(ChatEntity chat)? chatSelected,
+    TResult? Function(ChatMessageEntity message)? addNewMessage,
+    TResult? Function(int chatId)? chatNotificationOpened,
+  }) {
+    return chatNotificationOpened?.call(chatId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(bool? shouldResetChat)? reset,
+    TResult Function(UserEntity user)? userSelected,
+    TResult Function()? getChatMessage,
+    TResult Function()? loadMoreChatMessage,
+    TResult Function(int chatId, ChatMessage message, String socketId)?
+        sendMessage,
+    TResult Function(ChatEntity chat)? chatSelected,
+    TResult Function(ChatMessageEntity message)? addNewMessage,
+    TResult Function(int chatId)? chatNotificationOpened,
+    required TResult orElse(),
+  }) {
+    if (chatNotificationOpened != null) {
+      return chatNotificationOpened(chatId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ChatStarted value) started,
+    required TResult Function(ChatReset value) reset,
+    required TResult Function(UserSelected value) userSelected,
+    required TResult Function(GetChatMessage value) getChatMessage,
+    required TResult Function(LoadMoreChatMessage value) loadMoreChatMessage,
+    required TResult Function(SendMessage value) sendMessage,
+    required TResult Function(ChatSelected value) chatSelected,
+    required TResult Function(AddNewMessage value) addNewMessage,
+    required TResult Function(ChatNotificationOpened value)
+        chatNotificationOpened,
+  }) {
+    return chatNotificationOpened(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ChatStarted value)? started,
+    TResult? Function(ChatReset value)? reset,
+    TResult? Function(UserSelected value)? userSelected,
+    TResult? Function(GetChatMessage value)? getChatMessage,
+    TResult? Function(LoadMoreChatMessage value)? loadMoreChatMessage,
+    TResult? Function(SendMessage value)? sendMessage,
+    TResult? Function(ChatSelected value)? chatSelected,
+    TResult? Function(AddNewMessage value)? addNewMessage,
+    TResult? Function(ChatNotificationOpened value)? chatNotificationOpened,
+  }) {
+    return chatNotificationOpened?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ChatStarted value)? started,
+    TResult Function(ChatReset value)? reset,
+    TResult Function(UserSelected value)? userSelected,
+    TResult Function(GetChatMessage value)? getChatMessage,
+    TResult Function(LoadMoreChatMessage value)? loadMoreChatMessage,
+    TResult Function(SendMessage value)? sendMessage,
+    TResult Function(ChatSelected value)? chatSelected,
+    TResult Function(AddNewMessage value)? addNewMessage,
+    TResult Function(ChatNotificationOpened value)? chatNotificationOpened,
+    required TResult orElse(),
+  }) {
+    if (chatNotificationOpened != null) {
+      return chatNotificationOpened(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ChatNotificationOpened implements ChatEvent {
+  const factory ChatNotificationOpened(final int chatId) =
+      _$ChatNotificationOpenedImpl;
+
+  int get chatId;
+  @JsonKey(ignore: true)
+  _$$ChatNotificationOpenedImplCopyWith<_$ChatNotificationOpenedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ChatState {
   List<ChatEntity> get chats => throw _privateConstructorUsedError;
   List<ChatMessageEntity> get chatMessages =>
@@ -1526,6 +1782,7 @@ mixin _$ChatState {
   int? get otherUserId => throw _privateConstructorUsedError;
   bool get isLastPage => throw _privateConstructorUsedError;
   int get page => throw _privateConstructorUsedError;
+  int? get notificationChatId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatStateCopyWith<ChatState> get copyWith =>
@@ -1545,7 +1802,8 @@ abstract class $ChatStateCopyWith<$Res> {
       String message,
       int? otherUserId,
       bool isLastPage,
-      int page});
+      int page,
+      int? notificationChatId});
 
   $ChatEntityCopyWith<$Res>? get selectedChat;
 }
@@ -1571,6 +1829,7 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
     Object? otherUserId = freezed,
     Object? isLastPage = null,
     Object? page = null,
+    Object? notificationChatId = freezed,
   }) {
     return _then(_value.copyWith(
       chats: null == chats
@@ -1605,6 +1864,10 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
+      notificationChatId: freezed == notificationChatId
+          ? _value.notificationChatId
+          : notificationChatId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -1637,7 +1900,8 @@ abstract class _$$ChatStateImplCopyWith<$Res>
       String message,
       int? otherUserId,
       bool isLastPage,
-      int page});
+      int page,
+      int? notificationChatId});
 
   @override
   $ChatEntityCopyWith<$Res>? get selectedChat;
@@ -1662,6 +1926,7 @@ class __$$ChatStateImplCopyWithImpl<$Res>
     Object? otherUserId = freezed,
     Object? isLastPage = null,
     Object? page = null,
+    Object? notificationChatId = freezed,
   }) {
     return _then(_$ChatStateImpl(
       chats: null == chats
@@ -1696,6 +1961,10 @@ class __$$ChatStateImplCopyWithImpl<$Res>
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
+      notificationChatId: freezed == notificationChatId
+          ? _value.notificationChatId
+          : notificationChatId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -1711,7 +1980,8 @@ class _$ChatStateImpl extends _ChatState with DiagnosticableTreeMixin {
       required this.message,
       this.otherUserId,
       required this.isLastPage,
-      required this.page})
+      required this.page,
+      this.notificationChatId})
       : _chats = chats,
         _chatMessages = chatMessages,
         super._();
@@ -1744,10 +2014,12 @@ class _$ChatStateImpl extends _ChatState with DiagnosticableTreeMixin {
   final bool isLastPage;
   @override
   final int page;
+  @override
+  final int? notificationChatId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatState(chats: $chats, chatMessages: $chatMessages, selectedChat: $selectedChat, status: $status, message: $message, otherUserId: $otherUserId, isLastPage: $isLastPage, page: $page)';
+    return 'ChatState(chats: $chats, chatMessages: $chatMessages, selectedChat: $selectedChat, status: $status, message: $message, otherUserId: $otherUserId, isLastPage: $isLastPage, page: $page, notificationChatId: $notificationChatId)';
   }
 
   @override
@@ -1762,7 +2034,8 @@ class _$ChatStateImpl extends _ChatState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('message', message))
       ..add(DiagnosticsProperty('otherUserId', otherUserId))
       ..add(DiagnosticsProperty('isLastPage', isLastPage))
-      ..add(DiagnosticsProperty('page', page));
+      ..add(DiagnosticsProperty('page', page))
+      ..add(DiagnosticsProperty('notificationChatId', notificationChatId));
   }
 
   @override
@@ -1781,7 +2054,9 @@ class _$ChatStateImpl extends _ChatState with DiagnosticableTreeMixin {
                 other.otherUserId == otherUserId) &&
             (identical(other.isLastPage, isLastPage) ||
                 other.isLastPage == isLastPage) &&
-            (identical(other.page, page) || other.page == page));
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.notificationChatId, notificationChatId) ||
+                other.notificationChatId == notificationChatId));
   }
 
   @override
@@ -1794,7 +2069,8 @@ class _$ChatStateImpl extends _ChatState with DiagnosticableTreeMixin {
       message,
       otherUserId,
       isLastPage,
-      page);
+      page,
+      notificationChatId);
 
   @JsonKey(ignore: true)
   @override
@@ -1812,7 +2088,8 @@ abstract class _ChatState extends ChatState {
       required final String message,
       final int? otherUserId,
       required final bool isLastPage,
-      required final int page}) = _$ChatStateImpl;
+      required final int page,
+      final int? notificationChatId}) = _$ChatStateImpl;
   const _ChatState._() : super._();
 
   @override
@@ -1831,6 +2108,8 @@ abstract class _ChatState extends ChatState {
   bool get isLastPage;
   @override
   int get page;
+  @override
+  int? get notificationChatId;
   @override
   @JsonKey(ignore: true)
   _$$ChatStateImplCopyWith<_$ChatStateImpl> get copyWith =>

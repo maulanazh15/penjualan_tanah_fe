@@ -47,6 +47,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         otherUserId: null,
         isLastPage: false,
         page: 1,
+        notificationChatId: null,
         chats: (event.shouldResetChat != null && event.shouldResetChat!)
             ? []
             : state.chats,
@@ -66,8 +67,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
       ChatEntity? chat;
 
-      // ;
-      // print(state.isSearchChat);
       if (state.isSearchChat) {
         final chatResult = await _chatRepository.createChat(
           CreateChatRequest(userId: state.otherUserId!),
@@ -79,6 +78,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         }
       } else if (state.isListChat) {
         chat = state.selectedChat;
+      } else if (state.isNotificationChat) {
+        final chatResult =
+            await _chatRepository.getSingleChat(state.notificationChatId!);
+        if (chatResult.success) {
+          chat = chatResult.data;
+        }
       }
 
       if (chat == null) {
@@ -93,7 +98,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
       final result = await _chatMessageRepository.getChatMessages(
           chatId: chat.id, page: 1);
-      // print()
       if (result.success) {
         emit(state.copyWith(
           chatMessages: result.data ?? [],
@@ -116,7 +120,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         status: DataStatus.submitting,
       ));
 
-      // print(event.socketId + " from send message event");
       final result = await _chatMessageRepository.createChatMessage(
         CreateChatMessageRequest(
           chatId: event.chatId,
@@ -173,7 +176,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
 
     on<ChatSelected>((event, emit) {
-      // print(event.chat);
       emit(state.copyWith(
         selectedChat: event.chat,
       ));
@@ -182,10 +184,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<AddNewMessage>((event, emit) {
       emit(state.copyWith(
         chatMessages: [
-          event.message, 
-        ...state.chatMessages,
+          event.message,
+          ...state.chatMessages,
         ],
       ));
+    });
+
+    on<ChatNotificationOpened>((event, emit) {
+      emit(state.copyWith(notificationChatId: event.chatId));
     });
   }
 }

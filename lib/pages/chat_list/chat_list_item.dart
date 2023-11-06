@@ -22,7 +22,6 @@ class ChatListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print(currentUser.urlProfileImage);
     return ListTile(
       leading:
           // const Icon(Icons.account_circle, size: 50.0),

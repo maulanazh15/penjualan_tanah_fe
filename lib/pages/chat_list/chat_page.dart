@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/chat/chat_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/user/user_bloc.dart';
@@ -12,6 +13,8 @@ import 'package:penjualan_tanah_fe/widget/blank_content.dart';
 import 'package:search_page/search_page.dart';
 import 'package:web_socket_channel/io.dart';
 import '../../models/user_model.dart';
+import '../../utils/logger.dart';
+import '../../utils/onesignal/onesignal.dart';
 import '../../widget/startup_container.dart';
 
 class ChatPage extends StatefulWidget {
@@ -23,6 +26,85 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  Future<void> setupOneSignal(int userId) async {
+    await initOneSignal();
+    registerOneSignalEventListener(
+      onOpened: onOpened,
+      onReceivedInForeground: onReceivedInForeground,
+    );
+    promptPolicyPrivacy(userId);
+  }
+
+  void onOpened(OSNotificationOpenedResult result) {
+    vLog('NOTIFICATION OPENED HANDLER CALLED WITH: ${result}');
+    vLog(
+        "Opened notification: \n${result.notification.jsonRepresentation().replaceAll("\\n", "\n")}");
+
+    try {
+      final data = result.notification.additionalData;
+      if (data != null) {
+        final chatId = (data['data']['chatId'] as int);
+        final chatBloc = context.read<ChatBloc>();
+        final selectedChat = chatBloc.state.selectedChat;
+
+        if (chatId != selectedChat?.id) {
+          chatBloc.add(ChatNotificationOpened(chatId));
+          Navigator.of(context).pushNamed(ChatPage.routeName);
+        }
+      }
+    } catch (_) {}
+  }
+
+  void onReceivedInForeground(OSNotificationReceivedEvent event) {
+    vLog(
+        "Notification received in foreground notification: \n${event.notification.jsonRepresentation().replaceAll("\\n", "\n")}");
+    final chatBloc = context.read<ChatBloc>();
+    try {
+      final data = event.notification.additionalData;
+      final selectedChat = chatBloc.state.selectedChat;
+
+      if (selectedChat != null && data != null) {
+        vLog(data);
+        final chatId = (data['data']['chatId'] as int);
+
+        if (selectedChat.id == chatId) {
+          event.complete(null);
+          return;
+        }
+      }
+      chatBloc.add(const ChatStarted());
+      event.complete(event.notification);
+
+      vLog(data);
+    } catch (_) {
+      event.complete(null);
+    }
+  }
+
+  Future<void> promptPolicyPrivacy(int userId) async {
+    final oneSignalShared = OneSignal.shared;
+
+    bool userProvidedPrivacyConsent =
+        await oneSignalShared.userProvidedPrivacyConsent();
+
+    if (userProvidedPrivacyConsent) {
+      sendUserTag(userId);
+    } else {
+      bool requiresConsent = await oneSignalShared.requiresUserPrivacyConsent();
+
+      if (requiresConsent) {
+        final accepted =
+            await oneSignalShared.promptUserForPushNotificationPermission();
+        if (accepted) {
+          await oneSignalShared.consentGranted(true);
+          sendUserTag(userId);
+        }
+      } else {
+        sendUserTag(userId);
+      }
+    }
+  }
+
   void _showSearch(BuildContext context, List<UserEntity> users) {
     // print(users);
 
@@ -99,13 +181,14 @@ class _ChatPageState extends State<ChatPage> {
         userBloc.add(const UserStarted());
 
         LaravelEcho.init(token: authBloc.state.token!);
-        // print("${await LaravelEcho.socketId} from Echo after connected");
-        // print("${LaravelEcho.instance.socketId()} from instance");
+        setupOneSignal(authBloc.state.user!.id);
       },
       onDisposed: () {
-        LaravelEcho.instance.disconnect();
-        LaravelEcho.instance.connector.socket
-            .on('disconnect', (_) => print('disconnected '));
+        // LaravelEcho.instance.disconnect();
+        // LaravelEcho.instance.connector
+        //     .onDisconnect((data) => print('disconnected '));
+        // LaravelEcho.instance.connector.socket
+        //     .on('disconnect', (_) => print('disconnected '));
       },
       child: Container(
         padding: EdgeInsets.all(14.0),
@@ -164,11 +247,11 @@ class _ChatPageState extends State<ChatPage> {
                       );
                     },
                   ),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(Websocket.routeName);
-                      },
-                      icon: Icon(Icons.ac_unit))
+                  // IconButton(
+                  //     onPressed: () {
+                  //       Navigator.of(context).pushNamed(Websocket.routeName);
+                  //     },
+                  //     icon: Icon(Icons.ac_unit))
                 ],
               ),
             ),

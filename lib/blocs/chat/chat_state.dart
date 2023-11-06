@@ -13,6 +13,7 @@ class ChatState with _$ChatState {
     int? otherUserId,
     required bool isLastPage,
     required int page,
+    int? notificationChatId,
   }) = _ChatState;
 
   factory ChatState.initial() {
@@ -24,12 +25,16 @@ class ChatState with _$ChatState {
       chatMessages: [],
       isLastPage: false,
       page: 1,
+      notificationChatId: null,
     );
   }
 
   bool get isSearchChat => otherUserId != null && selectedChat == null;
 
   bool get isListChat => otherUserId == null && selectedChat != null;
+
+  bool get isNotificationChat => 
+  otherUserId == null && selectedChat == null && notificationChatId !=null;
 
   List<ChatMessage> get uiChatMessages {
     return chatMessages.map((e) => e.toChatMessage).toList();

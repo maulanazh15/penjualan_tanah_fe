@@ -30,6 +30,15 @@ class LaravelEcho {
 
   static Echo get instance => _echo;
 
+  // static Future<String> get socketId async {
+  //   // _echo.connector.socket.on('connect', (_) {
+  //   //   final id = _echo.connector.socket.id;
+  //   //   print('connected ' + (id ?? ' null'));
+  //   // });
+
+  //   _echo.connector.onConnect((data) => print("connected " + _echo.socketId.toString()));
+  //   return _echo.socketId.toString();
+  // }
   static Future<String> get socketId async {
     _echo.connector.socket.on('connect', (_) {
       final id = _echo.connector.socket.id;
