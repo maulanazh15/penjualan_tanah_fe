@@ -31,7 +31,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       emit(state.copyWith(status: DataStatus.loading));
 
       final result = await _chatRepository.getChats();
-      ;
+      
       emit(state.copyWith(
         status: DataStatus.loaded,
         chats: result.success ? result.data ?? [] : [],
@@ -191,7 +191,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     });
 
     on<ChatNotificationOpened>((event, emit) {
-      emit(state.copyWith(notificationChatId: event.chatId));
+      emit(state.copyWith(
+        notificationChatId: event.chatId
+        ));
     });
   }
 }

@@ -43,16 +43,21 @@ class _ChatPageState extends State<ChatPage> {
     try {
       final data = result.notification.additionalData;
       if (data != null) {
-        final chatId = (data['data']['chatId'] as int);
+        // vLog(data['data']['chatId']);
+        final chatId = int.parse(data['data']['chatId']);
+        iLog("$chatId chat ID");
         final chatBloc = context.read<ChatBloc>();
         final selectedChat = chatBloc.state.selectedChat;
-
+        vLog(selectedChat);
         if (chatId != selectedChat?.id) {
+          vLog(data);
           chatBloc.add(ChatNotificationOpened(chatId));
-          Navigator.of(context).pushNamed(ChatPage.routeName);
+          Navigator.of(context).pushNamed(SingleChatPage.routeName);
         }
       }
-    } catch (_) {}
+    } catch (_) {
+      eLog(_);
+    }
   }
 
   void onReceivedInForeground(OSNotificationReceivedEvent event) {
@@ -65,7 +70,7 @@ class _ChatPageState extends State<ChatPage> {
 
       if (selectedChat != null && data != null) {
         vLog(data);
-        final chatId = (data['data']['chatId'] as int);
+        final chatId = data['data']['chatId'];
 
         if (selectedChat.id == chatId) {
           event.complete(null);
@@ -77,6 +82,7 @@ class _ChatPageState extends State<ChatPage> {
 
       vLog(data);
     } catch (_) {
+      eLog(_);
       event.complete(null);
     }
   }
@@ -159,7 +165,6 @@ class _ChatPageState extends State<ChatPage> {
           onTap: () {
             // / selected user
             context.read<ChatBloc>().add(UserSelected(user));
-
             // / push to chat screen
             Navigator.of(context).pushNamed(SingleChatPage.routeName);
           },

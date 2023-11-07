@@ -34,7 +34,7 @@ class ChatState with _$ChatState {
   bool get isListChat => otherUserId == null && selectedChat != null;
 
   bool get isNotificationChat => 
-  otherUserId == null && selectedChat == null && notificationChatId !=null;
+  otherUserId == null && selectedChat == null && notificationChatId != null;
 
   List<ChatMessage> get uiChatMessages {
     return chatMessages.map((e) => e.toChatMessage).toList();
