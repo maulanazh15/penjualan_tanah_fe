@@ -14,8 +14,6 @@ class UserEntity with _$UserEntity {
     required int id,
     required String email,
     required String username,
-    @JsonKey(name: 'X-CSRF-TOKEN') String? csrfToken,
-    // @JsonKey(name: 'photo_profile') String? profileImageUser,
   }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>

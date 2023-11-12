@@ -10,6 +10,7 @@ import 'package:penjualan_tanah_fe/cubits/cubits.dart';
 import 'package:penjualan_tanah_fe/pages/chat_list/chat_page.dart';
 import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:penjualan_tanah_fe/pages/profile/update_profile.dart';
 import 'package:penjualan_tanah_fe/pages/splash/splash_page.dart';
 import 'package:penjualan_tanah_fe/pages/websocket-test/websocket.dart';
 import 'package:penjualan_tanah_fe/repositories/auth/auth_repository.dart';
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
             ChatPage.routeName: (_) => const ChatPage(),
             SingleChatPage.routeName: (_) => const SingleChatPage(),
             Websocket.routeName: (_) => const Websocket(),
+            UpdateProfileScreen.routeName: (_) => const UpdateProfileScreen()
           },
         ),
       ),

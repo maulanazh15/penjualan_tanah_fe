@@ -11,7 +11,6 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       email: json['email'] as String,
       username: json['username'] as String,
-      csrfToken: json['X-CSRF-TOKEN'] as String?,
     );
 
 Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
@@ -19,7 +18,6 @@ Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
       'id': instance.id,
       'email': instance.email,
       'username': instance.username,
-      'X-CSRF-TOKEN': instance.csrfToken,
     };
 
 _$AuthUserImpl _$$AuthUserImplFromJson(Map<String, dynamic> json) =>

@@ -23,8 +23,6 @@ mixin _$UserEntity {
   int get id => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
-  @JsonKey(name: 'X-CSRF-TOKEN')
-  String? get csrfToken => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,11 +36,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call(
-      {int id,
-      String email,
-      String username,
-      @JsonKey(name: 'X-CSRF-TOKEN') String? csrfToken});
+  $Res call({int id, String email, String username});
 }
 
 /// @nodoc
@@ -61,7 +55,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? id = null,
     Object? email = null,
     Object? username = null,
-    Object? csrfToken = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -76,10 +69,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      csrfToken: freezed == csrfToken
-          ? _value.csrfToken
-          : csrfToken // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -92,11 +81,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      String email,
-      String username,
-      @JsonKey(name: 'X-CSRF-TOKEN') String? csrfToken});
+  $Res call({int id, String email, String username});
 }
 
 /// @nodoc
@@ -113,7 +98,6 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? id = null,
     Object? email = null,
     Object? username = null,
-    Object? csrfToken = freezed,
   }) {
     return _then(_$UserEntityImpl(
       id: null == id
@@ -128,10 +112,6 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      csrfToken: freezed == csrfToken
-          ? _value.csrfToken
-          : csrfToken // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -140,10 +120,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserEntityImpl extends _UserEntity {
   _$UserEntityImpl(
-      {required this.id,
-      required this.email,
-      required this.username,
-      @JsonKey(name: 'X-CSRF-TOKEN') this.csrfToken})
+      {required this.id, required this.email, required this.username})
       : super._();
 
   factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -155,13 +132,10 @@ class _$UserEntityImpl extends _UserEntity {
   final String email;
   @override
   final String username;
-  @override
-  @JsonKey(name: 'X-CSRF-TOKEN')
-  final String? csrfToken;
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, email: $email, username: $username, csrfToken: $csrfToken)';
+    return 'UserEntity(id: $id, email: $email, username: $username)';
   }
 
   @override
@@ -172,14 +146,12 @@ class _$UserEntityImpl extends _UserEntity {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.csrfToken, csrfToken) ||
-                other.csrfToken == csrfToken));
+                other.username == username));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, username, csrfToken);
+  int get hashCode => Object.hash(runtimeType, id, email, username);
 
   @JsonKey(ignore: true)
   @override
@@ -197,11 +169,9 @@ class _$UserEntityImpl extends _UserEntity {
 
 abstract class _UserEntity extends UserEntity {
   factory _UserEntity(
-          {required final int id,
-          required final String email,
-          required final String username,
-          @JsonKey(name: 'X-CSRF-TOKEN') final String? csrfToken}) =
-      _$UserEntityImpl;
+      {required final int id,
+      required final String email,
+      required final String username}) = _$UserEntityImpl;
   _UserEntity._() : super._();
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
@@ -213,9 +183,6 @@ abstract class _UserEntity extends UserEntity {
   String get email;
   @override
   String get username;
-  @override
-  @JsonKey(name: 'X-CSRF-TOKEN')
-  String? get csrfToken;
   @override
   @JsonKey(ignore: true)
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>

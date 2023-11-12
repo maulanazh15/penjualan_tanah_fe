@@ -2,8 +2,7 @@ class Endpoints {
   // Base Url
 
   static const base = "http://10.0.2.2";
-  static const baseUrl = 
-  "$base:8000";
+  static const baseUrl = "$base:8000";
   // 'https://47f4-182-2-45-233.ngrok-free.app';
   static const broadCastUrl = "http://10.0.2.2:6001";
 
@@ -35,4 +34,5 @@ class Endpoints {
 
   static const getUsers = "$_apiVersion/user";
   static const getPhotoProfile = "$baseUrl$_baseAuth/photo-profile";
+  static const updateUserProfile = "$_baseAuth/update";
 }

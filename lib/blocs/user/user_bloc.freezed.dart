@@ -19,32 +19,42 @@ mixin _$UserEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function(
+            String username, String email, XFile? profileImage)
+        userUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function(String username, String email, XFile? profileImage)?
+        userUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function(String username, String email, XFile? profileImage)?
+        userUpdated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(UserStarted value) started,
+    required TResult Function(UserUpdated value) userUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(UserStarted value)? started,
+    TResult? Function(UserUpdated value)? userUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserStarted value)? started,
+    TResult Function(UserUpdated value)? userUpdated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -106,6 +116,9 @@ class _$UserStartedImpl implements UserStarted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function(
+            String username, String email, XFile? profileImage)
+        userUpdated,
   }) {
     return started();
   }
@@ -114,6 +127,8 @@ class _$UserStartedImpl implements UserStarted {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function(String username, String email, XFile? profileImage)?
+        userUpdated,
   }) {
     return started?.call();
   }
@@ -122,6 +137,8 @@ class _$UserStartedImpl implements UserStarted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function(String username, String email, XFile? profileImage)?
+        userUpdated,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -134,6 +151,7 @@ class _$UserStartedImpl implements UserStarted {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(UserStarted value) started,
+    required TResult Function(UserUpdated value) userUpdated,
   }) {
     return started(this);
   }
@@ -142,6 +160,7 @@ class _$UserStartedImpl implements UserStarted {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(UserStarted value)? started,
+    TResult? Function(UserUpdated value)? userUpdated,
   }) {
     return started?.call(this);
   }
@@ -150,6 +169,7 @@ class _$UserStartedImpl implements UserStarted {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(UserStarted value)? started,
+    TResult Function(UserUpdated value)? userUpdated,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -161,6 +181,167 @@ class _$UserStartedImpl implements UserStarted {
 
 abstract class UserStarted implements UserEvent {
   const factory UserStarted() = _$UserStartedImpl;
+}
+
+/// @nodoc
+abstract class _$$UserUpdatedImplCopyWith<$Res> {
+  factory _$$UserUpdatedImplCopyWith(
+          _$UserUpdatedImpl value, $Res Function(_$UserUpdatedImpl) then) =
+      __$$UserUpdatedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String username, String email, XFile? profileImage});
+}
+
+/// @nodoc
+class __$$UserUpdatedImplCopyWithImpl<$Res>
+    extends _$UserEventCopyWithImpl<$Res, _$UserUpdatedImpl>
+    implements _$$UserUpdatedImplCopyWith<$Res> {
+  __$$UserUpdatedImplCopyWithImpl(
+      _$UserUpdatedImpl _value, $Res Function(_$UserUpdatedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? email = null,
+    Object? profileImage = freezed,
+  }) {
+    return _then(_$UserUpdatedImpl(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileImage: freezed == profileImage
+          ? _value.profileImage
+          : profileImage // ignore: cast_nullable_to_non_nullable
+              as XFile?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UserUpdatedImpl implements UserUpdated {
+  const _$UserUpdatedImpl(
+      {required this.username, required this.email, this.profileImage});
+
+  @override
+  final String username;
+  @override
+  final String email;
+  @override
+  final XFile? profileImage;
+
+  @override
+  String toString() {
+    return 'UserEvent.userUpdated(username: $username, email: $email, profileImage: $profileImage)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserUpdatedImpl &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.profileImage, profileImage) ||
+                other.profileImage == profileImage));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, username, email, profileImage);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserUpdatedImplCopyWith<_$UserUpdatedImpl> get copyWith =>
+      __$$UserUpdatedImplCopyWithImpl<_$UserUpdatedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(
+            String username, String email, XFile? profileImage)
+        userUpdated,
+  }) {
+    return userUpdated(username, email, profileImage);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(String username, String email, XFile? profileImage)?
+        userUpdated,
+  }) {
+    return userUpdated?.call(username, email, profileImage);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String username, String email, XFile? profileImage)?
+        userUpdated,
+    required TResult orElse(),
+  }) {
+    if (userUpdated != null) {
+      return userUpdated(username, email, profileImage);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserStarted value) started,
+    required TResult Function(UserUpdated value) userUpdated,
+  }) {
+    return userUpdated(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserStarted value)? started,
+    TResult? Function(UserUpdated value)? userUpdated,
+  }) {
+    return userUpdated?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserStarted value)? started,
+    TResult Function(UserUpdated value)? userUpdated,
+    required TResult orElse(),
+  }) {
+    if (userUpdated != null) {
+      return userUpdated(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserUpdated implements UserEvent {
+  const factory UserUpdated(
+      {required final String username,
+      required final String email,
+      final XFile? profileImage}) = _$UserUpdatedImpl;
+
+  String get username;
+  String get email;
+  XFile? get profileImage;
+  @JsonKey(ignore: true)
+  _$$UserUpdatedImplCopyWith<_$UserUpdatedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
