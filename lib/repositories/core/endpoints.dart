@@ -35,4 +35,8 @@ class Endpoints {
   static const getUsers = "$_apiVersion/user";
   static const getPhotoProfile = "$baseUrl$_baseAuth/photo-profile";
   static const updateUserProfile = "$_baseAuth/update";
+
+  // Location
+  static const baseLocation = "$_apiVersion/location";
+  static const getProvinces = "$baseLocation/provinces";
 }
