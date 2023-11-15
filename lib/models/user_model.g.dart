@@ -11,6 +11,10 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       email: json['email'] as String,
       username: json['username'] as String,
+      provId: json['prov_id'] as int?,
+      cityId: json['city_id'] as int?,
+      disId: json['dis_id'] as int?,
+      subDisId: json['subdis_id'] as int?,
     );
 
 Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
@@ -18,6 +22,10 @@ Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
       'id': instance.id,
       'email': instance.email,
       'username': instance.username,
+      'prov_id': instance.provId,
+      'city_id': instance.cityId,
+      'dis_id': instance.disId,
+      'subdis_id': instance.subDisId,
     };
 
 _$AuthUserImpl _$$AuthUserImplFromJson(Map<String, dynamic> json) =>

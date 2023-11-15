@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:penjualan_tanah_fe/pages/profile/update_profile.dart';
@@ -13,9 +14,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final authBloc = AuthBloc().state;
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.read<AuthBloc>().state;
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -81,7 +82,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ProfileMenuWidget(
                 title: "Billing Details", icon: Icons.wallet, onPress: () {}),
             ProfileMenuWidget(
-                title: "User Management", icon: Icons.people, onPress: () {}),
+                title: "Tanah Anda", icon: Icons.people, onPress: () {
+                  
+                }),
             const Divider(),
             const SizedBox(height: 10),
             ProfileMenuWidget(
@@ -104,6 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: ElevatedButton(
                             onPressed: () {}
                             // () => AuthenticationRepository.instance.logout()
+                          
                             ,
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.redAccent,

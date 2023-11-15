@@ -20,8 +20,16 @@ UserUpdateRequest _$UserUpdateRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserUpdateRequest {
-  String get username => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  @JsonKey(name: 'prov_id')
+  int? get provId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'city_id')
+  int? get cityId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'dis_id')
+  int? get disId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'subdis_id')
+  int? get subDisId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +43,13 @@ abstract class $UserUpdateRequestCopyWith<$Res> {
           UserUpdateRequest value, $Res Function(UserUpdateRequest) then) =
       _$UserUpdateRequestCopyWithImpl<$Res, UserUpdateRequest>;
   @useResult
-  $Res call({String username, String email});
+  $Res call(
+      {String? username,
+      String? email,
+      @JsonKey(name: 'prov_id') int? provId,
+      @JsonKey(name: 'city_id') int? cityId,
+      @JsonKey(name: 'dis_id') int? disId,
+      @JsonKey(name: 'subdis_id') int? subDisId});
 }
 
 /// @nodoc
@@ -51,18 +65,38 @@ class _$UserUpdateRequestCopyWithImpl<$Res, $Val extends UserUpdateRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? email = null,
+    Object? username = freezed,
+    Object? email = freezed,
+    Object? provId = freezed,
+    Object? cityId = freezed,
+    Object? disId = freezed,
+    Object? subDisId = freezed,
   }) {
     return _then(_value.copyWith(
-      username: null == username
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
+              as String?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      provId: freezed == provId
+          ? _value.provId
+          : provId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cityId: freezed == cityId
+          ? _value.cityId
+          : cityId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      disId: freezed == disId
+          ? _value.disId
+          : disId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subDisId: freezed == subDisId
+          ? _value.subDisId
+          : subDisId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -75,7 +109,13 @@ abstract class _$$UserUpdateRequestImplCopyWith<$Res>
       __$$UserUpdateRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String email});
+  $Res call(
+      {String? username,
+      String? email,
+      @JsonKey(name: 'prov_id') int? provId,
+      @JsonKey(name: 'city_id') int? cityId,
+      @JsonKey(name: 'dis_id') int? disId,
+      @JsonKey(name: 'subdis_id') int? subDisId});
 }
 
 /// @nodoc
@@ -89,18 +129,38 @@ class __$$UserUpdateRequestImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? email = null,
+    Object? username = freezed,
+    Object? email = freezed,
+    Object? provId = freezed,
+    Object? cityId = freezed,
+    Object? disId = freezed,
+    Object? subDisId = freezed,
   }) {
     return _then(_$UserUpdateRequestImpl(
-      username: null == username
+      username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
+              as String?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      provId: freezed == provId
+          ? _value.provId
+          : provId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cityId: freezed == cityId
+          ? _value.cityId
+          : cityId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      disId: freezed == disId
+          ? _value.disId
+          : disId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subDisId: freezed == subDisId
+          ? _value.subDisId
+          : subDisId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -108,19 +168,37 @@ class __$$UserUpdateRequestImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserUpdateRequestImpl implements _UserUpdateRequest {
-  _$UserUpdateRequestImpl({required this.username, required this.email});
+  _$UserUpdateRequestImpl(
+      {this.username,
+      this.email,
+      @JsonKey(name: 'prov_id') this.provId,
+      @JsonKey(name: 'city_id') this.cityId,
+      @JsonKey(name: 'dis_id') this.disId,
+      @JsonKey(name: 'subdis_id') this.subDisId});
 
   factory _$UserUpdateRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserUpdateRequestImplFromJson(json);
 
   @override
-  final String username;
+  final String? username;
   @override
-  final String email;
+  final String? email;
+  @override
+  @JsonKey(name: 'prov_id')
+  final int? provId;
+  @override
+  @JsonKey(name: 'city_id')
+  final int? cityId;
+  @override
+  @JsonKey(name: 'dis_id')
+  final int? disId;
+  @override
+  @JsonKey(name: 'subdis_id')
+  final int? subDisId;
 
   @override
   String toString() {
-    return 'UserUpdateRequest(username: $username, email: $email)';
+    return 'UserUpdateRequest(username: $username, email: $email, provId: $provId, cityId: $cityId, disId: $disId, subDisId: $subDisId)';
   }
 
   @override
@@ -130,12 +208,18 @@ class _$UserUpdateRequestImpl implements _UserUpdateRequest {
             other is _$UserUpdateRequestImpl &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.provId, provId) || other.provId == provId) &&
+            (identical(other.cityId, cityId) || other.cityId == cityId) &&
+            (identical(other.disId, disId) || other.disId == disId) &&
+            (identical(other.subDisId, subDisId) ||
+                other.subDisId == subDisId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, email);
+  int get hashCode => Object.hash(
+      runtimeType, username, email, provId, cityId, disId, subDisId);
 
   @JsonKey(ignore: true)
   @override
@@ -154,16 +238,33 @@ class _$UserUpdateRequestImpl implements _UserUpdateRequest {
 
 abstract class _UserUpdateRequest implements UserUpdateRequest {
   factory _UserUpdateRequest(
-      {required final String username,
-      required final String email}) = _$UserUpdateRequestImpl;
+          {final String? username,
+          final String? email,
+          @JsonKey(name: 'prov_id') final int? provId,
+          @JsonKey(name: 'city_id') final int? cityId,
+          @JsonKey(name: 'dis_id') final int? disId,
+          @JsonKey(name: 'subdis_id') final int? subDisId}) =
+      _$UserUpdateRequestImpl;
 
   factory _UserUpdateRequest.fromJson(Map<String, dynamic> json) =
       _$UserUpdateRequestImpl.fromJson;
 
   @override
-  String get username;
+  String? get username;
   @override
-  String get email;
+  String? get email;
+  @override
+  @JsonKey(name: 'prov_id')
+  int? get provId;
+  @override
+  @JsonKey(name: 'city_id')
+  int? get cityId;
+  @override
+  @JsonKey(name: 'dis_id')
+  int? get disId;
+  @override
+  @JsonKey(name: 'subdis_id')
+  int? get subDisId;
   @override
   @JsonKey(ignore: true)
   _$$UserUpdateRequestImplCopyWith<_$UserUpdateRequestImpl> get copyWith =>

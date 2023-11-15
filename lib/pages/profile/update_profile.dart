@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +9,9 @@ import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
 import 'package:penjualan_tanah_fe/utils/logger.dart';
+import '../../models/requests/user_update/user_update_request.dart';
 import '../../utils/dio_client/dio_client.dart';
-import 'package:penjualan_tanah_fe/models/app_response.dart';
+import 'package:penjualan_tanah_fe/repositories/user/base_user_repository.dart';
 
 class Province {
   final int provId;
@@ -390,109 +390,101 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     ),
                     // typeAheadField(),
                     const SizedBox(height: 40 - 20),
-                    cities == null
-                        ? CircularProgressIndicator()
-                        : TypeAheadFormField<City>(
-                            textFieldConfiguration: TextFieldConfiguration(
-                                controller: _cityController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Kabupaten/Kota',
-                                  prefixIcon: Icon(Icons.map_outlined),
-                                )),
-                            suggestionsCallback: (pattern) {
-                              return cities!
-                                  .where((city) => city.cityName
-                                      .toLowerCase()
-                                      .contains(pattern.toLowerCase()))
-                                  .toList();
-                            },
-                            itemBuilder: (context, city) {
-                              return ListTile(
-                                leading: Icon(Icons.place_outlined),
-                                title: Text(city.cityName),
-                              );
-                            },
-                            onSuggestionSelected: (city) async {
-                              _cityController.text = city.cityName;
-                              List<District>? districtsFetch =
-                                  await fetchDataDistricts(city.cityId);
-                              setState(() {
-                                selectedCity = city;
-                                districts = districtsFetch;
-                              });
-                            },
-                            validator: (value) =>
-                                value!.isEmpty ? 'Pilih provinsi' : null,
-                          ),
+                    TypeAheadFormField<City>(
+                      textFieldConfiguration: TextFieldConfiguration(
+                          controller: _cityController,
+                          decoration: const InputDecoration(
+                            labelText: 'Kabupaten/Kota',
+                            prefixIcon: Icon(Icons.map_outlined),
+                          )),
+                      suggestionsCallback: (pattern) {
+                        return cities!
+                            .where((city) => city.cityName
+                                .toLowerCase()
+                                .contains(pattern.toLowerCase()))
+                            .toList();
+                      },
+                      itemBuilder: (context, city) {
+                        return ListTile(
+                          leading: Icon(Icons.place_outlined),
+                          title: Text(city.cityName),
+                        );
+                      },
+                      onSuggestionSelected: (city) async {
+                        _cityController.text = city.cityName;
+                        List<District>? districtsFetch =
+                            await fetchDataDistricts(city.cityId);
+                        setState(() {
+                          selectedCity = city;
+                          districts = districtsFetch;
+                        });
+                      },
+                      validator: (value) =>
+                          value!.isEmpty ? 'Pilih provinsi' : null,
+                    ),
                     const SizedBox(height: 40 - 20),
-                    districts == null
-                        ? CircularProgressIndicator()
-                        : TypeAheadFormField<District>(
-                            textFieldConfiguration: TextFieldConfiguration(
-                                controller: _districtController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Kecamatan',
-                                  prefixIcon: Icon(Icons.map_outlined),
-                                )),
-                            suggestionsCallback: (pattern) {
-                              return districts!
-                                  .where((district) => district.disName
-                                      .toLowerCase()
-                                      .contains(pattern.toLowerCase()))
-                                  .toList();
-                            },
-                            itemBuilder: (context, district) {
-                              return ListTile(
-                                leading: Icon(Icons.place_outlined),
-                                title: Text(district.disName),
-                              );
-                            },
-                            onSuggestionSelected: (district) async {
-                              _districtController.text = district.disName;
-                              List<SubDistrict>? subDistrictsFetch =
-                                  await fetchDataSubDistricts(district.disId);
-                              setState(() {
-                                selectedDistrict = district;
-                                subDistricts = subDistrictsFetch;
-                              });
-                            },
-                            validator: (value) =>
-                                value!.isEmpty ? 'Pilih provinsi' : null,
-                          ),
+                    TypeAheadFormField<District>(
+                      textFieldConfiguration: TextFieldConfiguration(
+                          controller: _districtController,
+                          decoration: const InputDecoration(
+                            labelText: 'Kecamatan',
+                            prefixIcon: Icon(Icons.map_outlined),
+                          )),
+                      suggestionsCallback: (pattern) {
+                        return districts!
+                            .where((district) => district.disName
+                                .toLowerCase()
+                                .contains(pattern.toLowerCase()))
+                            .toList();
+                      },
+                      itemBuilder: (context, district) {
+                        return ListTile(
+                          leading: Icon(Icons.place_outlined),
+                          title: Text(district.disName),
+                        );
+                      },
+                      onSuggestionSelected: (district) async {
+                        _districtController.text = district.disName;
+                        List<SubDistrict>? subDistrictsFetch =
+                            await fetchDataSubDistricts(district.disId);
+                        setState(() {
+                          selectedDistrict = district;
+                          subDistricts = subDistrictsFetch;
+                        });
+                      },
+                      validator: (value) =>
+                          value!.isEmpty ? 'Pilih provinsi' : null,
+                    ),
                     const SizedBox(height: 40 - 20),
-
-                    subDistricts == null
-                        ? CircularProgressIndicator()
-                        : TypeAheadFormField<SubDistrict>(
-                            textFieldConfiguration: TextFieldConfiguration(
-                                controller: _subDistrictController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Desa Kelurahan',
-                                  prefixIcon: Icon(Icons.map_outlined),
-                                )),
-                            suggestionsCallback: (pattern) {
-                              return subDistricts!
-                                  .where((subDistrict) => subDistrict.subdisName
-                                      .toLowerCase()
-                                      .contains(pattern.toLowerCase()))
-                                  .toList();
-                            },
-                            itemBuilder: (context, subDistrict) {
-                              return ListTile(
-                                leading: Icon(Icons.place_outlined),
-                                title: Text(subDistrict.subdisName),
-                              );
-                            },
-                            onSuggestionSelected: (subDistrict) async {
-                              _subDistrictController.text =
-                                  subDistrict.subdisName;
-                              setState(() {
-                                selectedSubDistrict = subDistrict;
-                              });
-                            },
-                            validator: (value) =>
-                                value!.isEmpty ? 'Pilih provinsi' : null,
-                          ),
+                    TypeAheadFormField<SubDistrict>(
+                      textFieldConfiguration: TextFieldConfiguration(
+                          controller: _subDistrictController,
+                          decoration: const InputDecoration(
+                            labelText: 'Desa Kelurahan',
+                            prefixIcon: Icon(Icons.map_outlined),
+                          )),
+                      suggestionsCallback: (pattern) {
+                        return subDistricts!
+                            .where((subDistrict) => subDistrict.subdisName
+                                .toLowerCase()
+                                .contains(pattern.toLowerCase()))
+                            .toList();
+                      },
+                      itemBuilder: (context, subDistrict) {
+                        return ListTile(
+                          leading: Icon(Icons.place_outlined),
+                          title: Text(subDistrict.subdisName),
+                        );
+                      },
+                      onSuggestionSelected: (subDistrict) async {
+                        _subDistrictController.text = subDistrict.subdisName;
+                        setState(() {
+                          selectedSubDistrict = subDistrict;
+                        });
+                      },
+                      validator: (value) =>
+                          value!.isEmpty ? 'Pilih provinsi' : null,
+                    ),
 
                     const SizedBox(height: 40),
 
@@ -500,15 +492,31 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          final userBloc = context.read<UserBloc>();
-
-                          userBloc.add(UserEvent.userUpdated(
-                              username: _usernameController.text,
-                              email: _emailController.text,
-                              profileImage: _image));
-
-                          _showSuccessDialog(context, "Update Berhasil");
+                        onPressed: () async {
+                          final authBloc = context.read<AuthBloc>();
+                          final result = await UserRepository().updateUser(
+                              UserUpdateRequest(
+                                username: _usernameController.text,
+                                email: _emailController.text,
+                                provId: selectedProvince?.provId,
+                                cityId: selectedCity?.cityId,
+                                disId: selectedDistrict?.disId,
+                                subDisId: selectedSubDistrict?.subdisId,
+                              ),
+                              _image);
+                          eLog(result);
+                          if (result.success) {
+                            authBloc.add(
+                              Authenticated(
+                                isAuthenticated: true,
+                                token: authBloc.state.token,
+                                user: result.data)
+                                );
+                            iLog(authBloc.state.user);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Update Berhasil")));
+                          }
+                          // _showSuccessDialog(context, "Update Berhasil");
                         }
                         // () => Get.to(() => const UpdateProfileScreen())
                         ,

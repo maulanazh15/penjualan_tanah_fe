@@ -173,10 +173,10 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  final authBloc = AuthBloc();
   
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.read<AuthBloc>();
     final currentUser = authBloc.state.user!;
     final chatBloc = context.read<ChatBloc>();
     final userBloc = context.read<UserBloc>();

@@ -50,6 +50,7 @@ dependencies:
   pusher_client_fixed: ^0.0.2+2
   image_picker: ^1.0.4
   flutter_typeahead: ^4.8.0
+  map_location_picker: ^1.2.8+3
   # pusher_client: ^2.0.0
   # pusher_client:
   #   git:

@@ -14,6 +14,10 @@ class UserEntity with _$UserEntity {
     required int id,
     required String email,
     required String username,
+    @JsonKey(name: 'prov_id') int? provId,
+    @JsonKey(name: 'city_id') int? cityId,
+    @JsonKey(name: 'dis_id') int? disId,
+    @JsonKey(name: 'subdis_id') int? subDisId,
   }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>

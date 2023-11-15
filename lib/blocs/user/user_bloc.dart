@@ -3,9 +3,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
-import 'package:penjualan_tanah_fe/blocs/chat/chat_bloc.dart';
 import 'package:penjualan_tanah_fe/models/requests/user_update/user_update_request.dart';
-import 'package:penjualan_tanah_fe/repositories/auth/auth_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/user/base_user_repository.dart';
 
 import '../../models/user_model.dart';

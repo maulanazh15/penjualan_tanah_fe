@@ -23,6 +23,14 @@ mixin _$UserEntity {
   int get id => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
+  @JsonKey(name: 'prov_id')
+  int? get provId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'city_id')
+  int? get cityId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'dis_id')
+  int? get disId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'subdis_id')
+  int? get subDisId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +44,14 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({int id, String email, String username});
+  $Res call(
+      {int id,
+      String email,
+      String username,
+      @JsonKey(name: 'prov_id') int? provId,
+      @JsonKey(name: 'city_id') int? cityId,
+      @JsonKey(name: 'dis_id') int? disId,
+      @JsonKey(name: 'subdis_id') int? subDisId});
 }
 
 /// @nodoc
@@ -55,6 +70,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? id = null,
     Object? email = null,
     Object? username = null,
+    Object? provId = freezed,
+    Object? cityId = freezed,
+    Object? disId = freezed,
+    Object? subDisId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,6 +88,22 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      provId: freezed == provId
+          ? _value.provId
+          : provId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cityId: freezed == cityId
+          ? _value.cityId
+          : cityId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      disId: freezed == disId
+          ? _value.disId
+          : disId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subDisId: freezed == subDisId
+          ? _value.subDisId
+          : subDisId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -81,7 +116,14 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String email, String username});
+  $Res call(
+      {int id,
+      String email,
+      String username,
+      @JsonKey(name: 'prov_id') int? provId,
+      @JsonKey(name: 'city_id') int? cityId,
+      @JsonKey(name: 'dis_id') int? disId,
+      @JsonKey(name: 'subdis_id') int? subDisId});
 }
 
 /// @nodoc
@@ -98,6 +140,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? id = null,
     Object? email = null,
     Object? username = null,
+    Object? provId = freezed,
+    Object? cityId = freezed,
+    Object? disId = freezed,
+    Object? subDisId = freezed,
   }) {
     return _then(_$UserEntityImpl(
       id: null == id
@@ -112,6 +158,22 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      provId: freezed == provId
+          ? _value.provId
+          : provId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cityId: freezed == cityId
+          ? _value.cityId
+          : cityId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      disId: freezed == disId
+          ? _value.disId
+          : disId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subDisId: freezed == subDisId
+          ? _value.subDisId
+          : subDisId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -120,7 +182,13 @@ class __$$UserEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserEntityImpl extends _UserEntity {
   _$UserEntityImpl(
-      {required this.id, required this.email, required this.username})
+      {required this.id,
+      required this.email,
+      required this.username,
+      @JsonKey(name: 'prov_id') this.provId,
+      @JsonKey(name: 'city_id') this.cityId,
+      @JsonKey(name: 'dis_id') this.disId,
+      @JsonKey(name: 'subdis_id') this.subDisId})
       : super._();
 
   factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -132,10 +200,22 @@ class _$UserEntityImpl extends _UserEntity {
   final String email;
   @override
   final String username;
+  @override
+  @JsonKey(name: 'prov_id')
+  final int? provId;
+  @override
+  @JsonKey(name: 'city_id')
+  final int? cityId;
+  @override
+  @JsonKey(name: 'dis_id')
+  final int? disId;
+  @override
+  @JsonKey(name: 'subdis_id')
+  final int? subDisId;
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, email: $email, username: $username)';
+    return 'UserEntity(id: $id, email: $email, username: $username, provId: $provId, cityId: $cityId, disId: $disId, subDisId: $subDisId)';
   }
 
   @override
@@ -146,12 +226,18 @@ class _$UserEntityImpl extends _UserEntity {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.username, username) ||
-                other.username == username));
+                other.username == username) &&
+            (identical(other.provId, provId) || other.provId == provId) &&
+            (identical(other.cityId, cityId) || other.cityId == cityId) &&
+            (identical(other.disId, disId) || other.disId == disId) &&
+            (identical(other.subDisId, subDisId) ||
+                other.subDisId == subDisId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, username);
+  int get hashCode => Object.hash(
+      runtimeType, id, email, username, provId, cityId, disId, subDisId);
 
   @JsonKey(ignore: true)
   @override
@@ -171,7 +257,11 @@ abstract class _UserEntity extends UserEntity {
   factory _UserEntity(
       {required final int id,
       required final String email,
-      required final String username}) = _$UserEntityImpl;
+      required final String username,
+      @JsonKey(name: 'prov_id') final int? provId,
+      @JsonKey(name: 'city_id') final int? cityId,
+      @JsonKey(name: 'dis_id') final int? disId,
+      @JsonKey(name: 'subdis_id') final int? subDisId}) = _$UserEntityImpl;
   _UserEntity._() : super._();
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
@@ -183,6 +273,18 @@ abstract class _UserEntity extends UserEntity {
   String get email;
   @override
   String get username;
+  @override
+  @JsonKey(name: 'prov_id')
+  int? get provId;
+  @override
+  @JsonKey(name: 'city_id')
+  int? get cityId;
+  @override
+  @JsonKey(name: 'dis_id')
+  int? get disId;
+  @override
+  @JsonKey(name: 'subdis_id')
+  int? get subDisId;
   @override
   @JsonKey(ignore: true)
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>

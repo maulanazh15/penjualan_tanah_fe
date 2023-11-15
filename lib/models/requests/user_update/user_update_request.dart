@@ -8,8 +8,12 @@ part 'user_update_request.g.dart';
 @freezed
 class UserUpdateRequest with _$UserUpdateRequest {
   factory UserUpdateRequest({
-    required String username,
-    required String email,
+    String? username,
+    String? email,
+    @JsonKey(name: 'prov_id') int? provId,
+    @JsonKey(name: 'city_id') int? cityId,
+    @JsonKey(name: 'dis_id') int? disId,
+    @JsonKey(name: 'subdis_id') int? subDisId,
     // @JsonKey(name: 'photo_profile') required XFile profileImage
   }) = _UserUpdateRequest;
 	
