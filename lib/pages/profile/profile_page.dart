@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_login/flutter_login.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:penjualan_tanah_fe/pages/profile/update_profile.dart';
-
+import 'package:penjualan_tanah_fe/cubits/login/login_cubit.dart';
+import '../../utils/onesignal/onesignal.dart';
+import '../login/login_page.dart';
 import 'profile_menu_widget.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -82,9 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ProfileMenuWidget(
                 title: "Billing Details", icon: Icons.wallet, onPress: () {}),
             ProfileMenuWidget(
-                title: "Tanah Anda", icon: Icons.people, onPress: () {
-                  
-                }),
+                title: "Tanah Anda", icon: Icons.people, onPress: () {}),
             const Divider(),
             const SizedBox(height: 10),
             ProfileMenuWidget(
@@ -95,32 +96,41 @@ class _ProfilePageState extends State<ProfilePage> {
                 textColor: Colors.red,
                 endIcon: false,
                 onPress: () {
-                  AlertDialog(
-                      title: Text("LOGOUT"),
-                      titleTextStyle: const TextStyle(fontSize: 20),
-                      content: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.0),
-                        child: Text("Are you sure, you want to Logout?"),
-                      ),
-                      actions: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {}
-                            // () => AuthenticationRepository.instance.logout()
-                          
-                            ,
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.redAccent,
-                                side: BorderSide.none),
-                            child: const Text("Yes"),
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          title: Text("LOGOUT"),
+                          titleTextStyle: const TextStyle(fontSize: 20),
+                          content: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 15.0),
+                            child: Text("Are you sure, you want to Logout?"),
                           ),
-                        ),
-                        OutlinedButton(
-                            onPressed: () {}
-                            // () => Get.back()
-                            ,
-                            child: const Text("No")),
-                      ]);
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                final authBloc = context.read<AuthBloc>().state;
+
+                                if (authBloc.isAuthenticated) {
+                                  context.read<LoginCubit>().signOut();
+                                  deleteUserTag();
+                                  Navigator.of(context).pushReplacementNamed(
+                                      LoginPage.routeName);
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.redAccent,
+                                  side: BorderSide.none),
+                              child: const Text("Yes"),
+                            ),
+                            OutlinedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("No")),
+                          ]);
+                    },
+                  );
                 }),
           ],
         ),

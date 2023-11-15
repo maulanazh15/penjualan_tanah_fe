@@ -38,7 +38,7 @@ dependencies:
   hydrated_bloc: ^9.0.0-dev.2
   path_provider: ^2.0.11
   intl: ^0.17.0
-  logger: ^1.1.0
+  logger: ^2.0.2+1
   pretty_dio_logger: ^1.1.1
   search_page: ^2.0.0+1
   dash_chat_2: ^0.0.14
@@ -50,7 +50,7 @@ dependencies:
   pusher_client_fixed: ^0.0.2+2
   image_picker: ^1.0.4
   flutter_typeahead: ^4.8.0
-  map_location_picker: ^1.2.8+3
+  # map_location_picker: ^1.2.8+3
   # pusher_client: ^2.0.0
   # pusher_client:
   #   git:

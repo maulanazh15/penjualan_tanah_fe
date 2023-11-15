@@ -493,6 +493,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
+                          // final userBloc = context.read<UserBloc>();
+                          // userBloc.add(UserEvent.userUpdated(
+                          //   username: _usernameController.text,
+                          //   email: _emailController.text,
+                          //   provId: selectedProvince?.provId,
+                          //   cityId: selectedCity?.cityId,
+                          //   disId: selectedDistrict?.disId,
+                          //   subDisId: selectedSubDistrict?.subdisId,
+                          // ));
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //     SnackBar(content: Text("Update Berhasil")));
                           final authBloc = context.read<AuthBloc>();
                           final result = await UserRepository().updateUser(
                               UserUpdateRequest(
@@ -506,15 +517,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               _image);
                           eLog(result);
                           if (result.success) {
-                            authBloc.add(
-                              Authenticated(
+                            authBloc.add(Authenticated(
                                 isAuthenticated: true,
                                 token: authBloc.state.token,
-                                user: result.data)
-                                );
+                                user: result.data));
                             iLog(authBloc.state.user);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Update Berhasil")));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Update Berhasil")));
+                          } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Update Gagal")));
                           }
                           // _showSuccessDialog(context, "Update Berhasil");
                         }

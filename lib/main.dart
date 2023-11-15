@@ -42,8 +42,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<AuthRepository>(create: (_) => AuthRepository()),
         RepositoryProvider<ChatRepository>(create: (_) => ChatRepository()),
         RepositoryProvider<UserRepository>(create: (_) => UserRepository()),
-        RepositoryProvider<ChatMessageRepository>(
-            create: (_) => ChatMessageRepository()),
+        RepositoryProvider<ChatMessageRepository>(create: (_) => ChatMessageRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -63,6 +62,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => UserBloc(
               userRepository: context.read<UserRepository>(),
+              authBloc: context.read<AuthBloc>()
             ),
           ),
         ],

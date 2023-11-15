@@ -200,67 +200,68 @@ class _ChatPageState extends State<ChatPage> {
         padding: EdgeInsets.all(14.0),
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.all(10.0),
-              width: 400,
-              height: 70,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: Colors.green, width: 2.0)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // const Icon(Icons.account_circle, size: 50.0),
-                  AvatarProfile(user: currentUser),
-                  // Image.network(currentUser.urlProfileImage, headers: const {
-                  //   HttpHeaders.connectionHeader: 'keep-alive'
-                  // },),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Chat List',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'User Id : ${currentUser.username}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      )
-                    ],
-                  ),
-                  BlocSelector<UserBloc, UserState, List<UserEntity>>(
-                    selector: (state) {
-                      return state.map(
-                        initial: (_) => [],
-                        loaded: (state) => state.users,
-                      );
-                    },
-                    builder: (context, state) {
-                      // ;
-                      return IconButton(
-                        onPressed: () {
-                          _showSearch(context, state);
-                        },
-                        icon: const Icon(Icons.search),
-                      );
-                    },
-                  ),
-                  // IconButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context).pushNamed(Websocket.routeName);
-                  //     },
-                  //     icon: Icon(Icons.ac_unit))
-                ],
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.all(10.0),
+            //   width: 400,
+            //   height: 70,
+            //   clipBehavior: Clip.hardEdge,
+            //   decoration: BoxDecoration(
+            //       color: Colors.green,
+            //       borderRadius: BorderRadius.circular(10.0),
+            //       border: Border.all(color: Colors.green, width: 2.0)),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       // const Icon(Icons.account_circle, size: 50.0),
+            //       AvatarProfile(user: currentUser),
+            //       // Image.network(currentUser.urlProfileImage, headers: const {
+            //       //   HttpHeaders.connectionHeader: 'keep-alive'
+            //       // },),
+            //       Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           const Text(
+            //             'Chat List',
+            //             style: TextStyle(
+            //               fontSize: 15,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //           Text(
+            //             'User Id : ${currentUser.username}',
+            //             style: const TextStyle(
+            //               fontSize: 14,
+            //               fontWeight: FontWeight.w400,
+            //             ),
+            //           )
+            //         ],
+            //       ),
+            //       BlocSelector<UserBloc, UserState, List<UserEntity>>(
+            //         selector: (state) {
+            //           return state.map(
+            //             initial: (_) => [],
+            //             loaded: (state) => state.users,
+            //           );
+            //         },
+            //         builder: (context, state) {
+            //           // ;
+            //           return IconButton(
+            //             onPressed: () {
+            //               _showSearch(context, state);
+            //             },
+            //             icon: const Icon(Icons.search),
+            //           );
+            //         },
+            //       ),
+            //       // IconButton(
+            //       //     onPressed: () {
+            //       //       Navigator.of(context).pushNamed(Websocket.routeName);
+            //       //     },
+            //       //     icon: Icon(Icons.ac_unit))
+            //     ],
+            //   ),
+            // ),
+            
             const SizedBox(
               height: 30,
             ),

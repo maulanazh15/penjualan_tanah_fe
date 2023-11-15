@@ -15,9 +15,12 @@ part 'user_bloc.freezed.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository _userRepository;
+  final AuthBloc _authBloc;
   UserBloc({
     required UserRepository userRepository,
+    required AuthBloc authBloc,
   })  : _userRepository = userRepository,
+        _authBloc = authBloc,
         super(UserState.initial()) {
     on<UserStarted>((event, emit) async {
       // TODO: implement event handler
@@ -27,15 +30,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<UserUpdated>((event, emit) async {
       final result = await _userRepository.updateUser(
-          UserUpdateRequest(username: event.username, email: event.email), event.profileImage );
+          UserUpdateRequest(
+            username: event.username, 
+            email: event.email,
+            provId: event.provId,
+            cityId: event.cityId,
+            disId: event.disId,
+            subDisId: event.subDisId,
+            ),
+          event.profileImage);
       eLog(result);
       if (result.success) {
-        final authBloc = AuthBloc();
-        authBloc.add(Authenticated(
+        _authBloc.add(Authenticated(
             isAuthenticated: true,
-            token: authBloc.state.token,
+            token: _authBloc.state.token,
             user: result.data));
-        iLog(authBloc.state.user);
+        iLog(_authBloc.state.user);
       }
     });
   }

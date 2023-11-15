@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/cubits/login/login_cubit.dart';
+import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:penjualan_tanah_fe/pages/home_page.dart';
 import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:penjualan_tanah_fe/pages/profile/profile_page.dart';
 import 'package:penjualan_tanah_fe/pages/serach_page.dart';
 import 'package:penjualan_tanah_fe/utils/onesignal/onesignal.dart';
+import 'package:search_page/search_page.dart';
 
+import '../../blocs/chat/chat_bloc.dart';
+import '../../blocs/user/user_bloc.dart';
+import '../../models/user_model.dart';
 import '../chat_list/chat_page.dart';
+import '../chat_list/single_chat_page.dart';
 
 class NavigationBarComponent extends StatefulWidget {
   const NavigationBarComponent({Key? key}) : super(key: key);
@@ -25,17 +31,80 @@ class _NavigationBarState extends State<NavigationBarComponent> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      ;
+      
     });
+  }
+  void _showSearch(BuildContext context, List<UserEntity> users) {
+    // print(users);
+
+    showSearch(
+      context: context,
+      delegate: SearchPage<UserEntity>(
+        items: users,
+        searchLabel: 'Search people',
+        suggestion: const Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.search,
+                size: 25.0,
+                color: Colors.grey,
+              ),
+              Text(
+                'Search users by username',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+        failure: const Center(
+          child: Text(
+            'No person found :(',
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        filter: (user) => [user.username],
+        builder: (user) => ListTile(
+          leading:
+              // const Icon(Icons.account_circle, size: 50.0),
+              AvatarProfile(key: ValueKey(user.id), user: user),
+          // Image.network(user.urlProfileImage,
+          // headers:
+          // const {
+          //   HttpHeaders.connectionHeader: 'keep-alive',
+          // },),
+          title: Text(user.username),
+          subtitle: Text(user.email),
+          onTap: () {
+            // / selected user
+            context.read<ChatBloc>().add(UserSelected(user));
+            // / push to chat screen
+            Navigator.of(context).pushNamed(SingleChatPage.routeName);
+          },
+        ),
+      ),
+    );
   }
 
   // Define a list of screens or pages that correspond to the menu items.
   final List<Widget> _screens = [
     // Replace these with your actual screen widgets.
-    HomePage(),
-    SerachPage(),
-    ChatPage(),
-    ProfilePage(),
+    const HomePage(
+      key: Key('Home'),
+    ),
+    const SerachPage(key: Key('Search'),),
+    const ChatPage(key: Key('Chat'),),
+    const ProfilePage(key: Key('Profile'),),
   ];
   // final authState = AuthBloc().state;
   @override
@@ -44,29 +113,34 @@ class _NavigationBarState extends State<NavigationBarComponent> {
     // ;
     return Scaffold(
       appBar: AppBar(
+        title: Center(
+          child: Text(_screens[_selectedIndex].key.toString().replaceAllMapped(
+                RegExp(r"\[<'?([^']+)'?>\]"),
+                (match) =>
+                    match.group(1) ??
+                    "", // Replace with an empty string if the match is null
+              )),
+        ),
         actions: [
-          BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
-            // TODO: implement listener
-            // ;
-            if (!state.isAuthenticated) {
-              deleteUserTag();
-              Navigator.of(context).pushReplacementNamed(LoginPage.routeName);
-            }
-          }, builder: (context, state) {
-            if (state.isAuthenticated) {
-              return IconButton(
-                  onPressed: () {
-                    // ;
-                    context.read<LoginCubit>().signOut();
-                  },
-                  icon: const Icon(Icons.logout));
-            }
-
-            return const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.people),
-            );
-          })
+          _screens[_selectedIndex].key == const Key('Chat') ? 
+          BlocSelector<UserBloc, UserState, List<UserEntity>>(
+                    selector: (state) {
+                      return state.map(
+                        initial: (_) => [],
+                        loaded: (state) => state.users,
+                      );
+                    },
+                    builder: (context, state) {
+                      // ;
+                      return IconButton(
+                        onPressed: () {
+                          _showSearch(context, state);
+                        },
+                        icon: const Icon(Icons.search),
+                      );
+                    },
+                  ) : const Text('')
+          
         ],
       ),
       body: _screens[_selectedIndex],
