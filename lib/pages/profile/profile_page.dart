@@ -5,6 +5,7 @@ import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:penjualan_tanah_fe/pages/profile/update_profile.dart';
 import 'package:penjualan_tanah_fe/cubits/login/login_cubit.dart';
+import 'package:penjualan_tanah_fe/pages/tanah/crud_tanah_page.dart';
 import '../../utils/onesignal/onesignal.dart';
 import '../login/login_page.dart';
 import 'profile_menu_widget.dart';
@@ -80,12 +81,16 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 10),
 
             /// -- MENU
+            // ProfileMenuWidget(
+            //     title: "Settings", icon: Icons.settings, onPress: () {}),
+            // ProfileMenuWidget(
+            //     title: "Billing Details", icon: Icons.wallet, onPress: () {}),
             ProfileMenuWidget(
-                title: "Settings", icon: Icons.settings, onPress: () {}),
-            ProfileMenuWidget(
-                title: "Billing Details", icon: Icons.wallet, onPress: () {}),
-            ProfileMenuWidget(
-                title: "Tanah Anda", icon: Icons.people, onPress: () {}),
+                title: "Tanah Anda",
+                icon: Icons.people,
+                onPress: () {
+                  Navigator.of(context).pushNamed(CrudLandPage.routeName);
+                }),
             const Divider(),
             const SizedBox(height: 10),
             ProfileMenuWidget(

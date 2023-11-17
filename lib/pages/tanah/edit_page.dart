@@ -5,9 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/user/user_bloc.dart';
+import 'package:penjualan_tanah_fe/models/land_model.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:penjualan_tanah_fe/pages/tanah/crud_tanah_page.dart';
 import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
+import 'package:penjualan_tanah_fe/repositories/land/land_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/location/location_repository.dart';
 import 'package:penjualan_tanah_fe/utils/logger.dart';
 import '../../models/location_model.dart';
@@ -15,16 +18,17 @@ import '../../models/requests/user_update/user_update_request.dart';
 import '../../utils/dio_client/dio_client.dart';
 import 'package:penjualan_tanah_fe/repositories/user/base_user_repository.dart';
 
-class UpdateProfileScreen extends StatefulWidget {
-  const UpdateProfileScreen({Key? key}) : super(key: key);
+class EditLandScreen extends StatefulWidget {
+  final LandModel landModel;
+  const EditLandScreen({Key? key, required this.landModel}) : super(key: key);
 
-  static const routeName = 'update-profile';
+  static const routeName = 'create-land';
 
   @override
-  State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
+  State<EditLandScreen> createState() => _EditLandScreenState();
 }
 
-class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+class _EditLandScreenState extends State<EditLandScreen> {
   List<Province>? provinces;
   Province? selectedProvince;
   List<City>? cities;
@@ -33,6 +37,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   District? selectedDistrict;
   List<SubDistrict>? subDistricts;
   SubDistrict? selectedSubDistrict;
+  LandModel? land;
 
   XFile? _image;
   final ImagePicker picker = ImagePicker();
@@ -69,14 +74,27 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     LocationRepository().fetchDataProvinces().then((value) {
       setState(() {
         provinces = value;
+        land = widget.landModel;
+        _judulController.text = land!.judul;
+        _hargaController.text = land!.harga.toString();
+        _luasController.text = land!.luas.toString();
+        _keteranganController.text = land!.keterangan.toString();
+        _alamatController.text = land!.alamat.toString();
+
+        selectedProvince = provinces!
+            .firstWhere((province) => province.provId == land!.provId);
+        _provinceController.text = selectedProvince!.provName;
       });
     });
   }
 
   final _formKey = GlobalKey<FormState>();
   final user = AuthBloc().state.user;
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _judulController = TextEditingController();
+  final TextEditingController _hargaController = TextEditingController();
+  final TextEditingController _luasController = TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
+  final TextEditingController _keteranganController = TextEditingController();
   final TextEditingController _provinceController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _districtController = TextEditingController();
@@ -84,9 +102,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final TextEditingController _usernameController =
+    LandModel land = widget.landModel;
+    // final TextEditingController _judulController =
     //     TextEditingController(text: user?.username);
-    // final TextEditingController _emailController =
+    // final TextEditingController _hargaController =
     //     TextEditingController(text: user?.email);
     void _showSuccessDialog(BuildContext context, String message) {
       showDialog(
@@ -102,11 +121,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       );
     }
 
-    // final controller = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Profile",
-            style: Theme.of(context).textTheme.headlineMedium),
+        title: Text("Buat Tanah",
+            style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -117,13 +135,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               Stack(
                 children: [
                   SizedBox(
-                    width: 120,
+                    width: double.maxFinite,
                     height: 120,
                     child: _image != null
-                        ? CircleAvatar(
-                            backgroundImage: FileImage(File(_image!.path)),
+                        ? Image.file(
+                            File(_image!.path),
                           )
-                        : AvatarProfile(user: user!),
+                        : Image.network(
+                            land.urlLandImage,
+                          ),
                   ),
                   Positioned(
                     bottom: 0,
@@ -135,7 +155,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           borderRadius: BorderRadius.circular(100),
                           color: Colors.black12),
                       child: IconButton(
-                        icon: Icon(Icons.camera),
+                        icon: const Icon(Icons.camera),
                         color: Colors.black,
                         iconSize: 20,
                         onPressed: () async {
@@ -154,16 +174,38 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: _usernameController,
+                      controller: _judulController,
                       decoration: const InputDecoration(
-                          label: Text("User Full Name"),
-                          prefixIcon: Icon(Icons.person)),
+                          label: Text("Judul"), prefixIcon: Icon(Icons.person)),
                     ),
                     const SizedBox(height: 40 - 20),
                     TextFormField(
-                      controller: _emailController,
+                      controller: _hargaController,
                       decoration: const InputDecoration(
-                          label: Text("Email"), prefixIcon: Icon(Icons.email)),
+                          label: Text("Harga"),
+                          prefixIcon: Icon(Icons.price_change)),
+                    ),
+                    const SizedBox(height: 40 - 20),
+                    TextFormField(
+                      controller: _luasController,
+                      decoration: const InputDecoration(
+                          label: Text("Luas"),
+                          prefixIcon: Icon(Icons.landscape)),
+                    ),
+                    const SizedBox(height: 40 - 20),
+                    TextFormField(
+                      controller: _alamatController,
+                      decoration: const InputDecoration(
+                          label: Text("Alamat"), prefixIcon: Icon(Icons.email)),
+                    ),
+                    const SizedBox(height: 40 - 20),
+                    TextFormField(
+                      controller: _keteranganController,
+                      maxLines: 5,
+                      keyboardType: TextInputType.multiline,
+                      decoration: const InputDecoration(
+                          label: Text("Keterangan"),
+                          prefixIcon: Icon(Icons.email)),
                     ),
                     const SizedBox(height: 40 - 20),
                     TypeAheadFormField<Province>(
@@ -188,8 +230,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       },
                       onSuggestionSelected: (province) async {
                         _provinceController.text = province.provName;
-                        List<City>? citiesFetch =
-                            await LocationRepository().fetchDataCities(province.provId);
+                        List<City>? citiesFetch = await LocationRepository()
+                            .fetchDataCities(province.provId);
                         setState(() {
                           cities = citiesFetch;
                           selectedProvince = province;
@@ -223,7 +265,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       onSuggestionSelected: (city) async {
                         _cityController.text = city.cityName;
                         List<District>? districtsFetch =
-                            await LocationRepository().fetchDataDistricts(city.cityId);
+                            await LocationRepository()
+                                .fetchDataDistricts(city.cityId);
                         setState(() {
                           selectedCity = city;
                           districts = districtsFetch;
@@ -256,7 +299,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       onSuggestionSelected: (district) async {
                         _districtController.text = district.disName;
                         List<SubDistrict>? subDistrictsFetch =
-                            await LocationRepository().fetchDataSubDistricts(district.disId);
+                            await LocationRepository()
+                                .fetchDataSubDistricts(district.disId);
                         setState(() {
                           selectedDistrict = district;
                           subDistricts = subDistrictsFetch;
@@ -303,50 +347,43 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          // final userBloc = context.read<UserBloc>();
-                          // userBloc.add(UserEvent.userUpdated(
-                          //   username: _usernameController.text,
-                          //   email: _emailController.text,
-                          //   provId: selectedProvince?.provId,
-                          //   cityId: selectedCity?.cityId,
-                          //   disId: selectedDistrict?.disId,
-                          //   subDisId: selectedSubDistrict?.subdisId,
-                          // ));
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //     SnackBar(content: Text("Update Berhasil")));
-                          final authBloc = context.read<AuthBloc>();
-                          final result = await UserRepository().updateUser(
-                              UserUpdateRequest(
-                                username: _usernameController.text,
-                                email: _emailController.text,
+                          final result = await LandRepository().updateLand(
+                              land.id!,
+                              LandModel(
+                                judul: _judulController.text,
+                                harga: int.parse(_hargaController.text),
+                                luas: double.parse(_luasController.text),
+                                alamat: _alamatController.text,
                                 provId: selectedProvince?.provId,
                                 cityId: selectedCity?.cityId,
                                 disId: selectedDistrict?.disId,
                                 subDisId: selectedSubDistrict?.subdisId,
-                              ),
+                                keterangan: _keteranganController.text,
+                                userId: user?.id,
+                              ).toJson(),
                               _image);
                           eLog(result);
                           if (result.success) {
-                            authBloc.add(Authenticated(
-                                isAuthenticated: true,
-                                token: authBloc.state.token,
-                                user: result.data));
-                            iLog(authBloc.state.user);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Update Berhasil")));
-                          } else {
+                            if (mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Update Berhasil")));
+                              Navigator.of(context)
+                                  .pushNamed(CrudLandPage.routeName);
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Update Gagal")));
                           }
                           // _showSuccessDialog(context, "Update Berhasil");
                         }
-                        // () => Get.to(() => const UpdateProfileScreen())
+                        // () => Get.to(() => const EditLandScreen())
                         ,
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amberAccent,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
-                        child: const Text("Update Profile",
+                        child: const Text("Update Detail Tanah",
                             style: TextStyle(color: Colors.black87)),
                       ),
                     ),
@@ -371,8 +408,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            _usernameController.text = "";
-                            _emailController.text = "";
+                            _judulController.text = "";
+                            _hargaController.text = "";
                             _provinceController.text = "";
                             _cityController.text = "";
                             _districtController.text = "";

@@ -25,9 +25,7 @@ class UserEntity with _$UserEntity {
 
   String get urlProfileImage {
     return "${Endpoints.getPhotoProfile}?user_id=$id";
-    // return profileImageUser != null
-    //     ? "${Endpoints.baseUrl}/storage/users/photo-profile/$profileImageUser"
-    //     : "${Endpoints.baseUrl}/storage/users/photo-profile/go-you-jung.jpg";
+
   }
 
   ChatUser get toChatUser {

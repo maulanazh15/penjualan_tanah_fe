@@ -12,6 +12,9 @@ import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:penjualan_tanah_fe/pages/profile/update_profile.dart';
 import 'package:penjualan_tanah_fe/pages/splash/splash_page.dart';
+import 'package:penjualan_tanah_fe/pages/tanah/create_page.dart';
+import 'package:penjualan_tanah_fe/pages/tanah/crud_tanah_page.dart';
+import 'package:penjualan_tanah_fe/pages/tanah/show_page.dart';
 import 'package:penjualan_tanah_fe/pages/websocket-test/websocket.dart';
 import 'package:penjualan_tanah_fe/repositories/auth/auth_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/chat/chat_repository.dart';
@@ -82,7 +85,10 @@ class MyApp extends StatelessWidget {
             ChatPage.routeName: (_) => const ChatPage(),
             SingleChatPage.routeName: (_) => const SingleChatPage(),
             Websocket.routeName: (_) => const Websocket(),
-            UpdateProfileScreen.routeName: (_) => const UpdateProfileScreen()
+            UpdateProfileScreen.routeName: (_) => const UpdateProfileScreen(),
+            CrudLandPage.routeName: (_) => const CrudLandPage(),
+            CreateLandScreen.routeName: (_) => const CreateLandScreen(),
+            // ShowPage.routeName: (_) => const ShowPage(landModel: );
           },
         ),
       ),

@@ -39,4 +39,8 @@ class Endpoints {
   // Location
   static const baseLocation = "$_apiVersion/location";
   static const getProvinces = "$baseLocation/provinces";
+
+  //Land
+  static const baseLand = "$_apiVersion/land";
+  static const getLandPhoto = "$baseUrl$_apiVersion/foto-tanah";
 }
