@@ -103,6 +103,7 @@ flutter:
   assets:
     - assets/images/5-you-jung.jpg
     - assets/images/chat.png
+    - assets/images/tanahlogo.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

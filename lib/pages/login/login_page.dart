@@ -10,73 +10,76 @@ class LoginPage extends StatelessWidget {
 
   static const routeName = 'login';
 
-
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<LoginCubit>();
 
-    return FlutterLogin(
-      title: 'Land Market App',
-      scrollable: true,
-      userType: LoginUserType.name,
-      hideForgotPasswordButton: true,
-      logo: AssetImage('assets/images/chat.png'),
-      onLogin: cubit.signIn,
-      onSignup: cubit.signUp,
-      userValidator: (value) {
-        if (value == '' ) {
-          return 'Please enter username';
-        }
-      },
-      passwordValidator: (value) {
-        if (value == null || value.length < 5) {
-          return 'Password must be at least 5 chars';
-        }
-      },
-      loginProviders: <LoginProvider>[
-        LoginProvider(
-          icon: FontAwesomeIcons.google,
-          label: 'Google',
-          callback: () async {
-            debugPrint('start google sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop google sign in');
-            return null;
-          },
+    return Scaffold(
+      backgroundColor: Colors.white, // Set the background color to white
+      body: FlutterLogin(
+        scrollable: true,
+        userType: LoginUserType.name,
+        hideForgotPasswordButton: true,
+        logo: AssetImage('assets/images/tanahlogo.png'),
+        onLogin: cubit.signIn,
+        onSignup: cubit.signUp,
+        userValidator: (value) {
+          if (value == '') {
+            return 'Please enter username';
+          }
+        },
+        passwordValidator: (value) {
+          if (value == null || value.length < 5) {
+            return 'Password must be at least 5 chars';
+          }
+        },
+        loginProviders: <LoginProvider>[
+          LoginProvider(
+            icon: FontAwesomeIcons.google,
+            label: 'Google',
+            callback: () async {
+              debugPrint('start google sign in');
+              await Future.delayed(loginTime);
+              debugPrint('stop google sign in');
+              return null;
+            },
+          ),
+          LoginProvider(
+            icon: FontAwesomeIcons.facebookF,
+            label: 'Facebook',
+            callback: () async {
+              debugPrint('start facebook sign in');
+              await Future.delayed(loginTime);
+              debugPrint('stop facebook sign in');
+              return null;
+            },
+          ),
+        ],
+        theme: LoginTheme(
+          primaryColor: Colors.green,
+          accentColor: Colors.greenAccent,
+          errorColor: Colors.red,
+          cardTheme: CardTheme(
+            color: Colors.white,
+          ),
+          inputTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: Colors.white,
+          ),
+          buttonTheme: LoginButtonTheme(
+            splashColor: Colors.lightGreenAccent,
+            highlightColor: Colors.lightGreen,
+          ),
+          titleStyle: TextStyle(
+            color: Colors.white, // Set the title text color to white
+          ),
         ),
-        LoginProvider(
-          icon: FontAwesomeIcons.facebookF,
-          label: 'Facebook',
-          callback: () async {
-            debugPrint('start facebook sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop facebook sign in');
-            return null;
-          },
-        ),
-        LoginProvider(
-          icon: FontAwesomeIcons.linkedinIn,
-          callback: () async {
-            debugPrint('start linkdin sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop linkdin sign in');
-            return null;
-          },
-        ),
-        LoginProvider(
-          icon: FontAwesomeIcons.githubAlt,
-          callback: () async {
-            debugPrint('start github sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop github sign in');
-            return null;
-          },
-        ),
-      ],
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacementNamed(NavigationBarComponent.routeName);
-      },
-      onRecoverPassword: (_) => Future(() => null),
+        onSubmitAnimationCompleted: () {
+          Navigator.of(context)
+              .pushReplacementNamed(NavigationBarComponent.routeName);
+        },
+        onRecoverPassword: (_) => Future(() => null),
+      ),
     );
   }
 }
