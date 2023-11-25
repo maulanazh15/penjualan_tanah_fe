@@ -109,7 +109,7 @@ class PusherConfig {
 
 Echo createLaravelEcho(String token) {
   IO.Socket socket = IO.io(
-    "http://10.0.2.2:6002",
+    "${Endpoints.base}:6002",
     IO.OptionBuilder()
         .disableAutoConnect()
         .setTransports(['websocket']).build(),
