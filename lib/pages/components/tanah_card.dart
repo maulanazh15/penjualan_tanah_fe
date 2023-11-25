@@ -37,7 +37,7 @@ class TanahCard extends StatelessWidget {
             onTap: () {
               // Handle item tap (e.g., navigate to detail page)
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ShowPage(landModel: landModel)));
+                  builder: (context) => ShowPage(landModel: landModel, isCrudPage: false,)));
             },
             subtitle: Padding(
               padding: const EdgeInsets.all(8.0),

@@ -116,7 +116,7 @@ class _CrudLandPageState extends State<CrudLandPage> {
                           // Handle item tap (e.g., navigate to detail page)
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  ShowPage(landModel: lands![index])));
+                                  ShowPage(landModel: lands![index], isCrudPage: true,)));
                         },
                         onLongPress: () {
                           showDialog(
