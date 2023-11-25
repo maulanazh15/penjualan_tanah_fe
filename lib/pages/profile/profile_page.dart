@@ -11,13 +11,17 @@ import '../login/login_page.dart';
 import 'profile_menu_widget.dart';
 
 class ProfilePage extends StatefulWidget {
+
   const ProfilePage({Key? key}) : super(key: key);
+
+  static const routeName = 'profile-page';
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>().state;
@@ -41,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 35,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: Colors.amberAccent),
+                        color: Theme.of(context).primaryColor),
                     child: const Icon(
                       Icons.edit,
                       color: Colors.black,
@@ -69,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // () => Get.to(() => const UpdateProfileScreen())
                 ,
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amberAccent,
+                    backgroundColor: Theme.of(context).primaryColor,
                     side: BorderSide.none,
                     shape: const StadiumBorder()),
                 child: const Text("Edit Profile",

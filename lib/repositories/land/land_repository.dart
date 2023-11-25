@@ -17,6 +17,26 @@ class LandRepository {
   Future<AppResponse<List<LandModel>>> getLands() async {
     try {
       final response = await _dioClient.get(Endpoints.baseLand);
+      iLog(response.data!);
+      return AppResponse<List<LandModel>>.fromJson(
+        response.data,
+        (dynamic json) {
+          if (response.data['success'] && json != null) {
+            return (json as List<dynamic>)
+                .map((e) => LandModel.fromJson(e))
+                .toList();
+          }
+          return [];
+        },
+      );
+    } catch (e) {
+      print('Error fetching lands: $e');
+      throw Exception('Failed to load lands');
+    }
+  }
+  Future<AppResponse<List<LandModel>>> getUserLands() async {
+    try {
+      final response = await _dioClient.get(Endpoints.getUserLands);
       // iLog(response.data!);
       return AppResponse<List<LandModel>>.fromJson(
         response.data,
@@ -100,7 +120,7 @@ class LandRepository {
   Future<AppResponse<void>> deleteLand(int landId) async {
     try {
       final response =
-          await _dioClient.delete('YOUR_API_ENDPOINT_HERE/$landId');
+          await _dioClient.delete('${Endpoints.baseLand}/$landId');
 
       return AppResponse<void>.fromJson(
         response.data,

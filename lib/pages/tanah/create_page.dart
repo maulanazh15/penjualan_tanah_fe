@@ -12,6 +12,7 @@ import 'package:penjualan_tanah_fe/pages/tanah/crud_tanah_page.dart';
 import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
 import 'package:penjualan_tanah_fe/repositories/land/land_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/location/location_repository.dart';
+import 'package:penjualan_tanah_fe/utils/imagepicker.dart';
 import 'package:penjualan_tanah_fe/utils/logger.dart';
 import '../../models/location_model.dart';
 import '../../models/requests/user_update/user_update_request.dart';
@@ -42,7 +43,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
 
   Future<void> _takePicture() async {
     XFile? image = await picker.pickImage(
-        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
+        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front, imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the captured photo.
@@ -54,7 +55,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
   }
 
   Future<void> _pickImage() async {
-    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    XFile? image = await picker.pickImage(source: ImageSource.gallery, imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the selected photo.
@@ -74,6 +75,12 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
         provinces = value;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -123,7 +130,6 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                 children: [
                   SizedBox(
                     width: double.maxFinite,
-                    height: 120,
                     child: _image != null
                         ? 
                         Image.file(File(_image!.path),)
@@ -347,28 +353,28 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                             keterangan: _keteranganController.text,
                             userId: user?.id,
                           ).toJson(), _image);
-                          eLog(result);
+                          eLog(result.data);
                           if (result.success) {
                             if (mounted) {
                               
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Update Berhasil")));
+                                const SnackBar(content: Text("Buat Tanah Berhasil")));
                             Navigator.of(context)
                                 .pushNamed(CrudLandPage.routeName);
                             }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Update Gagal")));
+                                SnackBar(content: Text("Buat Tanah Gagal")));
                           }
                           // _showSuccessDialog(context, "Update Berhasil");
                         }
                         // () => Get.to(() => const CreateLandScreen())
                         ,
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amberAccent,
+                            backgroundColor: Theme.of(context).primaryColor,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
-                        child: const Text("Update Profile",
+                        child: const Text("Buat Tanah",
                             style: TextStyle(color: Colors.black87)),
                       ),
                     ),
@@ -378,23 +384,27 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text.rich(
-                          TextSpan(
-                            text: "Joined",
-                            style: TextStyle(fontSize: 12),
-                            children: [
-                              TextSpan(
-                                  text: " Joined at",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12))
-                            ],
-                          ),
-                        ),
+                        // const Text.rich(
+                        //   TextSpan(
+                        //     text: "Joined",
+                        //     style: TextStyle(fontSize: 12),
+                        //     children: [
+                        //       TextSpan(
+                        //           text: " Joined at",
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               fontSize: 12))
+                        //     ],
+                        //   ),
+                        // ),
+                        
                         ElevatedButton(
                           onPressed: () {
                             _judulController.text = "";
                             _hargaController.text = "";
+                            _luasController.text = "";
+                            _keteranganController.text = "";
+                            _alamatController.text = "";
                             _provinceController.text = "";
                             _cityController.text = "";
                             _districtController.text = "";
@@ -413,7 +423,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                               foregroundColor: Colors.red,
                               shape: const StadiumBorder(),
                               side: BorderSide.none),
-                          child: const Text("Delete"),
+                          child: const Text("Hapus Isi Form"),
                         ),
                       ],
                     )

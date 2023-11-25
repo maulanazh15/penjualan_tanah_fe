@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
         scrollable: true,
         userType: LoginUserType.name,
         hideForgotPasswordButton: true,
-        logo: AssetImage('assets/images/tanahlogo.png'),
+        logo: const AssetImage('assets/images/tanahlogo.png'),
         onLogin: cubit.signIn,
         onSignup: cubit.signUp,
         userValidator: (value) {

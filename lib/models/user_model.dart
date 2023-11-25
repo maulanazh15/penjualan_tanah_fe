@@ -24,6 +24,7 @@ class UserEntity with _$UserEntity {
       _$UserEntityFromJson(json);
 
   String get urlProfileImage {
+    
     return "${Endpoints.getPhotoProfile}?user_id=$id";
 
   }

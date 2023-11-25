@@ -1,8 +1,11 @@
 class Endpoints {
   // Base Url
 
-  static const base = "http://10.0.2.2";
+  // static const base = "http://10.0.2.2";
+  static const base = "http://103.183.74.206";
+  
   static const baseUrl = "$base:8000";
+  // static const baseUrl = "https://7278-182-2-77-74.ngrok-free.app";
   // 'https://47f4-182-2-45-233.ngrok-free.app';
   static const broadCastUrl = "http://10.0.2.2:6001";
 
@@ -43,4 +46,6 @@ class Endpoints {
   //Land
   static const baseLand = "$_apiVersion/land";
   static const getLandPhoto = "$baseUrl$_apiVersion/foto-tanah";
+  static const getUserLands = "$baseLand/user";
+  static const getCloserLands = "$getUserLands/closer-lands";
 }

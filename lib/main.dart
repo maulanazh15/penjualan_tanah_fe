@@ -10,6 +10,7 @@ import 'package:penjualan_tanah_fe/cubits/cubits.dart';
 import 'package:penjualan_tanah_fe/pages/chat_list/chat_page.dart';
 import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:penjualan_tanah_fe/pages/profile/profile_page.dart';
 import 'package:penjualan_tanah_fe/pages/profile/update_profile.dart';
 import 'package:penjualan_tanah_fe/pages/splash/splash_page.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/create_page.dart';
@@ -72,7 +73,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'Penjualan Tanah App',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
             useMaterial3: true,
           ),
           initialRoute: SplashPage.routeName,
@@ -80,7 +81,7 @@ class MyApp extends StatelessWidget {
             LoginPage.routeName: (_) => LoginPage(),
             // ChatPage.routeName : (_) => ChatPage(),
             NavigationBarComponent.routeName: (_) =>
-                const NavigationBarComponent(),
+                NavigationBarComponent(),
             SplashPage.routeName: (_) => const SplashPage(),
             ChatPage.routeName: (_) => const ChatPage(),
             SingleChatPage.routeName: (_) => const SingleChatPage(),
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
             UpdateProfileScreen.routeName: (_) => const UpdateProfileScreen(),
             CrudLandPage.routeName: (_) => const CrudLandPage(),
             CreateLandScreen.routeName: (_) => const CreateLandScreen(),
+            ProfilePage.routeName: (_) => const ProfilePage(), 
             // ShowPage.routeName: (_) => const ShowPage(landModel: );
           },
         ),

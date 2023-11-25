@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/models/land_model.dart';
+import 'package:penjualan_tanah_fe/pages/components/navigation_bar_component.dart';
+import 'package:penjualan_tanah_fe/pages/profile/profile_page.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/create_page.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/show_page.dart';
 
 import '../../repositories/land/land_repository.dart';
 import '../../utils/logger.dart';
+import '../../widget/blank_content.dart';
 
 class CrudLandPage extends StatefulWidget {
   const CrudLandPage({Key? key}) : super(key: key);
@@ -17,12 +20,13 @@ class CrudLandPage extends StatefulWidget {
 
 class _CrudLandPageState extends State<CrudLandPage> {
   final LandRepository _landRepository = LandRepository();
+  bool isLoading = true;
 
-  List<LandModel>? lands;
+  List<LandModel> lands = [];
 
   Future<List<LandModel>> fetchLands() async {
     try {
-      final response = await _landRepository.getLands();
+      final response = await _landRepository.getUserLands();
       // iLog(response.data);
       return response.data!;
     } catch (e) {
@@ -33,13 +37,20 @@ class _CrudLandPageState extends State<CrudLandPage> {
 
   @override
   void initState() {
-    super.initState();
     fetchLands().then((value) {
-      iLog(value);
       setState(() {
         lands = value;
+        iLog(lands);
+        isLoading = false;
       });
     });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -48,10 +59,23 @@ class _CrudLandPageState extends State<CrudLandPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Land CRUD'),
-        // leading: ,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (_) => NavigationBarComponent(
+                        selectedIndex: 3,
+                      )));
+            },
+            icon: Icon(Icons.arrow_back)),
       ),
-      body: lands == null
-          ? Center(child: CircularProgressIndicator())
+      body: lands.isEmpty
+          ?
+          // Center(child: CircularProgressIndicator())
+          BlankContent(
+              content: "Tanah belum dibuat",
+              isLoading: isLoading,
+              icon: Icons.landscape_outlined,
+            )
           : ListView.builder(
               padding: EdgeInsets.all(15),
               itemCount: lands!.length,
@@ -61,14 +85,22 @@ class _CrudLandPageState extends State<CrudLandPage> {
                         .format(lands![index].harga);
 
                 return Card(
+                  elevation: 2.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                   child: Column(
                     children: [
                       // Image placeholder (replace with your image widget)
-                      Image.network(
-                        lands![index].urlLandImage,
-                        height: 150,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+                      ClipRRect(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(8.0)),
+                        child: Image.network(
+                          lands![index].urlLandImage,
+                          height: 150,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       ListTile(
                         title: Text(lands![index].judul),
@@ -77,7 +109,7 @@ class _CrudLandPageState extends State<CrudLandPage> {
                           children: [
                             Text('Harga: $formattedHarga'),
                             Text(
-                                'Luas: ${lands![index].luas}'), // Assuming luas is a numeric value
+                                'Luas: ${lands![index].luas} m\u00B2'), // Assuming luas is a numeric value
                           ],
                         ),
                         onTap: () {
@@ -85,6 +117,42 @@ class _CrudLandPageState extends State<CrudLandPage> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
                                   ShowPage(landModel: lands![index])));
+                        },
+                        onLongPress: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Hapus Data Tanah'),
+                                  content: Text(
+                                      "Apakah Anda yakin inign menghapus data tanah ini?"),
+                                  actions: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          LandRepository()
+                                              .deleteLand(
+                                                  lands[index].id!.toInt())
+                                              .then((value) {
+                                            setState(() {
+                                                  lands.remove(lands[index]);
+                                            });
+                                          Navigator.pop(context);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "Hapus Data Berhasil")));
+                                            
+                                          });
+                                        },
+                                        child: const Text("Ya")),
+                                    OutlinedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Tidak"))
+                                  ],
+                                );
+                              });
                         },
                       ),
                     ],

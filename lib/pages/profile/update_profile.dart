@@ -9,6 +9,7 @@ import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
 import 'package:penjualan_tanah_fe/repositories/location/location_repository.dart';
+import 'package:penjualan_tanah_fe/utils/imagepicker.dart';
 import 'package:penjualan_tanah_fe/utils/logger.dart';
 import '../../models/location_model.dart';
 import '../../models/requests/user_update/user_update_request.dart';
@@ -39,7 +40,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> _takePicture() async {
     XFile? image = await picker.pickImage(
-        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
+        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front
+        , imageQuality: quality,
+        );
 
     if (image != null) {
       // You can now use the 'image' object, which contains the captured photo.
@@ -51,7 +54,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   Future<void> _pickImage() async {
-    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    XFile? image = await picker.pickImage(source: ImageSource.gallery, imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the selected photo.
@@ -67,9 +70,23 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     // TODO: implement initState
     super.initState();
     LocationRepository().fetchDataProvinces().then((value) {
+      if (mounted) {
+        
       setState(() {
+        final user = AuthBloc().state.user;
         provinces = value;
+        _usernameController.text = user!.username;
+        _emailController.text = user.email;
+        if (user.subDisId != 0) {
+          LocationRepository().fetchDataLocation(user.subDisId!).then((value) {
+            _provinceController.text = value.provinceName;
+            _cityController.text = value.cityName;
+            _districtController.text = value.districtName;
+            _subDistrictController.text = value.subDistrictName;
+          });
+        }
       });
+      }
     });
   }
 
@@ -84,10 +101,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final TextEditingController _usernameController =
-    //     TextEditingController(text: user?.username);
-    // final TextEditingController _emailController =
-    //     TextEditingController(text: user?.email);
     void _showSuccessDialog(BuildContext context, String message) {
       showDialog(
         context: context,
@@ -188,8 +201,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       },
                       onSuggestionSelected: (province) async {
                         _provinceController.text = province.provName;
-                        List<City>? citiesFetch =
-                            await LocationRepository().fetchDataCities(province.provId);
+                        List<City>? citiesFetch = await LocationRepository()
+                            .fetchDataCities(province.provId);
                         setState(() {
                           cities = citiesFetch;
                           selectedProvince = province;
@@ -223,7 +236,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       onSuggestionSelected: (city) async {
                         _cityController.text = city.cityName;
                         List<District>? districtsFetch =
-                            await LocationRepository().fetchDataDistricts(city.cityId);
+                            await LocationRepository()
+                                .fetchDataDistricts(city.cityId);
                         setState(() {
                           selectedCity = city;
                           districts = districtsFetch;
@@ -256,7 +270,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       onSuggestionSelected: (district) async {
                         _districtController.text = district.disName;
                         List<SubDistrict>? subDistrictsFetch =
-                            await LocationRepository().fetchDataSubDistricts(district.disId);
+                            await LocationRepository()
+                                .fetchDataSubDistricts(district.disId);
                         setState(() {
                           selectedDistrict = district;
                           subDistricts = subDistrictsFetch;
@@ -325,7 +340,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 subDisId: selectedSubDistrict?.subdisId,
                               ),
                               _image);
-                          eLog(result);
+                          eLog(result.toString());
                           if (result.success) {
                             authBloc.add(Authenticated(
                                 isAuthenticated: true,
@@ -335,7 +350,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Update Berhasil")));
                           } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Update Gagal")));
                           }
                           // _showSuccessDialog(context, "Update Berhasil");
@@ -343,7 +358,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         // () => Get.to(() => const UpdateProfileScreen())
                         ,
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amberAccent,
+                            backgroundColor: Theme.of(context).primaryColor,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
                         child: const Text("Update Profile",
@@ -356,19 +371,20 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text.rich(
-                          TextSpan(
-                            text: "Joined",
-                            style: TextStyle(fontSize: 12),
-                            children: [
-                              TextSpan(
-                                  text: " Joined at",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12))
-                            ],
-                          ),
-                        ),
+                        // const Text.rich(
+                        //   TextSpan(
+                        //     text: "Joined",
+                        //     style: TextStyle(fontSize: 12),
+                        //     children: [
+                        //       TextSpan(
+                        //           text: " Joined at",
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               fontSize: 12))
+                        //     ],
+                        //   ),
+                        // ),
+
                         ElevatedButton(
                           onPressed: () {
                             _usernameController.text = "";
@@ -391,7 +407,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               foregroundColor: Colors.red,
                               shape: const StadiumBorder(),
                               side: BorderSide.none),
-                          child: const Text("Delete"),
+                          child: const Text("Hapus Isi Form"),
                         ),
                       ],
                     )

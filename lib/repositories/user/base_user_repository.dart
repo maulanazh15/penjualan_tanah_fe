@@ -55,7 +55,7 @@ class UserRepository extends BaseUserRepository {
       Endpoints.updateUserProfile,
       data: formData,
     );
-    // iLog(response.data['data']);
+    iLog(response.data['data']);
     return AppResponse<UserEntity>.fromJson(response.data, (dynamic json) {
       if (response.data['success'] && json != null) {
         return UserEntity.fromJson(json);

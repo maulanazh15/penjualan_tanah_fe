@@ -90,4 +90,20 @@ class LocationRepository {
       throw Exception('Error: $error');
     }
   }
+
+  Future<LocationData> fetchDataLocation(int id) async {
+    // Replace with your API endpoint URL
+    LocationData locationData = LocationData.defaultLocation();
+    try {
+      final response = await _dioClient.get("${Endpoints.baseLocation}/$id");
+      if (response.data['success'] && response.data['data'] != null) {
+        locationData = LocationData.fromJson(response.data['data']);
+        return locationData;
+      }
+      return locationData;
+    } catch (error) {
+      eLog(error);
+      throw Exception('Error: $error');
+    }
+  }
 }

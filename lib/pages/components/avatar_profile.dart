@@ -16,7 +16,7 @@ class AvatarProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
+    return  CircleAvatar(
         backgroundImage: NetworkImage(
     user.urlProfileImage, 
     headers: {

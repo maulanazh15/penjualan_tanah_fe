@@ -12,6 +12,7 @@ import 'package:penjualan_tanah_fe/pages/tanah/crud_tanah_page.dart';
 import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
 import 'package:penjualan_tanah_fe/repositories/land/land_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/location/location_repository.dart';
+import 'package:penjualan_tanah_fe/utils/imagepicker.dart';
 import 'package:penjualan_tanah_fe/utils/logger.dart';
 import '../../models/location_model.dart';
 import '../../models/requests/user_update/user_update_request.dart';
@@ -44,7 +45,8 @@ class _EditLandScreenState extends State<EditLandScreen> {
 
   Future<void> _takePicture() async {
     XFile? image = await picker.pickImage(
-        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
+        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front,
+        imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the captured photo.
@@ -56,7 +58,7 @@ class _EditLandScreenState extends State<EditLandScreen> {
   }
 
   Future<void> _pickImage() async {
-    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    XFile? image = await picker.pickImage(source: ImageSource.gallery, imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the selected photo.
@@ -81,9 +83,12 @@ class _EditLandScreenState extends State<EditLandScreen> {
         _keteranganController.text = land!.keterangan.toString();
         _alamatController.text = land!.alamat.toString();
 
-        selectedProvince = provinces!
-            .firstWhere((province) => province.provId == land!.provId);
-        _provinceController.text = selectedProvince!.provName;
+        LocationRepository().fetchDataLocation(land!.subDisId!).then((value) {
+          _provinceController.text = value.provinceName;
+          _cityController.text = value.cityName;
+          _districtController.text = value.districtName;
+          _subDistrictController.text = value.subDistrictName;
+        });
       });
     });
   }
@@ -103,10 +108,7 @@ class _EditLandScreenState extends State<EditLandScreen> {
   @override
   Widget build(BuildContext context) {
     LandModel land = widget.landModel;
-    // final TextEditingController _judulController =
-    //     TextEditingController(text: user?.username);
-    // final TextEditingController _hargaController =
-    //     TextEditingController(text: user?.email);
+
     void _showSuccessDialog(BuildContext context, String message) {
       showDialog(
         context: context,
@@ -123,7 +125,7 @@ class _EditLandScreenState extends State<EditLandScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Buat Tanah",
+        title: Text("Edit Data Tanah",
             style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: SingleChildScrollView(
@@ -136,7 +138,6 @@ class _EditLandScreenState extends State<EditLandScreen> {
                 children: [
                   SizedBox(
                     width: double.maxFinite,
-                    height: 120,
                     child: _image != null
                         ? Image.file(
                             File(_image!.path),
@@ -380,7 +381,7 @@ class _EditLandScreenState extends State<EditLandScreen> {
                         // () => Get.to(() => const EditLandScreen())
                         ,
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amberAccent,
+                            backgroundColor: Theme.of(context).primaryColor,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
                         child: const Text("Update Detail Tanah",
@@ -393,23 +394,27 @@ class _EditLandScreenState extends State<EditLandScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text.rich(
-                          TextSpan(
-                            text: "Joined",
-                            style: TextStyle(fontSize: 12),
-                            children: [
-                              TextSpan(
-                                  text: " Joined at",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12))
-                            ],
-                          ),
-                        ),
+                        // const Text.rich(
+                        //   TextSpan(
+                        //     text: "Joined",
+                        //     style: TextStyle(fontSize: 12),
+                        //     children: [
+                        //       TextSpan(
+                        //           text: " Joined at",
+                        //           style: TextStyle(
+                        //               fontWeight: FontWeight.bold,
+                        //               fontSize: 12))
+                        //     ],
+                        //   ),
+                        // ),
+
                         ElevatedButton(
                           onPressed: () {
                             _judulController.text = "";
                             _hargaController.text = "";
+                            _luasController.text = "";
+                            _keteranganController.text = "";
+                            _alamatController.text = "";
                             _provinceController.text = "";
                             _cityController.text = "";
                             _districtController.text = "";
@@ -428,7 +433,7 @@ class _EditLandScreenState extends State<EditLandScreen> {
                               foregroundColor: Colors.red,
                               shape: const StadiumBorder(),
                               side: BorderSide.none),
-                          child: const Text("Delete"),
+                          child: const Text("Hapus Isi Form"),
                         ),
                       ],
                     )

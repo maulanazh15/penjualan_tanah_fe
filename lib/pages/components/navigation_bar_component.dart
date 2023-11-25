@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/cubits/login/login_cubit.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
-import 'package:penjualan_tanah_fe/pages/home_page.dart';
+import 'package:penjualan_tanah_fe/pages/home/home_page.dart';
 import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:penjualan_tanah_fe/pages/profile/profile_page.dart';
 import 'package:penjualan_tanah_fe/pages/serach_page.dart';
@@ -16,8 +16,10 @@ import '../../models/user_model.dart';
 import '../chat_list/chat_page.dart';
 import '../chat_list/single_chat_page.dart';
 
+// ignore: must_be_immutable
 class NavigationBarComponent extends StatefulWidget {
-  const NavigationBarComponent({Key? key}) : super(key: key);
+  int? selectedIndex;
+  NavigationBarComponent({Key? key, this.selectedIndex}) : super(key: key);
 
   static const routeName = 'navigation-bar';
 
@@ -26,14 +28,22 @@ class NavigationBarComponent extends StatefulWidget {
 }
 
 class _NavigationBarState extends State<NavigationBarComponent> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      
+      widget.selectedIndex = null;
     });
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    widget.selectedIndex = null;
+    super.dispose();
+  }
+
   void _showSearch(BuildContext context, List<UserEntity> users) {
     // print(users);
 
@@ -102,17 +112,25 @@ class _NavigationBarState extends State<NavigationBarComponent> {
     const HomePage(
       key: Key('Home'),
     ),
-    const SerachPage(key: Key('Search'),),
-    const ChatPage(key: Key('Chat'),),
-    const ProfilePage(key: Key('Profile'),),
+    const SerachPage(
+      key: Key('Search'),
+    ),
+    const ChatPage(
+      key: Key('Chat'),
+    ),
+    const ProfilePage(
+      key: Key('Profile'),
+    ),
   ];
   // final authState = AuthBloc().state;
   @override
   Widget build(BuildContext context) {
     // final authState = context.read<AuthBloc>().state;
-    // ;
+    _selectedIndex = (widget.selectedIndex ?? _selectedIndex);
     return Scaffold(
       appBar: AppBar(
+        leading: null,
+        automaticallyImplyLeading: false,
         title: Center(
           child: Text(_screens[_selectedIndex].key.toString().replaceAllMapped(
                 RegExp(r"\[<'?([^']+)'?>\]"),
@@ -122,25 +140,25 @@ class _NavigationBarState extends State<NavigationBarComponent> {
               )),
         ),
         actions: [
-          _screens[_selectedIndex].key == const Key('Chat') ? 
-          BlocSelector<UserBloc, UserState, List<UserEntity>>(
-                    selector: (state) {
-                      return state.map(
-                        initial: (_) => [],
-                        loaded: (state) => state.users,
-                      );
-                    },
-                    builder: (context, state) {
-                      // ;
-                      return IconButton(
-                        onPressed: () {
-                          _showSearch(context, state);
-                        },
-                        icon: const Icon(Icons.search),
-                      );
-                    },
-                  ) : const Text('')
-          
+          _screens[_selectedIndex].key == const Key('Chat')
+              ? BlocSelector<UserBloc, UserState, List<UserEntity>>(
+                  selector: (state) {
+                    return state.map(
+                      initial: (_) => [],
+                      loaded: (state) => state.users,
+                    );
+                  },
+                  builder: (context, state) {
+                    // ;
+                    return IconButton(
+                      onPressed: () {
+                        _showSearch(context, state);
+                      },
+                      icon: const Icon(Icons.search),
+                    );
+                  },
+                )
+              : const Text('')
         ],
       ),
       body: _screens[_selectedIndex],
@@ -164,7 +182,7 @@ class _NavigationBarState extends State<NavigationBarComponent> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepOrange, // Change the selected item color
+        selectedItemColor: Theme.of(context).primaryColor, // Change the selected item color
         unselectedItemColor: Colors.grey, // Change the unselected item color
         onTap: _onItemTapped,
       ),
