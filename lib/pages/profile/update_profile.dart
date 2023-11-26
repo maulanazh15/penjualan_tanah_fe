@@ -40,9 +40,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> _takePicture() async {
     XFile? image = await picker.pickImage(
-        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front
-        , imageQuality: quality,
-        );
+      source: ImageSource.camera,
+      preferredCameraDevice: CameraDevice.front,
+      imageQuality: quality,
+    );
 
     if (image != null) {
       // You can now use the 'image' object, which contains the captured photo.
@@ -54,7 +55,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   Future<void> _pickImage() async {
-    XFile? image = await picker.pickImage(source: ImageSource.gallery, imageQuality: quality);
+    XFile? image = await picker.pickImage(
+        source: ImageSource.gallery, imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the selected photo.
@@ -71,21 +73,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     super.initState();
     LocationRepository().fetchDataProvinces().then((value) {
       if (mounted) {
-        
-      setState(() {
-        final user = AuthBloc().state.user;
-        provinces = value;
-        _usernameController.text = user!.username;
-        _emailController.text = user.email;
-        if (user.subDisId != 0) {
-          LocationRepository().fetchDataLocation(user.subDisId!).then((value) {
-            _provinceController.text = value.provinceName;
-            _cityController.text = value.cityName;
-            _districtController.text = value.districtName;
-            _subDistrictController.text = value.subDistrictName;
-          });
-        }
-      });
+        setState(() {
+          final user = AuthBloc().state.user;
+          provinces = value;
+          _usernameController.text = user!.username;
+          _emailController.text = user.email;
+          if (user.subDisId != 0) {
+            LocationRepository()
+                .fetchDataLocation(user.subDisId!)
+                .then((value) {
+              _provinceController.text = value.provinceName;
+              _cityController.text = value.cityName;
+              _districtController.text = value.districtName;
+              _subDistrictController.text = value.subDistrictName;
+            });
+          }
+        });
       }
     });
   }
@@ -318,21 +321,24 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                         
                           final authBloc = context.read<AuthBloc>();
-                          final result = await UserRepository().updateUser(
-                              UserUpdateRequest(
-                                username: _usernameController.text,
-                                email: _emailController.text,
-                                provId: selectedProvince?.provId,
-                                cityId: selectedCity?.cityId,
-                                disId: selectedDistrict?.disId,
-                                subDisId: selectedSubDistrict?.subdisId,
-                              ),
-                              _image).then((value)  {
-                                ScaffoldMessenger.of(context).showSnackBar(
+                          final result = await UserRepository()
+                              .updateUser(
+                                  UserUpdateRequest(
+                                    username: _usernameController.text,
+                                    email: _emailController.text,
+                                    provId: selectedProvince?.provId,
+                                    cityId: selectedCity?.cityId,
+                                    disId: selectedDistrict?.disId,
+                                    subDisId: selectedSubDistrict?.subdisId,
+                                  ),
+                                  _image)
+                              .then((value) {
+                            ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Proses ... ")));
-                              });
+
+                            return value;
+                          });
                           eLog(result.toString());
                           if (result.success) {
                             authBloc.add(Authenticated(
@@ -362,32 +368,29 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     // -- Created Date and Delete Button
                     SizedBox(
                       width: double.infinity,
-                      child: 
-
-                        ElevatedButton(
-                          onPressed: () {
-                            _usernameController.text = "";
-                            _emailController.text = "";
-                            _provinceController.text = "";
-                            _cityController.text = "";
-                            _districtController.text = "";
-                            _subDistrictController.text = "";
-                            setState(() {
-                              selectedProvince = null;
-                              selectedCity = null;
-                              selectedDistrict = null;
-                              selectedSubDistrict = null;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.redAccent.withOpacity(0.1),
-                              elevation: 0,
-                              foregroundColor: Colors.red,
-                              shape: const StadiumBorder(),
-                              side: BorderSide.none),
-                          child: const Text("Hapus Isi Form"),
-                        ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _usernameController.text = "";
+                          _emailController.text = "";
+                          _provinceController.text = "";
+                          _cityController.text = "";
+                          _districtController.text = "";
+                          _subDistrictController.text = "";
+                          setState(() {
+                            selectedProvince = null;
+                            selectedCity = null;
+                            selectedDistrict = null;
+                            selectedSubDistrict = null;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.redAccent.withOpacity(0.1),
+                            elevation: 0,
+                            foregroundColor: Colors.red,
+                            shape: const StadiumBorder(),
+                            side: BorderSide.none),
+                        child: const Text("Hapus Isi Form"),
+                      ),
                     )
                   ],
                 ),

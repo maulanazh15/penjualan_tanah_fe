@@ -70,7 +70,7 @@ class LandRepository {
         Endpoints.baseLand,
         data: formData,
       );
-      // iLog(response.data);
+      iLog(response.data);
       return AppResponse<LandModel>.fromJson(
         response.data,
         (dynamic json) {

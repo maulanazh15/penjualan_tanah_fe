@@ -352,7 +352,12 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                             subDisId: selectedSubDistrict?.subdisId,
                             keterangan: _keteranganController.text,
                             userId: user?.id,
-                          ).toJson(), _image);
+                          ).toJson(), _image).then((value) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Proses ... ")));
+
+                            return value;
+                          });
                           eLog(result.data);
                           if (result.success) {
                             if (mounted) {
@@ -381,51 +386,35 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                     const SizedBox(height: 40),
 
                     // -- Created Date and Delete Button
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // const Text.rich(
-                        //   TextSpan(
-                        //     text: "Joined",
-                        //     style: TextStyle(fontSize: 12),
-                        //     children: [
-                        //       TextSpan(
-                        //           text: " Joined at",
-                        //           style: TextStyle(
-                        //               fontWeight: FontWeight.bold,
-                        //               fontSize: 12))
-                        //     ],
-                        //   ),
-                        // ),
-                        
-                        ElevatedButton(
-                          onPressed: () {
-                            _judulController.text = "";
-                            _hargaController.text = "";
-                            _luasController.text = "";
-                            _keteranganController.text = "";
-                            _alamatController.text = "";
-                            _provinceController.text = "";
-                            _cityController.text = "";
-                            _districtController.text = "";
-                            _subDistrictController.text = "";
-                            setState(() {
-                              selectedProvince = null;
-                              selectedCity = null;
-                              selectedDistrict = null;
-                              selectedSubDistrict = null;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.redAccent.withOpacity(0.1),
-                              elevation: 0,
-                              foregroundColor: Colors.red,
-                              shape: const StadiumBorder(),
-                              side: BorderSide.none),
-                          child: const Text("Hapus Isi Form"),
-                        ),
-                      ],
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _judulController.text = "";
+                          _hargaController.text = "";
+                          _luasController.text = "";
+                          _keteranganController.text = "";
+                          _alamatController.text = "";
+                          _provinceController.text = "";
+                          _cityController.text = "";
+                          _districtController.text = "";
+                          _subDistrictController.text = "";
+                          setState(() {
+                            selectedProvince = null;
+                            selectedCity = null;
+                            selectedDistrict = null;
+                            selectedSubDistrict = null;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Colors.redAccent.withOpacity(0.1),
+                            elevation: 0,
+                            foregroundColor: Colors.red,
+                            shape: const StadiumBorder(),
+                            side: BorderSide.none),
+                        child: const Text("Hapus Isi Form"),
+                      ),
                     )
                   ],
                 ),

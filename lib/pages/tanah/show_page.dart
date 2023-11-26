@@ -96,8 +96,16 @@ class _ShowPageState extends State<ShowPage> {
                         backgroundColor: Theme.of(context).primaryColor,
                         side: BorderSide.none,
                         shape: const StadiumBorder()),
-                    child: const Text("Hubungi Penjual",
-                        style: TextStyle(color: Colors.black87)),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.chat_bubble_outline_rounded, color: Colors.white,),
+                        SizedBox(width: 10,),
+                        Text("Hubungi Penjual",
+                            style: TextStyle(color: Colors.white70)),
+                      ],
+                    ),
                   ),
                 ],
               ),
