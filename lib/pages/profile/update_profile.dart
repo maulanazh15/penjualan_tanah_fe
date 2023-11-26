@@ -318,17 +318,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          // final userBloc = context.read<UserBloc>();
-                          // userBloc.add(UserEvent.userUpdated(
-                          //   username: _usernameController.text,
-                          //   email: _emailController.text,
-                          //   provId: selectedProvince?.provId,
-                          //   cityId: selectedCity?.cityId,
-                          //   disId: selectedDistrict?.disId,
-                          //   subDisId: selectedSubDistrict?.subdisId,
-                          // ));
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //     SnackBar(content: Text("Update Berhasil")));
+                         
                           final authBloc = context.read<AuthBloc>();
                           final result = await UserRepository().updateUser(
                               UserUpdateRequest(
@@ -339,7 +329,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 disId: selectedDistrict?.disId,
                                 subDisId: selectedSubDistrict?.subdisId,
                               ),
-                              _image);
+                              _image).then((value)  {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Proses ... ")));
+                              });
                           eLog(result.toString());
                           if (result.success) {
                             authBloc.add(Authenticated(
@@ -366,24 +359,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       ),
                     ),
                     const SizedBox(height: 40),
-
                     // -- Created Date and Delete Button
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // const Text.rich(
-                        //   TextSpan(
-                        //     text: "Joined",
-                        //     style: TextStyle(fontSize: 12),
-                        //     children: [
-                        //       TextSpan(
-                        //           text: " Joined at",
-                        //           style: TextStyle(
-                        //               fontWeight: FontWeight.bold,
-                        //               fontSize: 12))
-                        //     ],
-                        //   ),
-                        // ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: 
 
                         ElevatedButton(
                           onPressed: () {
@@ -409,7 +388,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               side: BorderSide.none),
                           child: const Text("Hapus Isi Form"),
                         ),
-                      ],
                     )
                   ],
                 ),

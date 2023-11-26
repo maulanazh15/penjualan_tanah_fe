@@ -13,6 +13,7 @@ import 'package:search_page/search_page.dart';
 import '../../blocs/chat/chat_bloc.dart';
 import '../../blocs/user/user_bloc.dart';
 import '../../models/user_model.dart';
+import '../../utils/laravel_echo/laravel_echo.dart';
 import '../chat_list/chat_page.dart';
 import '../chat_list/single_chat_page.dart';
 
@@ -35,6 +36,14 @@ class _NavigationBarState extends State<NavigationBarComponent> {
       _selectedIndex = index;
       widget.selectedIndex = null;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final authBloc = context.read<AuthBloc>();
+    LaravelEcho.init(token: authBloc.state.token!);
   }
 
   @override
@@ -182,7 +191,8 @@ class _NavigationBarState extends State<NavigationBarComponent> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor, // Change the selected item color
+        selectedItemColor:
+            Theme.of(context).primaryColor, // Change the selected item color
         unselectedItemColor: Colors.grey, // Change the unselected item color
         onTap: _onItemTapped,
       ),

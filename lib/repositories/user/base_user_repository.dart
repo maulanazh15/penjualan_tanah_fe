@@ -35,6 +35,19 @@ class UserRepository extends BaseUserRepository {
   }
 
   @override
+  Future<AppResponse<UserEntity>> otherUser(int id) async {
+    
+    final response = await _dioClient.get("${Endpoints.getOtherUser}/$id");
+    
+    return AppResponse<UserEntity>.fromJson(response.data, (dynamic json) {
+      if (response.data['success'] && json != null) {
+        return UserEntity.fromJson(json);
+      }
+      return AuthBloc().state.user!;
+    });
+  }
+
+  @override
   Future<AppResponse<UserEntity>> updateUser(
     UserUpdateRequest request,
     XFile? profileImage,

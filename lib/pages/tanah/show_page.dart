@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/models/land_model.dart';
+import 'package:penjualan_tanah_fe/models/models.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/edit_page.dart';
 import 'package:penjualan_tanah_fe/repositories/location/location_repository.dart';
+import 'package:penjualan_tanah_fe/repositories/user/base_user_repository.dart';
+import 'package:penjualan_tanah_fe/utils/logger.dart';
 import 'package:penjualan_tanah_fe/utils/utils.dart';
 
+import '../../blocs/chat/chat_bloc.dart';
 import '../../models/location_model.dart';
+import '../../utils/laravel_echo/laravel_echo.dart';
+import '../chat_list/single_chat_page.dart';
 
 class ShowPage extends StatefulWidget {
   final LandModel landModel;
   final bool isCrudPage;
-  const ShowPage({Key? key, required this.landModel, required this.isCrudPage}) : super(key: key);
+  const ShowPage({Key? key, required this.landModel, required this.isCrudPage})
+      : super(key: key);
 
   static const routeName = 'show-page-tanah';
   @override
@@ -20,6 +29,7 @@ class ShowPage extends StatefulWidget {
 class _ShowPageState extends State<ShowPage> {
   LocationData? locationData;
   String? desa, kecamatan, kabupaten, provinsi;
+  UserEntity? landUser;
 
   @override
   void initState() {
@@ -54,22 +64,57 @@ class _ShowPageState extends State<ShowPage> {
 
   @override
   Widget build(BuildContext context) {
+    ChatBloc chatBloc = context.read<ChatBloc>();
+    final currentUser = context.read<AuthBloc>().state;
     LandModel land = widget.landModel;
-
     String formattedHarga =
         NumberFormat.currency(locale: 'id_ID', symbol: 'Rp').format(land.harga);
 
     return Scaffold(
+      bottomNavigationBar: currentUser.user!.id != land.userId
+          ? SizedBox(
+              width: double.maxFinite,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      // setupOneSignal(currentUser.user!.id);
+                      final user =
+                          await UserRepository().otherUser(land.userId as int);
+                      iLog(user);
+
+                      // / selected user
+                      chatBloc.add(UserSelected(user.data!));
+                      // / push to chat screen
+                      mounted
+                          ? Navigator.of(context)
+                              .pushNamed(SingleChatPage.routeName)
+                          : null;
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        side: BorderSide.none,
+                        shape: const StadiumBorder()),
+                    child: const Text("Hubungi Penjual",
+                        style: TextStyle(color: Colors.black87)),
+                  ),
+                ],
+              ),
+            )
+          : null,
       appBar: AppBar(
         title: Text(land.judul),
       ),
-      floatingActionButton: widget.isCrudPage ? FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => EditLandScreen(landModel: land)));
-        },
-        child: Icon(Icons.edit),
-      ) : null,
+      floatingActionButton: widget.isCrudPage
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => EditLandScreen(landModel: land)));
+              },
+              child: Icon(Icons.edit),
+            )
+          : null,
       body: SingleChildScrollView(
         child: Column(children: [
           Image.network(

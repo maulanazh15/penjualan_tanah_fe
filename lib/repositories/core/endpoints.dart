@@ -3,7 +3,7 @@ class Endpoints {
 
   // static const base = "http://10.0.2.2";
   static const base = "http://103.183.74.206";
-  
+
   static const baseUrl = "$base:8000";
   // static const baseUrl = "https://7278-182-2-77-74.ngrok-free.app";
   // 'https://47f4-182-2-45-233.ngrok-free.app';
@@ -38,6 +38,7 @@ class Endpoints {
   static const getUsers = "$_apiVersion/user";
   static const getPhotoProfile = "$baseUrl$_baseAuth/photo-profile";
   static const updateUserProfile = "$_baseAuth/update";
+  static const getOtherUser = "$_baseAuth/other-user/";
 
   // Location
   static const baseLocation = "$_apiVersion/location";

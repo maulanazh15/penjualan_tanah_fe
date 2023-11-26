@@ -186,7 +186,7 @@ class _ChatPageState extends State<ChatPage> {
         chatBloc.add(const ChatStarted());
         userBloc.add(const UserStarted());
 
-        LaravelEcho.init(token: authBloc.state.token!);
+        // LaravelEcho.init(token: authBloc.state.token!);
         setupOneSignal(authBloc.state.user!.id);
       },
       onDisposed: () {

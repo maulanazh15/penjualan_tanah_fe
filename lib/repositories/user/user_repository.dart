@@ -6,5 +6,7 @@ import '../../models/user_model.dart';
 
 abstract class BaseUserRepository {
   Future<AppResponse<List<UserEntity>>> getUsers();
-  Future<AppResponse<UserEntity>> updateUser(UserUpdateRequest request, XFile? profileImage);
+  Future<AppResponse<UserEntity>> updateUser(
+      UserUpdateRequest request, XFile? profileImage);
+  Future<AppResponse<UserEntity>> otherUser(int $id);
 }
