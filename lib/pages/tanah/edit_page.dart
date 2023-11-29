@@ -45,7 +45,8 @@ class _EditLandScreenState extends State<EditLandScreen> {
 
   Future<void> _takePicture() async {
     XFile? image = await picker.pickImage(
-        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front,
+        source: ImageSource.camera,
+        preferredCameraDevice: CameraDevice.front,
         imageQuality: quality);
 
     if (image != null) {
@@ -58,7 +59,8 @@ class _EditLandScreenState extends State<EditLandScreen> {
   }
 
   Future<void> _pickImage() async {
-    XFile? image = await picker.pickImage(source: ImageSource.gallery, imageQuality: quality);
+    XFile? image = await picker.pickImage(
+        source: ImageSource.gallery, imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the selected photo.
@@ -109,15 +111,38 @@ class _EditLandScreenState extends State<EditLandScreen> {
   Widget build(BuildContext context) {
     LandModel land = widget.landModel;
 
-    void _showSuccessDialog(BuildContext context, String message) {
+    void _showPickPictureDialog(BuildContext context) {
       showDialog(
         context: context,
         builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true); // Close the dialog after 2 seconds
-          });
           return AlertDialog(
-            content: Text(message),
+            title: Text('Ambil Foto Tanah Dari'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_image != null)
+                  Image.file(
+                    File(_image!.path),
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _takePicture();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Kamera'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _pickImage();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ambil dari Galeri'),
+                ),
+              ],
+            ),
           );
         },
       );
@@ -159,8 +184,8 @@ class _EditLandScreenState extends State<EditLandScreen> {
                         icon: const Icon(Icons.camera),
                         color: Colors.black,
                         iconSize: 20,
-                        onPressed: () async {
-                          await _takePicture();
+                        onPressed: () {
+                          _showPickPictureDialog(context);
                         },
                       ),
                     ),
@@ -348,21 +373,23 @@ class _EditLandScreenState extends State<EditLandScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          final result = await LandRepository().updateLand(
-                              land.id!,
-                              LandModel(
-                                judul: _judulController.text,
-                                harga: int.parse(_hargaController.text),
-                                luas: double.parse(_luasController.text),
-                                alamat: _alamatController.text,
-                                provId: selectedProvince?.provId,
-                                cityId: selectedCity?.cityId,
-                                disId: selectedDistrict?.disId,
-                                subDisId: selectedSubDistrict?.subdisId,
-                                keterangan: _keteranganController.text,
-                                userId: user?.id,
-                              ).toJson(),
-                              _image).then((value) {
+                          final result = await LandRepository()
+                              .updateLand(
+                                  land.id!,
+                                  LandModel(
+                                    judul: _judulController.text,
+                                    harga: int.parse(_hargaController.text),
+                                    luas: double.parse(_luasController.text),
+                                    alamat: _alamatController.text,
+                                    provId: selectedProvince?.provId,
+                                    cityId: selectedCity?.cityId,
+                                    disId: selectedDistrict?.disId,
+                                    subDisId: selectedSubDistrict?.subdisId,
+                                    keterangan: _keteranganController.text,
+                                    userId: user?.id,
+                                  ).toJson(),
+                                  _image)
+                              .then((value) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Proses ... ")));
 
@@ -417,8 +444,7 @@ class _EditLandScreenState extends State<EditLandScreen> {
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Colors.redAccent.withOpacity(0.1),
+                            backgroundColor: Colors.redAccent.withOpacity(0.1),
                             elevation: 0,
                             foregroundColor: Colors.red,
                             shape: const StadiumBorder(),

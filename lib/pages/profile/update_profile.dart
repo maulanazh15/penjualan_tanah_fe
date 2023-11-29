@@ -104,15 +104,38 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void _showSuccessDialog(BuildContext context, String message) {
+    void _showPickPictureDialog(BuildContext context) {
       showDialog(
         context: context,
         builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true); // Close the dialog after 2 seconds
-          });
           return AlertDialog(
-            content: Text(message),
+            title: Text('Ambil Foto Profile Dari'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_image != null)
+                  Image.file(
+                    File(_image!.path),
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _takePicture();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Kamera'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _pickImage();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ambil dari Galleri'),
+                ),
+              ],
+            ),
           );
         },
       );
@@ -154,8 +177,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         icon: Icon(Icons.camera),
                         color: Colors.black,
                         iconSize: 20,
-                        onPressed: () async {
-                          await _takePicture();
+                        onPressed: () {
+                          _showPickPictureDialog(context);
                         },
                       ),
                     ),

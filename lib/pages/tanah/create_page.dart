@@ -43,7 +43,9 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
 
   Future<void> _takePicture() async {
     XFile? image = await picker.pickImage(
-        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front, imageQuality: quality);
+        source: ImageSource.camera,
+        preferredCameraDevice: CameraDevice.front,
+        imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the captured photo.
@@ -55,7 +57,8 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
   }
 
   Future<void> _pickImage() async {
-    XFile? image = await picker.pickImage(source: ImageSource.gallery, imageQuality: quality);
+    XFile? image = await picker.pickImage(
+        source: ImageSource.gallery, imageQuality: quality);
 
     if (image != null) {
       // You can now use the 'image' object, which contains the selected photo.
@@ -101,15 +104,38 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
     //     TextEditingController(text: user?.username);
     // final TextEditingController _hargaController =
     //     TextEditingController(text: user?.email);
-    void _showSuccessDialog(BuildContext context, String message) {
+    void _showPickPictureDialog(BuildContext context) {
       showDialog(
         context: context,
         builder: (context) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true); // Close the dialog after 2 seconds
-          });
           return AlertDialog(
-            content: Text(message),
+            title: Text('Ambil Foto Tanah Dari'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_image != null)
+                  Image.file(
+                    File(_image!.path),
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _takePicture();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Kamera'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _pickImage();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ambil dari Galeri'),
+                ),
+              ],
+            ),
           );
         },
       );
@@ -131,12 +157,12 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                   SizedBox(
                     width: double.maxFinite,
                     child: _image != null
-                        ? 
-                        Image.file(File(_image!.path),)
-                          
+                        ? Image.file(
+                            File(_image!.path),
+                          )
                         : Image.network(
-                          user!.urlProfileImage,
-                        ),
+                            user!.urlProfileImage,
+                          ),
                   ),
                   Positioned(
                     bottom: 0,
@@ -151,8 +177,8 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                         icon: const Icon(Icons.camera),
                         color: Colors.black,
                         iconSize: 20,
-                        onPressed: () async {
-                          await _takePicture();
+                        onPressed: () {
+                          _showPickPictureDialog(context);
                         },
                       ),
                     ),
@@ -340,19 +366,22 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          final result =
-                              await LandRepository().createLand(LandModel(
-                            judul: _judulController.text,
-                            harga: int.parse(_hargaController.text),
-                            luas: double.parse(_luasController.text),
-                            alamat: _alamatController.text,
-                            provId: selectedProvince?.provId,
-                            cityId: selectedCity?.cityId,
-                            disId: selectedDistrict?.disId,
-                            subDisId: selectedSubDistrict?.subdisId,
-                            keterangan: _keteranganController.text,
-                            userId: user?.id,
-                          ).toJson(), _image).then((value) {
+                          final result = await LandRepository()
+                              .createLand(
+                                  LandModel(
+                                    judul: _judulController.text,
+                                    harga: int.parse(_hargaController.text),
+                                    luas: double.parse(_luasController.text),
+                                    alamat: _alamatController.text,
+                                    provId: selectedProvince?.provId,
+                                    cityId: selectedCity?.cityId,
+                                    disId: selectedDistrict?.disId,
+                                    subDisId: selectedSubDistrict?.subdisId,
+                                    keterangan: _keteranganController.text,
+                                    userId: user?.id,
+                                  ).toJson(),
+                                  _image)
+                              .then((value) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Proses ... ")));
 
@@ -361,11 +390,11 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                           eLog(result.data);
                           if (result.success) {
                             if (mounted) {
-                              
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Buat Tanah Berhasil")));
-                            Navigator.of(context)
-                                .pushNamed(CrudLandPage.routeName);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Buat Tanah Berhasil")));
+                              Navigator.of(context)
+                                  .pushNamed(CrudLandPage.routeName);
                             }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -407,8 +436,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Colors.redAccent.withOpacity(0.1),
+                            backgroundColor: Colors.redAccent.withOpacity(0.1),
                             elevation: 0,
                             foregroundColor: Colors.red,
                             shape: const StadiumBorder(),
