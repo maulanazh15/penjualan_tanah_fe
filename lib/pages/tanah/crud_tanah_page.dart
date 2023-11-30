@@ -63,7 +63,7 @@ class _CrudLandPageState extends State<CrudLandPage> {
             onPressed: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (_) => NavigationBarComponent(
-                        selectedIndex: 3,
+                        selectedIndex: 2,
                       )));
             },
             icon: Icon(Icons.arrow_back)),

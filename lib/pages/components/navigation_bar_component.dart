@@ -121,9 +121,9 @@ class _NavigationBarState extends State<NavigationBarComponent> {
     const HomePage(
       key: Key('Home'),
     ),
-    const SerachPage(
-      key: Key('Search'),
-    ),
+    // const SerachPage(
+    //   key: Key('Search'),
+    // ),
     const ChatPage(
       key: Key('Chat'),
     ),
@@ -177,10 +177,10 @@ class _NavigationBarState extends State<NavigationBarComponent> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.search),
+          //   label: 'Search',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble),
             label: 'Chat',
