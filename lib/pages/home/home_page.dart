@@ -45,33 +45,43 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return lands.isEmpty ? 
-      BlankContent(
-        content: "Tanah Belum ada",
-        isLoading: isLoading,
-        icon: Icons.landscape_outlined,
-      ) 
-      :
-      ListView.builder(
-      itemCount: (lands.length / 2).ceil(),
-      itemBuilder: (context, index) {
-        int startIndex = index * 2;
-        int endIndex = (index + 1) * 2;
-        if (endIndex > lands.length) {
-          endIndex = lands.length;
-        }
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              for (int i = startIndex; i < endIndex; i++)
-                Expanded(
-                  child: TanahCard(landModel: lands[i], imageUrl: lands[i].urlLandImage,judul: lands[i].judul, harga: lands[i].harga,),
-                ),
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/tanahlogo.png',
+            height: 40.0), // Adjust the height as needed
+      ),
+      body: lands.isEmpty
+          ? BlankContent(
+              content: "Tanah Belum ada",
+              isLoading: isLoading,
+              icon: Icons.landscape_outlined,
+            )
+          : ListView.builder(
+              itemCount: (lands.length / 2).ceil(),
+              itemBuilder: (context, index) {
+                int startIndex = index * 2;
+                int endIndex = (index + 1) * 2;
+                if (endIndex > lands.length) {
+                  endIndex = lands.length;
+                }
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      for (int i = startIndex; i < endIndex; i++)
+                        Expanded(
+                          child: TanahCard(
+                            landModel: lands[i],
+                            imageUrl: lands[i].urlLandImage,
+                            judul: lands[i].judul,
+                            harga: lands[i].harga,
+                          ),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            ),
     );
   }
 }
