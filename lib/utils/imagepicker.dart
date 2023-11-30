@@ -1,1 +1,1 @@
-const int quality = 50;
+const int quality = 20;
