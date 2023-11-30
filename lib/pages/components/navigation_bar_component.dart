@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
-import 'package:penjualan_tanah_fe/cubits/login/login_cubit.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:penjualan_tanah_fe/pages/home/home_page.dart';
-import 'package:penjualan_tanah_fe/pages/login/login_page.dart';
 import 'package:penjualan_tanah_fe/pages/profile/profile_page.dart';
-import 'package:penjualan_tanah_fe/pages/serach_page.dart';
-import 'package:penjualan_tanah_fe/utils/onesignal/onesignal.dart';
 import 'package:search_page/search_page.dart';
 
 import '../../blocs/chat/chat_bloc.dart';

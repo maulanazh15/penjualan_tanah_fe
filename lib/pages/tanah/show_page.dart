@@ -12,7 +12,6 @@ import 'package:penjualan_tanah_fe/utils/utils.dart';
 
 import '../../blocs/chat/chat_bloc.dart';
 import '../../models/location_model.dart';
-import '../../utils/laravel_echo/laravel_echo.dart';
 import '../chat_list/single_chat_page.dart';
 
 class ShowPage extends StatefulWidget {
@@ -120,7 +119,7 @@ class _ShowPageState extends State<ShowPage> {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => EditLandScreen(landModel: land)));
               },
-              child: Icon(Icons.edit),
+              child: const Icon(Icons.edit),
             )
           : null,
       body: SingleChildScrollView(
@@ -131,7 +130,7 @@ class _ShowPageState extends State<ShowPage> {
             width: double.infinity,
             fit: BoxFit.cover,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(
@@ -149,7 +148,7 @@ class _ShowPageState extends State<ShowPage> {
                         color: Colors.grey.withOpacity(0.5), // Shadow color
                         spreadRadius: 3, // Spread radius
                         blurRadius: 5, // Blur radius
-                        offset: Offset(
+                        offset: const Offset(
                             0, 3), // Offset to control the shadow direction
                       ),
                     ],
@@ -160,11 +159,11 @@ class _ShowPageState extends State<ShowPage> {
                       alignment: Alignment.center,
                       child: Column(children: [
                         Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Harga"),
+                              const Text("Harga"),
                               Text(formattedHarga),
                             ],
                           ),
@@ -173,7 +172,7 @@ class _ShowPageState extends State<ShowPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -186,7 +185,7 @@ class _ShowPageState extends State<ShowPage> {
                         color: Colors.grey.withOpacity(0.5), // Shadow color
                         spreadRadius: 3, // Spread radius
                         blurRadius: 5, // Blur radius
-                        offset: Offset(
+                        offset: const Offset(
                             0, 3), // Offset to control the shadow direction
                       ),
                     ],
@@ -197,11 +196,11 @@ class _ShowPageState extends State<ShowPage> {
                       alignment: Alignment.center,
                       child: Column(children: [
                         Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Luas"),
+                              const Text("Luas"),
                               Text("${land.luas} m\u00B2"),
                             ],
                           ),
@@ -210,7 +209,7 @@ class _ShowPageState extends State<ShowPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -223,7 +222,7 @@ class _ShowPageState extends State<ShowPage> {
                         color: Colors.grey.withOpacity(0.5), // Shadow color
                         spreadRadius: 3, // Spread radius
                         blurRadius: 5, // Blur radius
-                        offset: Offset(
+                        offset: const Offset(
                             0, 3), // Offset to control the shadow direction
                       ),
                     ],
@@ -234,13 +233,13 @@ class _ShowPageState extends State<ShowPage> {
                       alignment: Alignment.centerLeft,
                       child: Column(children: [
                         Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Alamat"),
-                              Divider(),
+                              const Text("Alamat"),
+                              const Divider(),
                               Text(
                                   "${land.alamat}, Desa $desa, Kecamatan $kecamatan, Kabupaten/Kota $kabupaten, Provinsi $provinsi"),
                             ],
@@ -250,7 +249,7 @@ class _ShowPageState extends State<ShowPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -263,7 +262,7 @@ class _ShowPageState extends State<ShowPage> {
                         color: Colors.grey.withOpacity(0.5), // Shadow color
                         spreadRadius: 3, // Spread radius
                         blurRadius: 5, // Blur radius
-                        offset: Offset(
+                        offset: const Offset(
                             0, 3), // Offset to control the shadow direction
                       ),
                     ],
@@ -274,13 +273,13 @@ class _ShowPageState extends State<ShowPage> {
                       alignment: Alignment.centerLeft,
                       child: Column(children: [
                         Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Keterangan"),
-                              Divider(),
+                              const Text("Keterangan"),
+                              const Divider(),
                               Text(land.keterangan as String),
                             ],
                           ),

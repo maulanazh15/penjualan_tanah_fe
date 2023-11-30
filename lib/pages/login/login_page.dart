@@ -6,7 +6,9 @@ import 'package:penjualan_tanah_fe/pages/components/navigation_bar_component.dar
 import 'package:penjualan_tanah_fe/cubits/cubits.dart';
 
 class LoginPage extends StatelessWidget {
-  Duration get loginTime => Duration(milliseconds: 2250);
+  const LoginPage({super.key});
+
+  Duration get loginTime => const Duration(milliseconds: 2250);
 
   static const routeName = 'login';
 
@@ -27,11 +29,13 @@ class LoginPage extends StatelessWidget {
           if (value == '') {
             return 'Please enter username';
           }
+          return null;
         },
         passwordValidator: (value) {
           if (value == null || value.length < 5) {
             return 'Password must be at least 5 chars';
           }
+          return null;
         },
         loginProviders: <LoginProvider>[
           LoginProvider(
@@ -59,18 +63,18 @@ class LoginPage extends StatelessWidget {
           primaryColor: Colors.green,
           accentColor: Colors.greenAccent,
           errorColor: Colors.red,
-          cardTheme: CardTheme(
+          cardTheme: const CardTheme(
             color: Colors.white,
           ),
-          inputTheme: InputDecorationTheme(
+          inputTheme: const InputDecorationTheme(
             filled: true,
             fillColor: Colors.white,
           ),
-          buttonTheme: LoginButtonTheme(
+          buttonTheme: const LoginButtonTheme(
             splashColor: Colors.lightGreenAccent,
             highlightColor: Colors.lightGreen,
           ),
-          titleStyle: TextStyle(
+          titleStyle: const TextStyle(
             color: Colors.white, // Set the title text color to white
           ),
         ),

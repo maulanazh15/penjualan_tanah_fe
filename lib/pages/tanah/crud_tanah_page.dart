@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/models/land_model.dart';
 import 'package:penjualan_tanah_fe/pages/components/navigation_bar_component.dart';
-import 'package:penjualan_tanah_fe/pages/profile/profile_page.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/create_page.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/show_page.dart';
 
@@ -58,7 +57,7 @@ class _CrudLandPageState extends State<CrudLandPage> {
     final user = AuthBloc().state.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Land CRUD'),
+        title: const Text('Tanah Anda'),
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -66,7 +65,7 @@ class _CrudLandPageState extends State<CrudLandPage> {
                         selectedIndex: 2,
                       )));
             },
-            icon: Icon(Icons.arrow_back)),
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: lands.isEmpty
           ?
@@ -77,12 +76,12 @@ class _CrudLandPageState extends State<CrudLandPage> {
               icon: Icons.landscape_outlined,
             )
           : ListView.builder(
-              padding: EdgeInsets.all(15),
-              itemCount: lands!.length,
+              padding: const EdgeInsets.all(15),
+              itemCount: lands.length,
               itemBuilder: (context, index) {
                 String formattedHarga =
                     NumberFormat.currency(locale: 'id_ID', symbol: 'Rp')
-                        .format(lands![index].harga);
+                        .format(lands[index].harga);
 
                 return Card(
                   elevation: 2.0,
@@ -94,37 +93,37 @@ class _CrudLandPageState extends State<CrudLandPage> {
                       // Image placeholder (replace with your image widget)
                       ClipRRect(
                         borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(8.0)),
+                            const BorderRadius.vertical(top: Radius.circular(8.0)),
                         child: Image.network(
-                          lands![index].urlLandImage,
+                          lands[index].urlLandImage,
                           height: 150,
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
                       ),
                       ListTile(
-                        title: Text(lands![index].judul),
+                        title: Text(lands[index].judul),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Harga: $formattedHarga'),
                             Text(
-                                'Luas: ${lands![index].luas} m\u00B2'), // Assuming luas is a numeric value
+                                'Luas: ${lands[index].luas} m\u00B2'), // Assuming luas is a numeric value
                           ],
                         ),
                         onTap: () {
                           // Handle item tap (e.g., navigate to detail page)
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  ShowPage(landModel: lands![index], isCrudPage: true,)));
+                                  ShowPage(landModel: lands[index], isCrudPage: true,)));
                         },
                         onLongPress: () {
                           showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  title: Text('Hapus Data Tanah'),
-                                  content: Text(
+                                  title: const Text('Hapus Data Tanah'),
+                                  content: const Text(
                                       "Apakah Anda yakin inign menghapus data tanah ini?"),
                                   actions: [
                                     ElevatedButton(
@@ -165,7 +164,7 @@ class _CrudLandPageState extends State<CrudLandPage> {
           // Handle button press (e.g., navigate to create page)
           Navigator.of(context).pushNamed(CreateLandScreen.routeName);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

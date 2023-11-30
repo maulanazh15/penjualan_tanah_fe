@@ -126,7 +126,7 @@ class LandRepository {
         response.data,
         (_) {
           if (response.data['success']) {
-            return null;
+            return;
           }
           throw Exception('Failed to delete land');
         },

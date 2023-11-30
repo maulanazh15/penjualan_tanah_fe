@@ -15,7 +15,6 @@ import 'package:penjualan_tanah_fe/pages/profile/update_profile.dart';
 import 'package:penjualan_tanah_fe/pages/splash/splash_page.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/create_page.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/crud_tanah_page.dart';
-import 'package:penjualan_tanah_fe/pages/tanah/show_page.dart';
 import 'package:penjualan_tanah_fe/pages/websocket-test/websocket.dart';
 import 'package:penjualan_tanah_fe/repositories/auth/auth_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/chat/chat_repository.dart';
@@ -78,7 +77,7 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: SplashPage.routeName,
           routes: {
-            LoginPage.routeName: (_) => LoginPage(),
+            LoginPage.routeName: (_) => const LoginPage(),
             // ChatPage.routeName : (_) => ChatPage(),
             NavigationBarComponent.routeName: (_) =>
                 NavigationBarComponent(),

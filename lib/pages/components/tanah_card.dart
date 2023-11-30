@@ -10,7 +10,7 @@ class TanahCard extends StatelessWidget {
   final String judul;
   final int harga;
 
-  TanahCard({required this.imageUrl, required this.judul, required this.harga, required this.landModel});
+  const TanahCard({super.key, required this.imageUrl, required this.judul, required this.harga, required this.landModel});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class TanahCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(8.0)),
             child: Image.network(
               imageUrl,
               height: 150.0,
@@ -47,12 +47,12 @@ class TanahCard extends StatelessWidget {
                   Text(
                     judul,
                     style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                        const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     formattedHarga,
-                    style: TextStyle(fontSize: 14.0, color: Colors.green),
+                    style: const TextStyle(fontSize: 14.0, color: Colors.green),
                   ),
                 ],
               ),

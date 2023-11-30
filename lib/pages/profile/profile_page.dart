@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_login/flutter_login.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:penjualan_tanah_fe/pages/profile/update_profile.dart';
@@ -97,8 +96,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 }),
             const Divider(),
             const SizedBox(height: 10),
-            ProfileMenuWidget(
-                title: "Information", icon: Icons.info, onPress: () {}),
+            // ProfileMenuWidget(
+            //     title: "Information", icon: Icons.info, onPress: () {}),
             ProfileMenuWidget(
                 title: "Logout",
                 icon: Icons.arrow_back,
@@ -109,11 +108,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                          title: Text("LOGOUT"),
+                          title: const Text("LOGOUT"),
                           titleTextStyle: const TextStyle(fontSize: 20),
                           content: const Padding(
                             padding: EdgeInsets.symmetric(vertical: 15.0),
-                            child: Text("Are you sure, you want to Logout?"),
+                            child: Text("Apakah Anda yakin ingin Logout dari aplikasi?"),
                           ),
                           actions: [
                             ElevatedButton(

@@ -1,6 +1,5 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:intl/intl.dart';
 import 'package:penjualan_tanah_fe/models/user_model.dart';
 import 'package:penjualan_tanah_fe/utils/formatting.dart';
 

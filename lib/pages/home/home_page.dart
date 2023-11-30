@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:penjualan_tanah_fe/pages/components/tanah_card.dart';
 import 'package:penjualan_tanah_fe/repositories/land/land_repository.dart';
-import 'package:penjualan_tanah_fe/repositories/location/location_repository.dart';
 import 'package:penjualan_tanah_fe/widget/blank_content.dart';
 
 import '../../models/land_model.dart';

@@ -6,7 +6,7 @@ part 'land_state.dart';
 part 'land_bloc.freezed.dart';
 
 class LandBloc extends Bloc<LandEvent, LandState> {
-  LandBloc() : super(_Initial()) {
+  LandBloc() : super(const _Initial()) {
     on<LandEvent>((event, emit) {
       // TODO: implement event handler
     });

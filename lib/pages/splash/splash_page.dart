@@ -30,7 +30,6 @@ class _SplashPageState extends State<SplashPage> {
     if (!mounted) return;
 
     final authState = context.read<AuthBloc>().state;
-    ;
     final redirectPage = authState.isAuthenticated
         ? NavigationBarComponent.routeName
         : LoginPage.routeName;

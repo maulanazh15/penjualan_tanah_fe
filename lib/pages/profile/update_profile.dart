@@ -1,19 +1,15 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
-import 'package:penjualan_tanah_fe/blocs/user/user_bloc.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
 import 'package:penjualan_tanah_fe/repositories/location/location_repository.dart';
 import 'package:penjualan_tanah_fe/utils/imagepicker.dart';
 import 'package:penjualan_tanah_fe/utils/logger.dart';
 import '../../models/location_model.dart';
 import '../../models/requests/user_update/user_update_request.dart';
-import '../../utils/dio_client/dio_client.dart';
 import 'package:penjualan_tanah_fe/repositories/user/base_user_repository.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
@@ -109,7 +105,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Ambil Foto Profile Dari'),
+            title: const Text('Ambil Foto Profile Dari'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -125,14 +121,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     await _takePicture();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Kamera'),
+                  child: const Text('Kamera'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
                     await _pickImage();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Ambil dari Galleri'),
+                  child: const Text('Ambil dari Galleri'),
                 ),
               ],
             ),
@@ -174,7 +170,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           borderRadius: BorderRadius.circular(100),
                           color: Colors.black12),
                       child: IconButton(
-                        icon: Icon(Icons.camera),
+                        icon: const Icon(Icons.camera),
                         color: Colors.black,
                         iconSize: 20,
                         onPressed: () {
@@ -221,7 +217,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       },
                       itemBuilder: (context, province) {
                         return ListTile(
-                          leading: Icon(Icons.place_outlined),
+                          leading: const Icon(Icons.place_outlined),
                           title: Text(province.provName),
                         );
                       },
@@ -255,7 +251,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       },
                       itemBuilder: (context, city) {
                         return ListTile(
-                          leading: Icon(Icons.place_outlined),
+                          leading: const Icon(Icons.place_outlined),
                           title: Text(city.cityName),
                         );
                       },
@@ -289,7 +285,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       },
                       itemBuilder: (context, district) {
                         return ListTile(
-                          leading: Icon(Icons.place_outlined),
+                          leading: const Icon(Icons.place_outlined),
                           title: Text(district.disName),
                         );
                       },
@@ -323,7 +319,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       },
                       itemBuilder: (context, subDistrict) {
                         return ListTile(
-                          leading: Icon(Icons.place_outlined),
+                          leading: const Icon(Icons.place_outlined),
                           title: Text(subDistrict.subdisName),
                         );
                       },
@@ -358,7 +354,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                   _image)
                               .then((value) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Proses ... ")));
+                                const SnackBar(content: Text("Proses ... ")));
 
                             return value;
                           });
@@ -370,10 +366,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 user: result.data));
                             iLog(authBloc.state.user);
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Update Berhasil")));
+                                const SnackBar(content: Text("Update Berhasil")));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Update Gagal")));
+                                const SnackBar(content: Text("Update Gagal")));
                           }
                           // _showSuccessDialog(context, "Update Berhasil");
                         }

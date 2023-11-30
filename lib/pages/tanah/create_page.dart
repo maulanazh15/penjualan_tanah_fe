@@ -1,23 +1,15 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
-import 'package:penjualan_tanah_fe/blocs/user/user_bloc.dart';
 import 'package:penjualan_tanah_fe/models/land_model.dart';
-import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:penjualan_tanah_fe/pages/tanah/crud_tanah_page.dart';
-import 'package:penjualan_tanah_fe/repositories/core/endpoints.dart';
 import 'package:penjualan_tanah_fe/repositories/land/land_repository.dart';
 import 'package:penjualan_tanah_fe/repositories/location/location_repository.dart';
 import 'package:penjualan_tanah_fe/utils/imagepicker.dart';
 import 'package:penjualan_tanah_fe/utils/logger.dart';
 import '../../models/location_model.dart';
-import '../../models/requests/user_update/user_update_request.dart';
-import '../../utils/dio_client/dio_client.dart';
-import 'package:penjualan_tanah_fe/repositories/user/base_user_repository.dart';
 
 class CreateLandScreen extends StatefulWidget {
   const CreateLandScreen({Key? key}) : super(key: key);
@@ -109,7 +101,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Ambil Foto Tanah Dari'),
+            title: const Text('Ambil Foto Tanah Dari'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -125,14 +117,14 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                     await _takePicture();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Kamera'),
+                  child: const Text('Kamera'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
                     await _pickImage();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Ambil dari Galeri'),
+                  child: const Text('Ambil dari Galeri'),
                 ),
               ],
             ),
@@ -243,7 +235,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                       },
                       itemBuilder: (context, province) {
                         return ListTile(
-                          leading: Icon(Icons.place_outlined),
+                          leading: const Icon(Icons.place_outlined),
                           title: Text(province.provName),
                         );
                       },
@@ -277,7 +269,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                       },
                       itemBuilder: (context, city) {
                         return ListTile(
-                          leading: Icon(Icons.place_outlined),
+                          leading: const Icon(Icons.place_outlined),
                           title: Text(city.cityName),
                         );
                       },
@@ -311,7 +303,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                       },
                       itemBuilder: (context, district) {
                         return ListTile(
-                          leading: Icon(Icons.place_outlined),
+                          leading: const Icon(Icons.place_outlined),
                           title: Text(district.disName),
                         );
                       },
@@ -345,7 +337,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                       },
                       itemBuilder: (context, subDistrict) {
                         return ListTile(
-                          leading: Icon(Icons.place_outlined),
+                          leading: const Icon(Icons.place_outlined),
                           title: Text(subDistrict.subdisName),
                         );
                       },
@@ -383,7 +375,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                                   _image)
                               .then((value) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Proses ... ")));
+                                const SnackBar(content: Text("Proses ... ")));
 
                             return value;
                           });
@@ -398,7 +390,7 @@ class _CreateLandScreenState extends State<CreateLandScreen> {
                             }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Buat Tanah Gagal")));
+                                const SnackBar(content: Text("Buat Tanah Gagal")));
                           }
                           // _showSuccessDialog(context, "Update Berhasil");
                         }

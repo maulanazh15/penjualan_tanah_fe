@@ -1,4 +1,3 @@
-import 'package:penjualan_tanah_fe/utils/logger.dart';
 
 class Province {
   final int provId;

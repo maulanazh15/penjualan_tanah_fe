@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_login/flutter_login.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:penjualan_tanah_fe/blocs/auth/auth_bloc.dart';
@@ -21,7 +20,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     required AuthBloc authBloc,
   })  : _userRepository = userRepository,
         _authBloc = authBloc,
-        super(UserState.initial()) {
+        super(const UserState.initial()) {
     on<UserStarted>((event, emit) async {
       // TODO: implement event handler
       final result = await _userRepository.getUsers();

@@ -7,11 +7,8 @@ import 'package:penjualan_tanah_fe/blocs/user/user_bloc.dart';
 import 'package:penjualan_tanah_fe/pages/chat_list/chat_list_item.dart';
 import 'package:penjualan_tanah_fe/pages/chat_list/single_chat_page.dart';
 import 'package:penjualan_tanah_fe/pages/components/avatar_profile.dart';
-import 'package:penjualan_tanah_fe/pages/websocket-test/websocket.dart';
-import 'package:penjualan_tanah_fe/utils/laravel_echo/laravel_echo.dart';
 import 'package:penjualan_tanah_fe/widget/blank_content.dart';
 import 'package:search_page/search_page.dart';
-import 'package:web_socket_channel/io.dart';
 import '../../models/user_model.dart';
 import '../../utils/logger.dart';
 import '../../utils/onesignal/onesignal.dart';
@@ -36,7 +33,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void onOpened(OSNotificationOpenedResult result) {
-    vLog('NOTIFICATION OPENED HANDLER CALLED WITH: ${result}');
+    vLog('NOTIFICATION OPENED HANDLER CALLED WITH: $result');
     vLog(
         "Opened notification: \n${result.notification.jsonRepresentation().replaceAll("\\n", "\n")}");
 
@@ -197,7 +194,7 @@ class _ChatPageState extends State<ChatPage> {
         //     .on('disconnect', (_) => print('disconnected '));
       },
       child: Container(
-        padding: EdgeInsets.all(14.0),
+        padding: const EdgeInsets.all(14.0),
         child: Column(
           children: [
             // Container(
