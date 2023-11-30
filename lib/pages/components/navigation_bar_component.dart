@@ -141,12 +141,14 @@ class _NavigationBarState extends State<NavigationBarComponent> {
         leading: null,
         automaticallyImplyLeading: false,
         title: Center(
-          child: Text(_screens[_selectedIndex].key.toString().replaceAllMapped(
-                RegExp(r"\[<'?([^']+)'?>\]"),
-                (match) =>
-                    match.group(1) ??
-                    "", // Replace with an empty string if the match is null
-              )),
+          child: Text(
+            _screens[_selectedIndex].key.toString().replaceAllMapped(
+                  RegExp(r"\[<'?([^']+)'?>\]"),
+                  (match) =>
+                      match.group(1) ??
+                      "", // Replace with an empty string if the match is null
+                ),
+          ),
         ),
         actions: [
           _screens[_selectedIndex].key == const Key('Chat')
@@ -169,6 +171,7 @@ class _NavigationBarState extends State<NavigationBarComponent> {
                 )
               : const Text('')
         ],
+        backgroundColor: Colors.green,
       ),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
